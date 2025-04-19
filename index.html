@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,37 +6,655 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio Desain Kaos</title>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --background-color: #1a1a1a;
-            --text-color: #ffffff;
-        }
-        body { font-family: 'Segoe UI', sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; background: var(--background-color); color: var(--text-color); }
-        .studio-container { display: grid; grid-template-columns: 300px 1fr; gap: 20px; height: 90vh; }
-        .controls-panel { background: #2a2a2a; padding: 20px; border-radius: 12px; overflow-y: auto; }
-        .controls-section { margin-bottom: 25px; padding: 15px; background: #333; border-radius: 8px; }
-        .controls-section h3 { margin-bottom: 10px; color: var(--primary-color); }
-        .input-group { margin-bottom: 10px; }
-        .input-group label { display: flex; align-items: center; gap: 8px; color: #aaa; }
-        input[type=file], input[type=color] { display: none; }
-        input[type=number] { width: 60px; padding: 4px; background: #444; border: 1px solid #555; border-radius: 4px; color: #fff; }
-        .color-options { display: flex; gap: 10px; margin-top: 10px; }
-        .color-swatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-swatch.selected { border-color: var(--primary-color); }
-        button { background: var(--primary-color); color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
-        button.secondary { background: var(--secondary-color); }
-        .design-canvas { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-        .zoom-controls { margin-bottom: 10px; display: flex; gap: 8px; }
-        .mockup-frame { position: relative; background: #333; border-radius: 12px; overflow: hidden; flex: 0 0 36%; }
-        .mockup-frame img.mockup { width: 100%; height: 100%; object-fit: contain; }
-        .overlay-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; }
-        .design-overlay { position: absolute; pointer-events: all; border: 2px dashed rgba(255,255,255,0.7); transform-origin: center; display: block; }
-        .size-box { position: absolute; background: rgba(0,0,0,0.7); padding: 6px; border-radius: 4px; color: #fff; font-size: 12px; pointer-events: all; display: flex; flex-direction: column; gap: 4px; }
-        .price-display { background: #333; padding: 15px; border-radius: 8px; margin-top: auto; color: #fff; }
-        .price-display h3 { margin: 0 0 10px; color: var(--primary-color); }
-        .price-display div { margin-bottom: 6px; }
+:root {
+    --primary-color: #4d8eff;
+    --primary-hover: #3a7df5;
+    --secondary-color: #7d8b94;
+    --secondary-hover: #6c7a83;
+    --background-color: #1a1a1a;
+    --background-elevated: #252525;
+    --background-elevated-2: #2e2e2e;
+    --text-color: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent-color: #00c8ff;
+    --success-color: #28a745;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-fast: all 0.15s ease-out;
+}
+
+body {
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+    background: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.studio-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 30px;
+    height: 90vh;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.controls-panel {
+    background: var(--background-elevated);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    overflow-y: auto;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-elevated-2);
+}
+
+.controls-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.controls-panel::-webkit-scrollbar-track {
+    background: var(--background-elevated-2);
+    border-radius: 3px;
+}
+
+.controls-panel::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+.controls-section {
+    margin-bottom: 25px;
+    padding: 18px;
+    background: var(--background-elevated-2);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+}
+
+.controls-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-left-color: var(--primary-color);
+}
+
+.controls-section h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls-section h3::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    transition: var(--transition-fast);
+}
+
+.input-group label:hover {
+    color: var(--text-color);
+}
+
+input[type=file], input[type=color] {
+    display: none;
+}
+
+input[type=number] {
+    width: 70px;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
+}
+
+input[type=number]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(77, 142, 255, 0.2);
+}
+
+.color-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.color-swatch.selected {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(77, 142, 255, 0.3);
+}
+
+button {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.secondary {
+    background: var(--secondary-color);
+}
+
+button.secondary:hover {
+    background: var(--secondary-hover);
+}
+
+button.icon-button {
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.design-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.mockup-frame {
+    position: relative;
+    background: var(--background-elevated-2);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    flex: 0 0 36%;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.mockup-frame:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+.mockup-frame img.mockup {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+}
+
+.design-overlay {
+    position: absolute;
+    pointer-events: all;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    transform-origin: center;
+    display: block;
+    transition: var(--transition-fast);
+}
+
+.design-overlay:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 200, 255, 0.3);
+}
+
+.size-box {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 12px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    animation: popIn 0.2s ease-out;
+    max-width: 100px;
+    min-width: 180px;
+    transform: translateY(0);
+    /* Logika penempatan otomatis */
+    bottom: auto;
+    right: auto;
+}
+
+
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.size-box button {
+    padding: 6px 10px;
+    margin: 2px;
+    font-size: 0.85rem;
+}
+
+.price-display {
+    background: var(--background-elevated-2);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-top: auto;
+    color: #fff;
+    box-shadow: var(--box-shadow);
+}
+
+.price-display h3 {
+    margin: 0 0 15px;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-display h3::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease-out;
+    overflow-y: auto;
+}
+
+.preview-content {
+    background: var(--background-elevated);
+    max-width: 90%;
+    width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    position: relative;
+    color: white;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Pastikan konten tidak kepotong */
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.preview-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin: 25px 0;
+}
+
+.preview-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.preview-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.preview-image img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: auto;
+    object-fit: contain;
+    background: #fff;
+    display: block;
+}
+
+.preview-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.close-btn::before, .close-btn::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: white;
+}
+
+.close-btn::before {
+    transform: rotate(45deg);
+}
+
+.close-btn::after {
+    transform: rotate(-45deg);
+}
+
+.price-detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.price-detail-item span:last-child {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.crop-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.crop-container {
+    position: relative;
+    max-width: 800px;
+    margin: 40px auto;
+    background: var(--background-elevated);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.crop-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 20px auto;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.crop-box {
+    position: absolute;
+    border: 2px dashed var(--accent-color);
+    background-color: rgba(0, 200, 255, 0.1);
+    cursor: move;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+}
+
+.crop-info {
+    margin-top: 20px;
+    color: var(--text-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.crop-info label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 15px;
+    font-size: 0.95rem;
+}
+
+.price-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    background: var(--background-elevated);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    font-size: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.price-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.price-row:hover {
+    color: var(--text-color);
+}
+
+.price-row:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 1.05rem;
+    padding-top: 10px;
+    margin-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.size-box button {
+    background: var(--success-color);
+    color: white;
+    font-size: 0.85rem;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: none;
+}
+
+.size-box button:hover {
+    background: #218838;
+    transform: none;
+}
+
+.size-box button.secondary {
+    background: var(--secondary-color);
+}
+
+.size-box button.secondary:hover {
+    background: var(--secondary-hover);
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.85rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .studio-container {
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .studio-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .mockup-frame {
+        flex: 0 0 300px;
+    }
+}
+
+/* Loading animation */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.loading {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+/* Responsive untuk modal */
+@media (max-width: 768px) {
+    .preview-content {
+        max-width: 95%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+    
+    .preview-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animasi tambahan */
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.size-box.position-top {
+    animation: slideDown 0.3s ease-out;
+}
     </style>
 </head>
 <body>
@@ -54,36 +673,28 @@
                 <h3>Upload Desain</h3>
                 <input type="file" id="uploadFront" accept="image/*">
                 <input type="file" id="uploadBack" accept="image/*">
-                <button onclick="uploadFront.click()">📁 Upload Depan</button>
-                <button onclick="uploadBack.click()">📁 Upload Belakang</button>
+                <button onclick="uploadFront.click()">📁 Depan</button>
+                <button onclick="uploadBack.click()">📁 Belakang</button>
             </div>
-            <div class="controls-section">
-                <h3>Opsi Ubah Ukuran</h3>
-                <div class="input-group"><label><input type="checkbox" id="proportionalToggle" checked> Proporsional</label></div>
-            </div>
+            
             <div class="controls-section">
                 <h3>Pengaturan Harga</h3>
-                <div class="input-group"><label>Harga per cm²:<input type="number" id="pricePerCm" value="25"></label></div>
-                <div class="input-group"><label>Harga Kaos (Base):<input type="number" id="basePrice" value="45000"></label></div>
-                <div class="input-group"><label>Biaya Desain:<input type="number" id="designFee" value="10000"></label></div>
+                <div class="input-group"><label>Harga per cm²:<input type="number" id="pricePerCm" value="20"></label></div>
+                <div class="input-group"><label>Harga Kaos:<input type="number" id="basePrice" value="40000"></label></div>
+                <div class="input-group"><label>Biaya Desain:<input type="number" id="designFee" value="0"></label></div>
             </div>
             <div class="price-display">
-                <h3>Total Harga: <span id="totalPrice">Rp 0</span></h3>
+                <h3>Total Harga: <span id="totalPrice">Rp 0</span></h3>
                 <div id="priceDetails">
-                    <div>Harga Kaos: Rp 0</div>
-                    <div>Biaya Sablon Depan: Rp 0</div>
-                    <div>Biaya Sablon Belakang: Rp 0</div>
-                    <div>Biaya Desain: Rp 0</div>
+                    <div>Harga Kaos Polos: Rp 0</div>
+                    <div>Biaya Sablon Depan: Rp 0</div>
+                    <div>Biaya Sablon Belakang: Rp 0</div>
+                    <div>Biaya Desain: Rp 0</div>
                 </div>
+                <button onclick="showPreview()" style="margin-top:15px">👁️ Preview Desain</button>
             </div>
         </div>
         <div class="design-canvas">
-            <div class="zoom-controls">
-                <button onclick="adjustZoom(0.1)">➕ Perbesar</button>
-                <button onclick="adjustZoom(-0.1)">➖ Perkecil</button>
-                <button onclick="resetZoom()">🔄 Reset Zoom</button>
-                <button onclick="downloadDesign()" class="secondary">💾 Unduh Desain</button>
-            </div>
             <div class="mockup-frame" id="frame-front">
                 <img id="mockup-front" class="mockup" src="https://i.imgur.com/15xUlpY.jpeg" crossorigin="anonymous">
                 <div class="overlay-container" id="overlay-container-front"></div>
@@ -94,17 +705,696 @@
             </div>
         </div>
     </div>
+
+    <div class="preview-modal">
+        <div class="preview-content">
+            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <h2>Preview Desain</h2>
+            <div class="preview-images">
+                <div class="preview-image">
+                    <h4>Depan</h4>
+                    <img id="preview-front-img">
+                </div>
+                <div class="preview-image">
+                    <h4>Belakang</h4>
+                    <img id="preview-back-img">
+                </div>
+            </div>
+            <div class="price-breakdown">
+                <h3>Rincian Harga:</h3>
+                <div id="preview-price-details"></div>
+                <div id="preview-total" style="
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffd700;
+    border-top: 1px solid #666;
+    padding-top: 10px;
+">💵 Total Harga: -</div>
+
+            </div>
+            <div class="preview-actions">
+                <button onclick="downloadPreview()">Unduh Preview</button>
+                <button onclick="sharePreview()">Bagikan via WhatsApp</button>
+                <button onclick="downloadCombinedPreview()" style="
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-weight: bold;
+    border-radius: 6px;
+    background: #00aa88;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+">⬇ Download Gabungan</button>
+            </div>
+        </div>
+    </div>
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-container">
+            <div id="cropImageContainer" style="position:relative"></div>
+            <div style="text-align:center; margin-top:20px;">
+                <button onclick="applyCrop()">Terapkan Crop</button>
+                <button onclick="closeCrop()">Batal</button>
+            </div>
+        </div>
+    </div>
+    <div id="preview-download-area" style="display:none; background:#2a2a2a; padding:20px; color:#fff; font-family:Arial">
+        <div style="text-align:center; font-weight:bold; font-size:18px; margin-bottom:10px;">
+            🖼️ Preview Desain Kaos
+        </div>
+        <div style="display:flex; gap:20px; justify-content:center; margin-bottom:15px;">
+            <img id="preview-download-front" style="max-width:300px; border:1px solid #444;">
+            <img id="preview-download-back" style="max-width:300px; border:1px solid #444;">
+        </div>
+        <div id="preview-download-prices" style="font-size:14px; line-height:1.6;"></div>
+        <div id="preview-download-total" style="margin-top:10px; font-size:16px; font-weight:bold; color:#00ff88;"></div>
+    </div>
+    
 <script>
     const colorData = {
         white: { front: 'https://i.imgur.com/15xUlpY.jpeg', back: 'https://i.imgur.com/1B2zntM.jpeg' },
         black: { front: 'https://i.imgur.com/N3zDDke.jpeg', back: 'https://i.imgur.com/8AheLaq.jpeg' },
         red:   { front: 'https://i.imgur.com/REDfront.jpg', back: 'https://i.imgur.com/REDback.jpg' }
     };
+    
     let currentColor = 'white';
+    const uploadFront = document.getElementById('uploadFront');
+    const uploadBack = document.getElementById('uploadBack');
+    const mockups = { front: document.getElementById('mockup-front'), back: document.getElementById('mockup-back') };
+    const containers = { front: document.getElementById('overlay-container-front'), back: document.getElementById('overlay-container-back') };
+    const transforms = { front: {}, back: {} };
+
     document.querySelectorAll('.color-swatch').forEach(s => s.addEventListener('click', () => {
         document.querySelectorAll('.color-swatch').forEach(e => e.classList.remove('selected'));
-        s.classList.add('selected'); currentColor = s.dataset.color; updateMockupImage();
+        s.classList.add('selected'); 
+        currentColor = s.dataset.color; 
+        updateMockupImage();
     }));
+
+    uploadFront.addEventListener('change', e => handleUpload(e, 'front'));
+    uploadBack.addEventListener('change', e => handleUpload(e, 'back'));
+    ['pricePerCm','basePrice','designFee'].forEach(id => document.getElementById(id).addEventListener('input', updatePrice));
+
+    function handleUpload(e, side) {
+        const file = e.target.files[0]; 
+        if (!file) return;
+        const reader = new FileReader(); 
+        reader.onload = ev => createOverlay(ev.target.result, side);
+        reader.readAsDataURL(file); 
+        e.target.value = '';
+    }
+
+    function createOverlay(src, side) {
+        const el = document.createElement('img'); 
+        el.src = src; 
+        el.className = 'design-overlay';
+        containers[side].appendChild(el); 
+        initOverlay(el, side);
+    }
+
+    function initOverlay(el, side) {
+        transforms[side] = {
+        x: 0, y: 0, width: 0, height: 0,
+        angle: 0, ar: 1,
+        box: null,
+        proportional: true,
+        interactable: null // <== TAMBAHKAN INI
+    };
+
+    el.onload = () => {
+        const cont = containers[side];
+        const ar = el.naturalWidth / el.naturalHeight;
+        transforms[side].ar = ar;
+
+        const w = Math.min(cont.offsetWidth * 0.7, 300);
+        transforms[side].width = w;
+        transforms[side].height = w / ar;
+        centerOverlay(side);
+
+        const box = document.createElement('div');
+        box.className = 'size-box';
+        cont.appendChild(box);
+        transforms[side].box = box;
+
+        const interactable = interact(el);
+        transforms[side].interactable = interactable; // <== SIMPAN INTERACT INSTANCE
+
+        applyInteractOptions(side); // <== PANGGIL KONFIGURASI
+
+        update(el, side);
+        updatePrice();
+    };
+}
+
+function applyInteractOptions(side) {
+    const el = containers[side].querySelector('.design-overlay');
+    const t = transforms[side];
+
+    if (!el || !t || !t.interactable) return;
+
+    const interactable = t.interactable;
+    interactable.unset(); // reset dulu agar tidak conflict
+
+    interact(el)
+        .draggable({
+            listeners: {
+                move(ev) {
+                    t.x += ev.dx;
+                    t.y += ev.dy;
+                    update(el, side);
+                }
+            }
+        })
+        .resizable({
+            edges: { left: true, right: true, top: true, bottom: true },
+            modifiers: [
+                interact.modifiers.aspectRatio({
+                    ratio: t.proportional ? t.ar : 'preserve',
+                    enabled: t.proportional // ini penting!
+                })
+            ],
+            listeners: {
+                move(ev) {
+                    t.width = ev.rect.width;
+                    t.height = ev.rect.height;
+                    t.x += ev.deltaRect.left;
+                    t.y += ev.deltaRect.top;
+                    update(el, side);
+                }
+            }
+        })
+        .gesturable({
+            listeners: {
+                move(ev) {
+                    t.angle += ev.da;
+                    update(el, side);
+                }
+            }
+        });
+
+    t.interactable = interactable;
+}
+
+
+    function update(el, side) {
+        const t = transforms[side]; 
+    el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
+    el.style.width = t.width + 'px'; 
+    el.style.height = t.height + 'px'; 
+    updateBox(side); // Pastikan ini tetap ada!
+}
+
+    function updateBox(side) {
+        const t = transforms[side], cont = containers[side], box = t.box;
+            if (!box) return;
+            const wCm = (t.width / cont.offsetWidth) * 104;
+            const hCm = (t.height / cont.offsetHeight) * 104;
+            const area = (wCm * hCm).toFixed(1);
+            box.innerHTML = `
+  <div>
+  Lebar: <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}"> cm
+</div>
+<div>
+  Tinggi: <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}"> cm
+</div>
+<div style="margin-top:5px">
+  <button id="applySizeBtn-${side}">✔ OK</button>
+</div>
+
+  <div>Luas: ${area} cm²</div>
+  <div id="propBox-${side}" style="margin-top:5px"></div>
+  <div style="margin-top:5px">
+      <button onclick="rotateOverlay('${side}', 90)">↻ 90°</button>
+      <button onclick="deleteOverlay('${side}')">🗑️ Hapus</button>
+      <button onclick="centerOverlay('${side}')">⨁ Pusatkan</button>
+      <button onclick="startCrop('${side}')">✂️ Crop</button>
+  </div>
+`;
+
+document.getElementById(`applySizeBtn-${side}`).onclick = () => {
+    const wVal = parseFloat(document.getElementById(`widthInput-${side}`).value) || 0;
+    const hVal = parseFloat(document.getElementById(`heightInput-${side}`).value) || 0;
+    const cont = containers[side];
+    const t = transforms[side];
+
+    if (t.proportional) {
+        // Prioritaskan lebar untuk menentukan tinggi
+        t.width = wVal / 104 * cont.offsetWidth;
+        t.height = t.width / t.ar;
+    } else {
+        t.width = wVal / 104 * cont.offsetWidth;
+        t.height = hVal / 104 * cont.offsetHeight;
+    }
+
+    update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
+    updateBox(side);
+    updatePrice();
+};
+
+
+// Tambahkan checkbox proporsional secara manual (TIDAK dalam innerHTML)
+const propContainer = document.getElementById(`propBox-${side}`);
+const label = document.createElement('label');
+const checkbox = document.createElement('input');
+checkbox.type = 'checkbox';
+checkbox.checked = t.proportional;
+checkbox.onchange = () => {
+    t.proportional = checkbox.checked;
+    applyInteractOptions(side); // Terapkan ulang Interact.js
+};
+label.appendChild(checkbox);
+label.append(" Proporsional");
+propContainer.appendChild(label);
+
+box.querySelectorAll('input').forEach(input => {
+    const applySize = () => {
+        const side = input.dataset.side;
+        const dim = input.dataset.dim;
+        const valCm = parseFloat(input.value) || 0;
+        const cont = containers[side];
+        const t = transforms[side];
+
+        if (dim === 'width') {
+            const px = valCm / 104 * cont.offsetWidth;
+            t.width = px;
+            if (t.proportional) {
+                t.height = px / t.ar;
+            }
+        } else {
+            const px = valCm / 104 * cont.offsetHeight;
+            t.height = px;
+            if (t.proportional) {
+                t.width = px * t.ar;
+            }
+        }
+
+        update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
+updateBox(side); // <-- ini akan refresh tampilan box info & harga
+updatePrice();   // <-- ini akan refresh total harga
+
+    };
+
+    // Update saat input diketik, Enter ditekan, atau blur
+    input.addEventListener('change', applySize);
+    input.addEventListener('blur', applySize);
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            applySize();
+            input.blur(); // keluar dari input
+        }
+    });
+});
+
+
+        box.style.left = `${t.x}px`;
+        box.style.top = `${t.y - box.offsetHeight - 4}px`;
+    }
+
+    let currentCropSide = null;
+        let cropInteract = null;
+
+        function startCrop(side) {
+    currentCropSide = side;
+    const overlay = containers[side].querySelector('.design-overlay');
+    if (!overlay) return;
+
+    const container = document.getElementById('cropImageContainer');
+    container.innerHTML = `<div class="crop-wrapper">
+        <img src="${overlay.src}" id="cropImg" style="max-width:100%">
+        <div class="crop-box" id="cropBox"></div>
+        <div class="crop-info">
+            <label>Lebar: <input id="cropWidth" type="number" step="1"> px</label>
+            <label>Tinggi: <input id="cropHeight" type="number" step="1"> px</label>
+            <label><input type="checkbox" id="lockRatio" checked> Rasio Terkunci</label>
+            <button onclick="resetCrop()">🔄 Reset</button>
+        </div>
+    </div>`;
+
+    const cropBox = document.getElementById('cropBox');
+    const cropImg = document.getElementById('cropImg');
+
+    // Interact.js
+    cropInteract = interact(cropBox)
+        .draggable({
+            modifiers: [interact.modifiers.restrictRect({ restriction: cropImg })],
+            listeners: {
+                move(e) {
+                    e.target.style.left = (parseFloat(e.target.style.left || 0) + e.dx) + 'px';
+                    e.target.style.top  = (parseFloat(e.target.style.top  || 0) + e.dy) + 'px';
+                    syncCropInputs();
+                }
+            }
+        })
+        .resizable({
+            edges: { left:true, right:true, top:true, bottom:true },
+            modifiers: [
+                interact.modifiers.restrictEdges({ restriction: cropImg }),
+                interact.modifiers.aspectRatio({ ratio: 1, enabled: true })
+            ],
+            listeners: {
+                move(e) {
+                    Object.assign(e.target.style, {
+                        width: `${e.rect.width}px`,
+                        height: `${e.rect.height}px`,
+                        left: `${parseFloat(e.target.style.left || 0) + e.deltaRect.left}px`,
+                        top: `${parseFloat(e.target.style.top || 0) + e.deltaRect.top}px`,
+                    });
+                    syncCropInputs();
+                }
+            }
+        });
+
+    document.getElementById('cropWidth').oninput = e => {
+        cropBox.style.width = e.target.value + 'px';
+    };
+    document.getElementById('cropHeight').oninput = e => {
+        cropBox.style.height = e.target.value + 'px';
+    };
+    document.getElementById('lockRatio').onchange = e => {
+        cropInteract.resizable({
+            modifiers: [interact.modifiers.aspectRatio({ ratio: 1, enabled: e.target.checked })]
+        });
+    };
+
+    cropBox.style.width = '100px';
+    cropBox.style.height = '100px';
+    cropBox.style.left = '50px';
+    cropBox.style.top = '50px';
+
+    document.getElementById('cropModal').style.display = 'block';
+}
+
+
+function applyCrop() {
+    const container = document.getElementById('cropImageContainer');
+    const img = container.querySelector('img');
+    const cropBox = container.querySelector('.crop-box');
+    
+    const scaleX = img.naturalWidth / img.offsetWidth;
+    const scaleY = img.naturalHeight / img.offsetHeight;
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = cropBox.offsetWidth * scaleX;
+    canvas.height = cropBox.offsetHeight * scaleY;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(
+        img,
+        cropBox.offsetLeft * scaleX,
+        cropBox.offsetTop * scaleY,
+        canvas.width,
+        canvas.height,
+        0, 0,
+        canvas.width,
+        canvas.height
+    );
+
+    // Hapus overlay dan size box lama
+    const containerOverlay = containers[currentCropSide];
+    containerOverlay.querySelector('.design-overlay')?.remove();
+    containerOverlay.querySelector('.size-box')?.remove();
+    transforms[currentCropSide] = {};
+
+    // Buat overlay baru dari hasil crop
+    createOverlay(canvas.toDataURL(), currentCropSide);
+
+    closeCrop();
+    updatePrice();
+}
+
+        function syncCropInputs() {
+    const box = document.getElementById('cropBox');
+    document.getElementById('cropWidth').value = parseInt(box.offsetWidth);
+    document.getElementById('cropHeight').value = parseInt(box.offsetHeight);
+}
+function resetCrop() {
+    const cropBox = document.getElementById('cropBox');
+    cropBox.style.left = '50px';
+    cropBox.style.top = '50px';
+    cropBox.style.width = '100px';
+    cropBox.style.height = '100px';
+    syncCropInputs();
+}
+
+
+        function closeCrop() {
+            document.getElementById('cropModal').style.display = 'none';
+            if (cropInteract) cropInteract.unset();
+            currentCropSide = null;
+        }
+
+
+    function rotateOverlay(side, degrees) {
+        transforms[side].angle += degrees;
+        update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
+    }
+
+    function deleteOverlay(side) {
+        const container = containers[side];
+        container.querySelector('.design-overlay')?.remove();
+        container.querySelector('.size-box')?.remove();
+        transforms[side] = {};
+        updatePrice();
+    }
+
+    function centerOverlay(side) {
+    const t = transforms[side];
+    const cont = containers[side];
+
+    // hanya mengatur posisi horizontal (tengah kiri-kanan)
+    t.x = (cont.offsetWidth - t.width) / 2;
+
+    // posisi vertikal tetap (jangan sentuh t.y)
+    update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
+}
+
+
+    function centerAllOverlays() {
+        ['front','back'].forEach(side => {
+            if (transforms[side].width) centerOverlay(side);
+        });
+    }
+
+    function roundSablonPrice(price) {
+    if (price < 5000) return 5000;
+    const remainder = price % 1000;
+    if (remainder <= 500) {
+        return price - remainder; // ke bawah
+    } else {
+        return price + (1000 - remainder); // ke atas
+    }
+}
+
+    function updatePrice() {
+        const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+        const base = parseFloat(document.getElementById('basePrice').value) || 0;
+        const fee  = parseFloat(document.getElementById('designFee').value)  || 0;
+        
+        let cf = 0, cb = 0;
+        let frontDetails = '', backDetails = '';
+        
+        ['front','back'].forEach(side => {
+            const t = transforms[side];
+            if (t.width && t.height) {
+                const cont = containers[side];
+                const wCm = (t.width / cont.offsetWidth) * 104;
+                const hCm = (t.height / cont.offsetHeight) * 104;
+                const area = wCm * hCm;
+                const cost = area * ppcm;
+                
+                const label = side === 'front' ? 'Depan' : 'Belakang';
+                const roundedCost = roundSablonPrice(cost);
+
+const detailHTML = `
+  <div class="price-row">
+      <div>🧢 Sisi ${label}</div>
+      <div>${wCm.toFixed(1)} × ${hCm.toFixed(1)} cm (${area.toFixed(0)} cm²)</div>
+      <div>Rp ${roundedCost.toLocaleString()}</div>
+  </div>
+`;
+
+                
+                if(side === 'front') {
+                    cf = roundSablonPrice(cost);
+                    frontDetails = detailHTML;
+                } else {
+                    cb = roundSablonPrice(cost);
+                    backDetails = detailHTML;
+                }
+            }
+        });
+        
+        const total = base + fee + cf + cb;
+
+        
+        document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString()}`;
+        document.getElementById('priceDetails').innerHTML = `
+  <div class="price-summary">
+      <div class="price-row">
+          <div>👕 Kaos</div>
+          <div></div>
+          <div>Rp ${base.toLocaleString()}</div>
+      </div>
+      ${frontDetails}
+      ${backDetails}
+      <div class="price-row">
+          <div>🎨 Desain</div>
+          <div></div>
+          <div>Rp ${fee.toLocaleString()}</div>
+      </div>
+  </div>
+`;
+
+    }
+
+    function showPreview() {
+        const frontCanvas = generatePreviewCanvas('front');
+        const backCanvas = generatePreviewCanvas('back');
+        
+        document.getElementById('preview-front-img').src = frontCanvas.toDataURL();
+        document.getElementById('preview-back-img').src = backCanvas.toDataURL();
+        
+        const priceDetails = document.getElementById('priceDetails').cloneNode(true);
+        priceDetails.id = 'preview-price-details';
+        document.getElementById('preview-price-details').replaceWith(priceDetails);
+        const total = document.getElementById('totalPrice').textContent;
+document.getElementById('preview-total').textContent = `💵 Total Harga: ${total}`;
+
+        document.querySelector('.preview-modal').style.display = 'block';
+    }
+
+    function generatePreviewCanvas(side) {
+        const mockup = document.getElementById(`mockup-${side}`);
+    const overlay = document.querySelector(`#overlay-container-${side} .design-overlay`);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Dapatkan dimensi asli mockup
+    const naturalWidth = mockup.naturalWidth;
+    const naturalHeight = mockup.naturalHeight;
+    canvas.width = naturalWidth;
+    canvas.height = naturalHeight;
+    
+    // Gambar mockup ke canvas
+    ctx.drawImage(mockup, 0, 0, naturalWidth, naturalHeight);
+    
+    if (overlay) {
+        const container = mockup.parentElement;
+        const t = transforms[side];
+        
+        // Hitung skala dan posisi mockup yang sebenarnya di dalam container
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+        const imageAspect = naturalWidth / naturalHeight;
+        const containerAspect = containerWidth / containerHeight;
+        
+        let renderedWidth, renderedHeight, renderedLeft, renderedTop;
+        if (imageAspect > containerAspect) {
+            renderedWidth = containerWidth;
+            renderedHeight = containerWidth / imageAspect;
+        } else {
+            renderedHeight = containerHeight;
+            renderedWidth = containerHeight * imageAspect;
+        }
+        renderedLeft = (containerWidth - renderedWidth) / 2;
+        renderedTop = (containerHeight - renderedHeight) / 2;
+        
+        // Faktor skala antara container dan gambar asli
+        const scaleX = renderedWidth / naturalWidth;
+        const scaleY = renderedHeight / naturalHeight;
+        
+        // Konversi posisi overlay ke koordinat gambar asli
+        const imageX = (t.x - renderedLeft) / scaleX;
+        const imageY = (t.y - renderedTop) / scaleY;
+        const imageWidth = t.width / scaleX;
+        const imageHeight = t.height / scaleY;
+        
+        // Gambar overlay dengan transformasi yang sesuai
+        ctx.save();
+        ctx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
+        ctx.rotate(t.angle * Math.PI / 180);
+        ctx.drawImage(
+            overlay,
+            -imageWidth/2,
+            -imageHeight/2,
+            imageWidth,
+            imageHeight
+        );
+        ctx.restore();
+    }
+    
+    return canvas;
+}
+function downloadCombinedPreview() {
+    // Isi ulang konten dari preview
+    document.getElementById('preview-download-front').src = generatePreviewCanvas('front').toDataURL();
+    document.getElementById('preview-download-back').src = generatePreviewCanvas('back').toDataURL();
+
+    const priceClone = document.getElementById('priceDetails').cloneNode(true);
+    const totalText = document.getElementById('totalPrice').textContent;
+    
+    // Format ulang harga sebagai teks
+    let priceHTML = '';
+    priceClone.querySelectorAll('.price-row').forEach(row => {
+        const cols = row.querySelectorAll('div');
+        if (cols.length === 3) {
+            priceHTML += `🧾 ${cols[0].innerText}: ${cols[1].innerText} – <b>${cols[2].innerText}</b><br>`;
+        }
+    });
+
+    document.getElementById('preview-download-prices').innerHTML = priceHTML;
+    document.getElementById('preview-download-total').textContent = `💵 Total Harga: ${totalText}`;
+
+    // Render menggunakan html2canvas
+    const area = document.getElementById('preview-download-area');
+    area.style.display = 'block'; // sementara tampilkan untuk render
+
+    html2canvas(area).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'preview-desain-kaos.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        area.style.display = 'none'; // sembunyikan lagi setelah render
+    });
+}
+
+
+
+    function downloadPreview() {
+        const frontCanvas = generatePreviewCanvas('front');
+        const backCanvas = generatePreviewCanvas('back');
+        
+        const frontLink = document.createElement('a');
+        frontLink.download = 'desain-depan.png';
+        frontLink.href = frontCanvas.toDataURL();
+        frontLink.click();
+        
+        const backLink = document.createElement('a');
+        backLink.download = 'desain-belakang.png';
+        backLink.href = backCanvas.toDataURL();
+        backLink.click();
+    }
+
+    function sharePreview() {
+        const price = document.getElementById('totalPrice').textContent;
+        const details = Array.from(document.querySelectorAll('#priceDetails .price-detail-item'))
+            .map(div => {
+                const spans = div.querySelectorAll('span');
+                return `${spans[0].textContent}: ${spans[1].textContent}`;
+            }).join('\n');
+        
+        const text = encodeURIComponent(
+            `📋 Rincian Pesanan Kaos Custom\n\n${details}\n\n💵 Total Harga: ${price}\n` +
+            '🎨 Desain dapat dilihat pada gambar lampiran'
+        );
+        
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    function closePreview() {
+        document.querySelector('.preview-modal').style.display = 'none';
+    }
 
     function updateMockupImage() {
         mockups.front.src = colorData[currentColor].front;
@@ -112,167 +1402,8 @@
         ['front','back'].forEach(side => containers[side].innerHTML = '');
     }
 
-    const uploadFront = document.getElementById('uploadFront');
-    const uploadBack = document.getElementById('uploadBack');
-    const mockups = { front: document.getElementById('mockup-front'), back: document.getElementById('mockup-back') };
-    const containers = { front: document.getElementById('overlay-container-front'), back: document.getElementById('overlay-container-back') };
-    const transforms = { front: {}, back: {} };
 
-    uploadFront.addEventListener('change', e => handleUpload(e, 'front'));
-    uploadBack.addEventListener('change', e => handleUpload(e, 'back'));
-    ['pricePerCm','basePrice','designFee'].forEach(id => document.getElementById(id).addEventListener('input', updatePrice));
 
-    function handleUpload(e, side) {
-        const file = e.target.files[0]; if (!file) return;
-        const reader = new FileReader(); reader.onload = ev => createOverlay(ev.target.result, side);
-        reader.readAsDataURL(file); e.target.value = '';
-    }
-
-    function createOverlay(src, side) {
-        const el = document.createElement('img'); el.src = src; el.className = 'design-overlay';
-        containers[side].appendChild(el); initOverlay(el, side);
-    }
-
-    function initOverlay(el, side) {
-        transforms[side] = { x:0, y:0, width:0, height:0, angle:0, ar:1, box:null };
-        el.onload = () => {
-            const cont = containers[side]; const ar = el.naturalWidth / el.naturalHeight;
-            transforms[side].ar = ar; const w = Math.min(cont.offsetWidth * 0.7, 300);
-            transforms[side].width = w; transforms[side].height = w / ar;
-            transforms[side].x = (cont.offsetWidth - w) / 2;
-            transforms[side].y = (cont.offsetHeight - transforms[side].height) / 2;
-            const box = document.createElement('div'); box.className = 'size-box'; cont.appendChild(box);
-            transforms[side].box = box;
-            interact(el)
-                .draggable({ listeners: { move(ev) { transforms[side].x += ev.dx; transforms[side].y += ev.dy; update(el, side); } } })
-                .resizable({ edges: { left:true, right:true, top:true, bottom:true }, modifiers: [document.getElementById('proportionalToggle').checked && interact.modifiers.aspectRatio({ ratio: ar })].filter(Boolean), listeners: { move(ev) { transforms[side].width = ev.rect.width; transforms[side].height = ev.rect.height; transforms[side].x += ev.deltaRect.left; transforms[side].y += ev.deltaRect.top; update(el, side); } } })
-                .gesturable({ listeners: { move(ev) { transforms[side].angle += ev.da; update(el, side); } } });
-            update(el, side); updatePrice();
-        };
-    }
-
-    function update(el, side) {
-        const t = transforms[side]; el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
-        el.style.width = t.width + 'px'; el.style.height = t.height + 'px'; updateBox(side);
-    }
-
-    function updateBox(side) {
-        const t = transforms[side], cont = containers[side], box = t.box;
-        if (!box) return;
-        const wCm = (t.width / cont.offsetWidth) * 104;
-        const hCm = (t.height / cont.offsetHeight) * 104;
-        const area = (wCm * hCm).toFixed(1);
-        box.innerHTML = `<div>Lebar: <input type="number" step="0.1" value="${wCm.toFixed(1)}" data-side="${side}" data-dim="width"> cm</div>` +
-                        `<div>Tinggi: <input type="number" step="0.1" value="${hCm.toFixed(1)}" data-side="${side}" data-dim="height"> cm</div>` +
-                        `<div>Luas: ${area} cm²</div>`;
-        box.querySelectorAll('input').forEach(input => {
-            input.onchange = function() {
-                const side = this.dataset.side;
-                const dim = this.dataset.dim;
-                const valCm = parseFloat(this.value) || 0;
-                const cont = containers[side];
-                if (dim === 'width') {
-                    const px = valCm / 104 * cont.offsetWidth;
-                    transforms[side].width = px;
-                    if (document.getElementById('proportionalToggle').checked) transforms[side].height = px / transforms[side].ar;
-                } else {
-                    const px = valCm / 104 * cont.offsetHeight;
-                    transforms[side].height = px;
-                    if (document.getElementById('proportionalToggle').checked) transforms[side].width = px * transforms[side].ar;
-                }
-                update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
-                updatePrice();
-            };
-        });
-        box.style.left = `${t.x}px`;
-        box.style.top = `${t.y - box.offsetHeight - 4}px`;
-    }
-
-    function updatePrice() {
-        const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
-        const base = parseFloat(document.getElementById('basePrice').value) || 0;
-        const fee  = parseFloat(document.getElementById('designFee').value)  || 0;
-        let cf = 0, cb = 0;
-        ['front','back'].forEach(side => {
-            const t = transforms[side];
-            if (t.width && t.height) {
-                const area = (t.width / containers[side].offsetWidth * 104) * (t.height / containers[side].offsetHeight * 104);
-                if (side === 'front') cf = area * ppcm;
-                else cb = area * ppcm;
-            }
-        });
-        const cfRounded = Math.round(Math.max(cf, 5000) / 1000) * 1000;
-        const cbRounded = Math.round(Math.max(cb, 5000) / 1000) * 1000;
-        const total = base + fee + cfRounded + cbRounded;
-        document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString()}`;
-        document.getElementById('priceDetails').innerHTML =
-            `<div>Harga Kaos: Rp ${base.toLocaleString()}</div>` +
-            `<div>Biaya Sablon Depan: Rp ${cfRounded.toLocaleString()}</div>` +
-            `<div>Biaya Sablon Belakang: Rp ${cbRounded.toLocaleString()}</div>` +
-            `<div>Biaya Desain: Rp ${fee.toLocaleString()}</div>`;
-    }
-
-    function adjustZoom(v) {
-        document.querySelectorAll('.mockup-frame').forEach(f => f.style.transform = `scale(${1 + v})`);
-    }
-    function resetZoom() {
-        document.querySelectorAll('.mockup-frame').forEach(f => f.style.transform = 'scale(1)');
-    }
-
-    function downloadDesign() {
-        ['front','back'].forEach(side => {
-            const mock = document.getElementById(`mockup-${side}`);
-            const t = transforms[side];
-            if (t.width && t.height) {
-                // Canvas with mockup's natural dimensions
-                const iw = mock.naturalWidth;
-                const ih = mock.naturalHeight;
-                const canvas = document.createElement('canvas');
-                canvas.width = iw;
-                canvas.height = ih;
-                const ctx = canvas.getContext('2d');
-
-                // Draw the mockup at full resolution
-                ctx.drawImage(mock, 0, 0, iw, ih);
-
-                // Compute displayed image size and offsets
-                const cw = mock.offsetWidth;
-                const ch = mock.offsetHeight;
-                const ratio = Math.min(cw / iw, ch / ih);
-                const dispW = iw * ratio;
-                const dispH = ih * ratio;
-                const offsetX = (cw - dispW) / 2;
-                const offsetY = (ch - dispH) / 2;
-
-                // Draw overlay scaled to natural resolution
-                const img = containers[side].querySelector('img.design-overlay');
-                if (img) {
-                    const sx = iw / dispW;
-                    const sy = ih / dispH;
-                    const w = t.width * sx;
-                    const h = t.height * sy;
-                    // Position relative to displayed image
-                    const overlayX = t.x - offsetX;
-                    const overlayY = t.y - offsetY;
-                    const cx = overlayX * sx + w / 2;
-                    const cy = overlayY * sy + h / 2;
-                    ctx.save();
-                    ctx.translate(cx, cy);
-                    ctx.rotate(t.angle * Math.PI / 180);
-                    ctx.drawImage(img, -w / 2, -h / 2, w, h);
-                    ctx.restore();
-                }
-
-                // Trigger download
-                const link = document.createElement('a');
-                link.download = `desain-${side}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }
-        });
-    }
-
-    // Inisialisasi mockup
     updateMockupImage();
 </script>
 </body>
