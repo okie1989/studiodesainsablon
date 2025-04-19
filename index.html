@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Desain Kaos</title>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
+        }
+        body { font-family: 'Segoe UI', sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; background: var(--background-color); color: var(--text-color); }
+        .studio-container { display: grid; grid-template-columns: 300px 1fr; gap: 20px; height: 90vh; }
+        .controls-panel { background: #2a2a2a; padding: 20px; border-radius: 12px; overflow-y: auto; }
+        .controls-section { margin-bottom: 25px; padding: 15px; background: #333; border-radius: 8px; }
+        .controls-section h3 { margin-bottom: 10px; color: var(--primary-color); }
+        .input-group { margin-bottom: 10px; }
+        .input-group label { display: flex; align-items: center; gap: 8px; color: #aaa; }
+        input[type=file], input[type=color] { display: none; }
+        input[type=number] { width: 60px; padding: 4px; background: #444; border: 1px solid #555; border-radius: 4px; color: #fff; }
+        .color-options { display: flex; gap: 10px; margin-top: 10px; }
+        .color-swatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+        .color-swatch.selected { border-color: var(--primary-color); }
+        button { background: var(--primary-color); color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+        button.secondary { background: var(--secondary-color); }
+        .design-canvas { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+        .zoom-controls { margin-bottom: 10px; display: flex; gap: 8px; }
+        .mockup-frame { position: relative; background: #333; border-radius: 12px; overflow: hidden; flex: 0 0 36%; }
+        .mockup-frame img.mockup { width: 100%; height: 100%; object-fit: contain; }
+        .overlay-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; }
+        .design-overlay { position: absolute; pointer-events: all; border: 2px dashed rgba(255,255,255,0.7); transform-origin: center; display: block; }
+        .size-box { position: absolute; background: rgba(0,0,0,0.7); padding: 6px; border-radius: 4px; color: #fff; font-size: 12px; pointer-events: all; display: flex; flex-direction: column; gap: 4px; }
+        .price-display { background: #333; padding: 15px; border-radius: 8px; margin-top: auto; color: #fff; }
+        .price-display h3 { margin: 0 0 10px; color: var(--primary-color); }
+        .price-display div { margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+    <div class="studio-container">
+        <div class="controls-panel">
+            <h2>Studio Desain Kaos</h2>
+            <div class="controls-section">
+                <h3>Warna Kaos</h3>
+                <div class="color-options">
+                    <div class="color-swatch selected" data-color="white" style="background:#fff"></div>
+                    <div class="color-swatch" data-color="black" style="background:#000"></div>
+                    <div class="color-swatch" data-color="red" style="background:#f00"></div>
+                </div>
+            </div>
+            <div class="controls-section">
+                <h3>Upload Desain</h3>
+                <input type="file" id="uploadFront" accept="image/*">
+                <input type="file" id="uploadBack" accept="image/*">
+                <button onclick="uploadFront.click()">📁 Upload Depan</button>
+                <button onclick="uploadBack.click()">📁 Upload Belakang</button>
+            </div>
+            <div class="controls-section">
+                <h3>Opsi Ubah Ukuran</h3>
+                <div class="input-group"><label><input type="checkbox" id="proportionalToggle" checked> Proporsional</label></div>
+            </div>
+            <div class="controls-section">
+                <h3>Pengaturan Harga</h3>
+                <div class="input-group"><label>Harga per cm²:<input type="number" id="pricePerCm" value="25"></label></div>
+                <div class="input-group"><label>Harga Kaos (Base):<input type="number" id="basePrice" value="45000"></label></div>
+                <div class="input-group"><label>Biaya Desain:<input type="number" id="designFee" value="10000"></label></div>
+            </div>
+            <div class="price-display">
+                <h3>Total Harga: <span id="totalPrice">Rp 0</span></h3>
+                <div id="priceDetails">
+                    <div>Harga Kaos: Rp 0</div>
+                    <div>Biaya Sablon Depan: Rp 0</div>
+                    <div>Biaya Sablon Belakang: Rp 0</div>
+                    <div>Biaya Desain: Rp 0</div>
+                </div>
+            </div>
+        </div>
+        <div class="design-canvas">
+            <div class="zoom-controls">
+                <button onclick="adjustZoom(0.1)">➕ Perbesar</button>
+                <button onclick="adjustZoom(-0.1)">➖ Perkecil</button>
+                <button onclick="resetZoom()">🔄 Reset Zoom</button>
+                <button onclick="downloadDesign()" class="secondary">💾 Unduh Desain</button>
+            </div>
+            <div class="mockup-frame" id="frame-front">
+                <img id="mockup-front" class="mockup" src="https://i.imgur.com/15xUlpY.jpeg" crossorigin="anonymous">
+                <div class="overlay-container" id="overlay-container-front"></div>
+            </div>
+            <div class="mockup-frame" id="frame-back">
+                <img id="mockup-back" class="mockup" src="https://i.imgur.com/1B2zntM.jpeg" crossorigin="anonymous">
+                <div class="overlay-container" id="overlay-container-back"></div>
+            </div>
+        </div>
+    </div>
+<script>
+    const colorData = {
+        white: { front: 'https://i.imgur.com/15xUlpY.jpeg', back: 'https://i.imgur.com/1B2zntM.jpeg' },
+        black: { front: 'https://i.imgur.com/N3zDDke.jpeg', back: 'https://i.imgur.com/8AheLaq.jpeg' },
+        red:   { front: 'https://i.imgur.com/REDfront.jpg', back: 'https://i.imgur.com/REDback.jpg' }
+    };
+    let currentColor = 'white';
+    document.querySelectorAll('.color-swatch').forEach(s => s.addEventListener('click', () => {
+        document.querySelectorAll('.color-swatch').forEach(e => e.classList.remove('selected'));
+        s.classList.add('selected'); currentColor = s.dataset.color; updateMockupImage();
+    }));
+
+    function updateMockupImage() {
+        mockups.front.src = colorData[currentColor].front;
+        mockups.back.src  = colorData[currentColor].back;
+        ['front','back'].forEach(side => containers[side].innerHTML = '');
+    }
+
+    const uploadFront = document.getElementById('uploadFront');
+    const uploadBack = document.getElementById('uploadBack');
+    const mockups = { front: document.getElementById('mockup-front'), back: document.getElementById('mockup-back') };
+    const containers = { front: document.getElementById('overlay-container-front'), back: document.getElementById('overlay-container-back') };
+    const transforms = { front: {}, back: {} };
+
+    uploadFront.addEventListener('change', e => handleUpload(e, 'front'));
+    uploadBack.addEventListener('change', e => handleUpload(e, 'back'));
+    ['pricePerCm','basePrice','designFee'].forEach(id => document.getElementById(id).addEventListener('input', updatePrice));
+
+    function handleUpload(e, side) {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader(); reader.onload = ev => createOverlay(ev.target.result, side);
+        reader.readAsDataURL(file); e.target.value = '';
+    }
+
+    function createOverlay(src, side) {
+        const el = document.createElement('img'); el.src = src; el.className = 'design-overlay';
+        containers[side].appendChild(el); initOverlay(el, side);
+    }
+
+    function initOverlay(el, side) {
+        transforms[side] = { x:0, y:0, width:0, height:0, angle:0, ar:1, box:null };
+        el.onload = () => {
+            const cont = containers[side]; const ar = el.naturalWidth / el.naturalHeight;
+            transforms[side].ar = ar; const w = Math.min(cont.offsetWidth * 0.7, 300);
+            transforms[side].width = w; transforms[side].height = w / ar;
+            transforms[side].x = (cont.offsetWidth - w) / 2;
+            transforms[side].y = (cont.offsetHeight - transforms[side].height) / 2;
+            const box = document.createElement('div'); box.className = 'size-box'; cont.appendChild(box);
+            transforms[side].box = box;
+            interact(el)
+                .draggable({ listeners: { move(ev) { transforms[side].x += ev.dx; transforms[side].y += ev.dy; update(el, side); } } })
+                .resizable({ edges: { left:true, right:true, top:true, bottom:true }, modifiers: [document.getElementById('proportionalToggle').checked && interact.modifiers.aspectRatio({ ratio: ar })].filter(Boolean), listeners: { move(ev) { transforms[side].width = ev.rect.width; transforms[side].height = ev.rect.height; transforms[side].x += ev.deltaRect.left; transforms[side].y += ev.deltaRect.top; update(el, side); } } })
+                .gesturable({ listeners: { move(ev) { transforms[side].angle += ev.da; update(el, side); } } });
+            update(el, side); updatePrice();
+        };
+    }
+
+    function update(el, side) {
+        const t = transforms[side]; el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
+        el.style.width = t.width + 'px'; el.style.height = t.height + 'px'; updateBox(side);
+    }
+
+    function updateBox(side) {
+        const t = transforms[side], cont = containers[side], box = t.box;
+        if (!box) return;
+        const wCm = (t.width / cont.offsetWidth) * 104;
+        const hCm = (t.height / cont.offsetHeight) * 104;
+        const area = (wCm * hCm).toFixed(1);
+        box.innerHTML = `<div>Lebar: <input type="number" step="0.1" value="${wCm.toFixed(1)}" data-side="${side}" data-dim="width"> cm</div>` +
+                        `<div>Tinggi: <input type="number" step="0.1" value="${hCm.toFixed(1)}" data-side="${side}" data-dim="height"> cm</div>` +
+                        `<div>Luas: ${area} cm²</div>`;
+        box.querySelectorAll('input').forEach(input => {
+            input.onchange = function() {
+                const side = this.dataset.side;
+                const dim = this.dataset.dim;
+                const valCm = parseFloat(this.value) || 0;
+                const cont = containers[side];
+                if (dim === 'width') {
+                    const px = valCm / 104 * cont.offsetWidth;
+                    transforms[side].width = px;
+                    if (document.getElementById('proportionalToggle').checked) transforms[side].height = px / transforms[side].ar;
+                } else {
+                    const px = valCm / 104 * cont.offsetHeight;
+                    transforms[side].height = px;
+                    if (document.getElementById('proportionalToggle').checked) transforms[side].width = px * transforms[side].ar;
+                }
+                update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
+                updatePrice();
+            };
+        });
+        box.style.left = `${t.x}px`;
+        box.style.top = `${t.y - box.offsetHeight - 4}px`;
+    }
+
+    function updatePrice() {
+        const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+        const base = parseFloat(document.getElementById('basePrice').value) || 0;
+        const fee  = parseFloat(document.getElementById('designFee').value)  || 0;
+        let cf = 0, cb = 0;
+        ['front','back'].forEach(side => {
+            const t = transforms[side];
+            if (t.width && t.height) {
+                const area = (t.width / containers[side].offsetWidth * 104) * (t.height / containers[side].offsetHeight * 104);
+                if (side === 'front') cf = area * ppcm;
+                else cb = area * ppcm;
+            }
+        });
+        const cfRounded = Math.round(Math.max(cf, 5000) / 1000) * 1000;
+        const cbRounded = Math.round(Math.max(cb, 5000) / 1000) * 1000;
+        const total = base + fee + cfRounded + cbRounded;
+        document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString()}`;
+        document.getElementById('priceDetails').innerHTML =
+            `<div>Harga Kaos: Rp ${base.toLocaleString()}</div>` +
+            `<div>Biaya Sablon Depan: Rp ${cfRounded.toLocaleString()}</div>` +
+            `<div>Biaya Sablon Belakang: Rp ${cbRounded.toLocaleString()}</div>` +
+            `<div>Biaya Desain: Rp ${fee.toLocaleString()}</div>`;
+    }
+
+    function adjustZoom(v) {
+        document.querySelectorAll('.mockup-frame').forEach(f => f.style.transform = `scale(${1 + v})`);
+    }
+    function resetZoom() {
+        document.querySelectorAll('.mockup-frame').forEach(f => f.style.transform = 'scale(1)');
+    }
+
+    function downloadDesign() {
+        ['front','back'].forEach(side => {
+            const mock = document.getElementById(`mockup-${side}`);
+            const t = transforms[side];
+            if (t.width && t.height) {
+                // Canvas with mockup's natural dimensions
+                const iw = mock.naturalWidth;
+                const ih = mock.naturalHeight;
+                const canvas = document.createElement('canvas');
+                canvas.width = iw;
+                canvas.height = ih;
+                const ctx = canvas.getContext('2d');
+
+                // Draw the mockup at full resolution
+                ctx.drawImage(mock, 0, 0, iw, ih);
+
+                // Compute displayed image size and offsets
+                const cw = mock.offsetWidth;
+                const ch = mock.offsetHeight;
+                const ratio = Math.min(cw / iw, ch / ih);
+                const dispW = iw * ratio;
+                const dispH = ih * ratio;
+                const offsetX = (cw - dispW) / 2;
+                const offsetY = (ch - dispH) / 2;
+
+                // Draw overlay scaled to natural resolution
+                const img = containers[side].querySelector('img.design-overlay');
+                if (img) {
+                    const sx = iw / dispW;
+                    const sy = ih / dispH;
+                    const w = t.width * sx;
+                    const h = t.height * sy;
+                    // Position relative to displayed image
+                    const overlayX = t.x - offsetX;
+                    const overlayY = t.y - offsetY;
+                    const cx = overlayX * sx + w / 2;
+                    const cy = overlayY * sy + h / 2;
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(t.angle * Math.PI / 180);
+                    ctx.drawImage(img, -w / 2, -h / 2, w, h);
+                    ctx.restore();
+                }
+
+                // Trigger download
+                const link = document.createElement('a');
+                link.download = `desain-${side}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+        });
+    }
+
+    // Inisialisasi mockup
+    updateMockupImage();
+</script>
+</body>
+</html>
