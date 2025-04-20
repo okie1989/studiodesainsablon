@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio Desain Kaos</title>
+    <!-- Favicon Kalkulator -->
+    <link rel="icon" 
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/calculator.svg" 
+          type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
     <style>
 :root {
     --primary-color: #4d8eff;
@@ -27,7 +30,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Exo 2", serif;
     max-width: 1400px;
     margin: 0 auto;
     padding: 30px;
@@ -76,7 +79,7 @@ body {
 }
 
 .controls-section {
-    margin-bottom: 25px;
+    margin-bottom: 6px;
     padding: 18px;
     background: var(--background-elevated-2);
     border-radius: var(--border-radius);
@@ -149,31 +152,47 @@ input[type=number]:focus {
     box-shadow: 0 0 0 2px rgba(77, 142, 255, 0.2);
 }
 
+/* Tata Letak Warna */
 .color-options {
-    display: flex;
-    gap: 12px;
-    margin-top: 12px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .color-swatch {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
     cursor: pointer;
-    border: 2px solid transparent;
+    position: relative;
     transition: var(--transition);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.color-swatch:hover {
-    transform: scale(1.1);
+.color-swatch::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: var(--transition);
 }
 
-.color-swatch.selected {
+.color-swatch.selected::after {
     border-color: var(--primary-color);
-    transform: scale(1.1);
-    box-shadow: 0 0 0 3px rgba(77, 142, 255, 0.3);
+}
+
+.sleeve-select {
+    background: var(--background-elevated-2);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 6px;
+    width: 100%;
+    margin-top: 5px;
 }
 
 button {
@@ -272,26 +291,140 @@ button.icon-button {
 
 .size-box {
     position: absolute;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     padding: 12px;
     border-radius: 8px;
     color: #fff;
     font-size: 13px;
     pointer-events: all;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    animation: popIn 0.2s ease-out;
-    max-width: 100px;
     min-width: 180px;
-    transform: translateY(0);
-    /* Logika penempatan otomatis */
-    bottom: auto;
-    right: auto;
+    transition: top 0.2s ease-out, left 0.2s ease-out;
+}
+
+.size-box-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 5px 0;
+}
+
+.size-box-input-row input {
+    width: 50px;
+    padding: 4px 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.size-box-input-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.size-box-input-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    min-width: 40px;
+}
+
+.size-box input[type="number"] {
+    width: 80px;
+    padding: 4px 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.size-box-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.size-box-buttons button {
+    padding: 4px;
+    margin: 0;
+    font-size: 0.7rem;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-box-buttons button i {
+    font-size: 0.8rem;
+}
+
+.size-box-buttons button {
+    position: relative;
+}
+
+
+.size-box-buttons button::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.size-box-buttons button:hover::after {
+    opacity: 1;
+}
+.size-box-header {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--accent-color);
+}
+
+.size-box-input-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.size-box-input-row input {
+    width: 50px;
+    padding: 4px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.size-box-confirm-btn {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    background: var(--success-color);
+    font-size: 0.8rem;
+}
+
+.size-box-confirm-btn:hover {
+    background: #218838;
 }
 
 
@@ -311,26 +444,136 @@ button.icon-button {
     padding: 20px;
     border-radius: var(--border-radius);
     margin-top: auto;
-    color: #fff;
     box-shadow: var(--box-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
 }
 
-.price-display h3 {
-    margin: 0 0 15px;
-    color: var(--primary-color);
-    font-size: 1.2rem;
+.price-display:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.price-header {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.price-display h3::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
+.price-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
 }
 
+.price-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.price-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.price-item:hover {
+    background: rgba(0, 0, 0, 0.3);
+    transform: translateX(5px);
+}
+
+.price-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.price-value {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.price-total {
+    margin: 20px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(77, 142, 255, 0.1), rgba(0, 200, 255, 0.1));
+    border-radius: var(--border-radius);
+    text-align: center;
+    border: 1px solid rgba(0, 200, 255, 0.2);
+    animation: glow 3s infinite alternate;
+}
+
+.total-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.total-amount {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.preview-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    margin-top: 10px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+.btn-text {
+    font-size: 0.95rem;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(0, 200, 255, 0.1); }
+    to { box-shadow: 0 0 15px rgba(0, 200, 255, 0.3); }
+}
 .preview-modal {
     display: none;
     position: fixed;
@@ -460,32 +703,31 @@ button.icon-button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 3000;
     padding: 20px;
     box-sizing: border-box;
-    animation: fadeIn 0.3s ease-out;
+    overflow: auto;
 }
 
 .crop-container {
     position: relative;
-    max-width: 800px;
-    margin: 40px auto;
+    max-width: 90%;
+    width: 600px;
+    margin: 20px auto;
     background: var(--background-elevated);
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--border-radius);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .crop-wrapper {
     position: relative;
-    display: inline-block;
-    margin: 20px auto;
+    margin: 0 auto;
     max-width: 100%;
-    overflow: hidden;
+    max-height: 60vh;
+    overflow: auto;
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .crop-box {
@@ -496,82 +738,125 @@ button.icon-button {
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
 }
 
-.crop-info {
-    margin-top: 20px;
-    color: var(--text-color);
+.crop-controls {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
 }
 
-.crop-info label {
-    display: inline-flex;
+.crop-controls button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}
+
+.crop-input-group {
+    display: flex;
     align-items: center;
     gap: 8px;
-    margin-right: 15px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+}
+
+.crop-input-group input {
+    width: 60px;
+    padding: 6px;
+    text-align: center;
 }
 
 .price-summary {
+    background: var(--background-elevated-2);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.price-detail {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 15px;
-    background: var(--background-elevated);
-    padding: 15px;
-    border-radius: var(--border-radius);
-    font-size: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .price-row {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
+    display: flex;
     justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-    color: var(--text-secondary);
-    transition: var(--transition-fast);
-}
-
-.price-row:hover {
-    color: var(--text-color);
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
 }
 
 .price-row:last-child {
     border-bottom: none;
+}
+
+.price-label {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.price-value {
     font-weight: 600;
     color: var(--accent-color);
-    font-size: 1.05rem;
-    padding-top: 10px;
-    margin-top: 5px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.size-box button {
-    background: var(--success-color);
-    color: white;
-    font-size: 0.85rem;
+.size-info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: 5px;
+}
+
+.price-total {
+    background: linear-gradient(135deg, rgba(77,142,255,0.1), rgba(0,200,255,0.1));
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 25px;
+    border: 1px solid rgba(0,200,255,0.2);
+}
+
+.total-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.total-amount {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    margin: 10px 0;
+}
+
+.total-note {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+.combined-btn {
+    background: #064236;
+    color: #2ae295;
     border: none;
-    padding: 6px 10px;
+    padding: 10px 15px;
     border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    transition: var(--transition-fast);
-    box-shadow: none;
+    transition: all 0.3s;
+    margin-top: 10px;
+    width: 100%;
+    PLACE-CONTENT: CENTER;
 }
 
-.size-box button:hover {
-    background: #218838;
-    transform: none;
+.combined-btn:hover {
+    background: #076448;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.size-box button.secondary {
-    background: var(--secondary-color);
-}
 
-.size-box button.secondary:hover {
-    background: var(--secondary-hover);
-}
 
 /* Tooltip styles */
 .tooltip {
@@ -654,20 +939,229 @@ button.icon-button {
 .size-box.position-top {
     animation: slideDown 0.3s ease-out;
 }
+
+/* Tambahkan di bagian CSS */
+.locked-input {
+    position: relative;
+    background: rgba(0,0,0,0.2) !important;
+    border-color: rgba(255,255,255,0.05) !important;
+    cursor: not-allowed;
+}
+
+.locked-input::after {
+    content: "🔒";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.admin-btn {
+    background: linear-gradient(135deg, #ff5e62, #ff9966);
+    margin-top: 5px;
+}
+
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    background: var(--background-elevated);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: slideDown 0.3s ease-out;
+}
+
+.login-box h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+}
+
+.login-box button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #ff5e62;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    display: none;
+}
+
+/* Tambahkan di bagian CSS */
+#preview-download-area {
+    background: var(--background-elevated);
+    padding: 30px;
+    color: var(--text-color);
+    font-family: "Exo 2", sans-serif;
+    width: 1000px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#preview-download-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#preview-download-images {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+#preview-download-images img {
+    max-width: 450px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#preview-download-prices {
+    background: var(--background-elevated-2);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.price-download-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 15px;
+}
+
+.price-download-row:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 1.05rem;
+    padding-top: 10px;
+    margin-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#preview-download-total {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: var(--accent-color);
+    padding: 15px;
+    background: var(--background-elevated-2);
+    border-radius: var(--border-radius);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--background-elevated-2);
+    border-radius: 8px;
+    transition: var(--transition-fast);
+}
+
+.section-header:hover {
+    background: var(--background-elevated);
+}
+
+.collapse-icon {
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.section-content {
+    max-height: 500px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.section-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+}
+.color-swatch:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.color-swatch:hover::after {
+    border-color: rgba(255,255,255,0.3);
+}
     </style>
 </head>
 <body>
     <div class="studio-container">
         <div class="controls-panel">
-            <h2>Studio Desain Kaos</h2>
+            <h2>APLIKASI CUSTOM TSHIRT PRICING</h2>
+            <h3>BY. KANVAS MERCH</h3>
             <div class="controls-section">
-                <h3>Warna Kaos</h3>
+                <h3>🎨 Warna Kaos</h3>
                 <div class="color-options">
-                    <div class="color-swatch selected" data-color="white" style="background:#fff"></div>
-                    <div class="color-swatch" data-color="black" style="background:#000"></div>
-                    <div class="color-swatch" data-color="red" style="background:#f00"></div>
+                    <div class="color-swatch selected" data-color="white" style="background:#ffffff" data-sleeve="short"></div>
+                    <div class="color-swatch" data-color="black" style="background:#000000" data-sleeve="short"></div>
+                    <div class="color-swatch" data-color="red" style="background:#ff0000" data-sleeve="short"></div>
+                    <div class="color-swatch" data-color="navy" style="background:#000080" data-sleeve="short"></div>
+                    <div class="color-swatch" data-color="grey" style="background:#808080" data-sleeve="short"></div>
+                </div>
+                
+                <div class="input-group" style="margin-top:15px;">
+                    <label>Model Lengan:
+                        <select id="sleeveType" class="sleeve-select">
+                            <option value="short">Pendek</option>
+                            <option value="long">Panjang</option>
+                        </select>
+                    </label>
                 </div>
             </div>
+            
             <div class="controls-section">
                 <h3>Upload Desain</h3>
                 <input type="file" id="uploadFront" accept="image/*">
@@ -676,22 +1170,81 @@ button.icon-button {
                 <button onclick="uploadBack.click()">📁 Belakang</button>
             </div>
             
-            <div class="controls-section">
-                <h3>Pengaturan Harga</h3>
-                <div class="input-group"><label>Harga per cm²:<input type="number" id="pricePerCm" value="20"></label></div>
-                <div class="input-group"><label>Harga Kaos:<input type="number" id="basePrice" value="40000"></label></div>
-                <div class="input-group"><label>Biaya Desain:<input type="number" id="designFee" value="0"></label></div>
-            </div>
-            <div class="price-display">
-                <h3>Total Harga: <span id="totalPrice">Rp 0</span></h3>
-                <div id="priceDetails">
-                    <div>Harga Kaos Polos: Rp 0</div>
-                    <div>Biaya Sablon Depan: Rp 0</div>
-                    <div>Biaya Sablon Belakang: Rp 0</div>
-                    <div>Biaya Desain: Rp 0</div>
-                </div>
-                <button onclick="showPreview()" style="margin-top:15px">👁️ Preview Desain</button>
-            </div>
+            <!-- Ganti bagian controls-section pengaturan harga dengan ini -->
+<!-- Di dalam controls-panel -->
+<div class="controls-section">
+    <div class="section-header" onclick="togglePriceSettings()">
+        <h3>⚙️ Pengaturan Harga</h3>
+        <span class="collapse-icon">▼</span>
+    </div>
+    <div class="section-content" id="priceSettings">
+        <div class="input-group">
+            <label>Harga per cm²:
+                <input type="number" id="pricePerCm" value="20" class="locked-input" readonly>
+            </label>
+        </div>
+        <div class="input-group">
+            <label>Harga Kaos:
+                <input type="number" id="basePrice" value="40000" class="locked-input" readonly>
+            </label>
+        </div>
+        <div class="input-group">
+            <label>Biaya Desain:
+                <input type="number" id="designFee" value="0" class="locked-input" readonly>
+            </label>
+        </div>
+        <button class="admin-btn" onclick="showLoginModal()">🔑 Ubah Harga Dasar</button>
+    </div>
+</div>
+
+<!-- Tambahkan modal login sebelum penutup body -->
+<div class="login-modal" id="loginModal">
+    <div class="login-box">
+        <h3>Login Admin</h3>
+        <p>Masukkan password untuk mengubah harga:</p>
+        <input type="password" id="adminPassword" placeholder="Password">
+        <div class="error-message" id="loginError">Password salah!</div>
+        <button onclick="checkAdminPassword()">Masuk</button>
+        <button class="secondary" onclick="closeLoginModal()">Batal</button>
+    </div>
+</div>
+<div class="price-display">
+    <div class="price-total">
+        <div class="total-label">TOTAL HARGA</div>
+        <div class="total-amount" id="totalPrice">Rp 0</div>
+    </div>
+
+    <div class="price-header">
+        <div class="price-icon">💵</div>
+        <h3>RINCIAN HARGA</h3>
+    </div>
+    
+    <div class="price-items">
+        <div class="price-item">
+            <span class="price-label">Kaos Polos</span>
+            <span class="price-value" id="basePriceDisplay">Rp 0</span>
+        </div>
+        <div class="price-item" id="frontPriceItem">
+            <span class="price-label">Sablon Depan</span>
+            <span class="price-value" id="frontPriceDisplay">-</span>
+        </div>
+        <div class="price-item" id="backPriceItem">
+            <span class="price-label">Sablon Belakang</span>
+            <span class="price-value" id="backPriceDisplay">-</span>
+        </div>
+        <div class="price-item">
+            <span class="price-label">Biaya Desain</span>
+            <span class="price-value" id="designFeeDisplay">Free</span>
+        </div>
+    </div>
+    
+    
+    
+    <button class="preview-btn" onclick="showPreview()">
+        <span class="btn-icon">👁️</span>
+        <span class="btn-text">PREVIEW DESAIN</span>
+    </button>
+</div>
         </div>
         <div class="design-canvas">
             <div class="mockup-frame" id="frame-front">
@@ -709,6 +1262,7 @@ button.icon-button {
         <div class="preview-content">
             <span class="close-btn" onclick="closePreview()">&times;</span>
             <h2>Preview Desain</h2>
+            
             <div class="preview-images">
                 <div class="preview-image">
                     <h4>Depan</h4>
@@ -719,33 +1273,43 @@ button.icon-button {
                     <img id="preview-back-img">
                 </div>
             </div>
-            <div class="price-breakdown">
-                <h3>Rincian Harga:</h3>
-                <div id="preview-price-details"></div>
-                <div id="preview-total" style="
-    margin-top: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffd700;
-    border-top: 1px solid #666;
-    padding-top: 10px;
-">💵 Total Harga: -</div>
-
+            
+            <div class="price-summary">
+                <h3 style="margin-bottom:15px;color:var(--primary-color);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;">
+                    📋 Rincian Biaya
+                </h3>
+                
+                <div class="price-detail">
+                    <div class="price-row">
+                        <span class="price-label">Kaos Polos</span>
+                        <span class="price-value" id="preview-base-price">Rp 0</span>
+                    </div>
+                    
+                    <div class="price-row" id="preview-front-row">
+                        <span class="price-label">Sablon Depan <span class="size-info" id="preview-front-size"></span></span>
+                        <span class="price-value" id="preview-front-price">-</span>
+                    </div>
+                    
+                    <div class="price-row" id="preview-back-row">
+                        <span class="price-label">Sablon Belakang <span class="size-info" id="preview-back-size"></span></span>
+                        <span class="price-value" id="preview-back-price">-</span>
+                    </div>
+                    
+                    <div class="price-row">
+                        <span class="price-label">Biaya Desain</span>
+                        <span class="price-value" id="preview-design-fee">Free</span>
+                    </div>
+                </div>
+                
+                <div class="price-total">
+                    <div class="total-label">TOTAL HARGA SATUAN</div>
+                    <div class="total-amount" id="preview-total-price">Rp 0</div>
+                    
+                </div>
             </div>
+            
             <div class="preview-actions">
-                <button onclick="downloadPreview()">Unduh Preview</button>
-                <button onclick="sharePreview()">Bagikan via WhatsApp</button>
-                <button onclick="downloadCombinedPreview()" style="
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-weight: bold;
-    border-radius: 6px;
-    background: #064236;
-    color: #2ae295;
-    border: none;
-    cursor: pointer;
-">⬇ Download Gabungan</button>
+                <button onclick="downloadCombinedPreview()" class="combined-btn">⬇ Download </button>
             </div>
         </div>
     </div>
@@ -753,29 +1317,59 @@ button.icon-button {
         <div class="crop-container">
             <div id="cropImageContainer" style="position:relative"></div>
             <div style="text-align:center; margin-top:20px;">
-                <button onclick="applyCrop()">Terapkan Crop</button>
-                <button onclick="closeCrop()">Batal</button>
+               
             </div>
         </div>
     </div>
-    <div id="preview-download-area" style="display:none; background:#2a2a2a; padding:20px; color:#fff; font-family:Arial">
-        <div style="text-align:center; font-weight:bold; font-size:18px; margin-bottom:10px;">
-            🖼️ Preview Desain Kaos
+    <div id="preview-download-area" style="display:none;">
+        <div id="preview-download-header">
+            <span>🖼️</span>
+            <span>Preview Desain Kaos Custom</span>
         </div>
-        <div style="display:flex; gap:20px; justify-content:center; margin-bottom:15px;">
-            <img id="preview-download-front" style="max-width:500px; border:1px solid #444;">
-            <img id="preview-download-back" style="max-width:500px; border:1px solid #444;">
+        <div id="preview-download-images">
+            <div>
+                <h4>Depan</h4>
+                <img id="preview-download-front">
+            </div>
+            <div>
+                <h4>Belakang</h4>
+                <img id="preview-download-back">
+            </div>
         </div>
-        <div id="preview-download-prices" style="font-size:14px; line-height:1.6;"></div>
-        <div id="preview-download-total" style="margin-top:10px; font-size:16px; font-weight:bold; color:#00ff88;"></div>
+        <div id="preview-download-prices">
+            <h3 style="color: var(--primary-color); margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span>🧾</span>
+                <span>Rincian Harga</span>
+            </h3>
+            <div id="price-download-details"></div>
+        </div>
+        <div id="preview-download-total"></div>
     </div>
     
 <script>
     const colorData = {
-        white: { front: 'https://i.imgur.com/15xUlpY.jpeg', back: 'https://i.imgur.com/1B2zntM.jpeg' },
-        black: { front: 'https://i.imgur.com/N3zDDke.jpeg', back: 'https://i.imgur.com/8AheLaq.jpeg' },
-        red:   { front: 'https://i.imgur.com/REDfront.jpg', back: 'https://i.imgur.com/REDback.jpg' }
-    };
+    white: {
+        short: {
+            front: 'https://i.imgur.com/15xUlpY.jpeg',
+            back: 'https://i.imgur.com/1B2zntM.jpeg'
+        },
+        long: {
+            front: 'https://i.imgur.com/shortcode-front-long.jpg',
+            back: 'https://i.imgur.com/shortcode-back-long.jpg'
+        }
+    },
+    black: {
+        short: {
+            front: 'https://i.imgur.com/N3zDDke.jpeg',
+            back: 'https://i.imgur.com/8AheLaq.jpeg'
+        },
+        long: {
+            front: 'https://i.imgur.com/shortcode-black-front-long.jpg',
+            back: 'https://i.imgur.com/shortcode-black-back-long.jpg'
+        }
+    },
+    // Tambahkan warna lain dengan URL gambar yang sesuai
+};
     
     let currentColor = 'white';
     const uploadFront = document.getElementById('uploadFront');
@@ -783,6 +1377,11 @@ button.icon-button {
     const mockups = { front: document.getElementById('mockup-front'), back: document.getElementById('mockup-back') };
     const containers = { front: document.getElementById('overlay-container-front'), back: document.getElementById('overlay-container-back') };
     const transforms = { front: {}, back: {} };
+
+    document.getElementById('sleeveType').addEventListener('change', function() {
+    updateMockupImage();
+    updatePrice();
+});
 
     document.querySelectorAll('.color-swatch').forEach(s => s.addEventListener('click', () => {
         document.querySelectorAll('.color-swatch').forEach(e => e.classList.remove('selected'));
@@ -793,7 +1392,17 @@ button.icon-button {
 
     uploadFront.addEventListener('change', e => handleUpload(e, 'front'));
     uploadBack.addEventListener('change', e => handleUpload(e, 'back'));
-    ['pricePerCm','basePrice','designFee'].forEach(id => document.getElementById(id).addEventListener('input', updatePrice));
+    ['pricePerCm','basePrice','designFee'].forEach(id => {
+    const input = document.getElementById(id);
+    input.addEventListener('input', function() {
+        if (isAdmin) {
+            updatePrice();
+        } else {
+            // Reset nilai jika bukan admin mencoba mengubah
+            this.value = this.defaultValue;
+        }
+    });
+});
 
     function handleUpload(e, side) {
         const file = e.target.files[0]; 
@@ -810,7 +1419,12 @@ button.icon-button {
         el.className = 'design-overlay';
         containers[side].appendChild(el); 
         initOverlay(el, side);
-    }
+        const interactable = interact(el)
+        .draggable({ /* ... */ })
+        .resizable({ /* ... */ })
+        .on('dragmove resizemove', () => positionSizeBox(side));
+}
+    
 
     function initOverlay(el, side) {
         transforms[side] = {
@@ -904,111 +1518,190 @@ function applyInteractOptions(side) {
     updateBox(side); // Pastikan ini tetap ada!
 }
 
-    function updateBox(side) {
-        const t = transforms[side], cont = containers[side], box = t.box;
-            if (!box) return;
-            const wCm = (t.width / cont.offsetWidth) * 104;
-            const hCm = (t.height / cont.offsetHeight) * 104;
-            const area = (wCm * hCm).toFixed(1);
-            box.innerHTML = `
-  <div>
-  Lebar: <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}"> cm
-</div>
-<div>
-  Tinggi: <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}"> cm
-</div>
-<div style="margin-top:5px">
-  <button id="applySizeBtn-${side}">✔ OK</button>
-</div>
+function updateBox(side) {
+    const t = transforms[side];
+    const cont = containers[side];
+    const box = t.box;
+    if (!box) return;
 
-  <div>Luas: ${area} cm²</div>
-  <div id="propBox-${side}" style="margin-top:5px"></div>
-  <div style="margin-top:5px">
-      <button onclick="rotateOverlay('${side}', 90)">↻ 90°</button>
-      <button onclick="deleteOverlay('${side}')">🗑️ Hapus</button>
-      <button onclick="centerOverlay('${side}')">⨁ Pusatkan</button>
-      <button onclick="startCrop('${side}')">✂️ Crop</button>
-  </div>
-`;
+    const wCm = (t.width / cont.offsetWidth) * 104;
+    const hCm = (t.height / cont.offsetHeight) * 104;
 
-document.getElementById(`applySizeBtn-${side}`).onclick = () => {
-    const wVal = parseFloat(document.getElementById(`widthInput-${side}`).value) || 0;
-    const hVal = parseFloat(document.getElementById(`heightInput-${side}`).value) || 0;
+    box.innerHTML = `
+        <div class="size-box-header">Edit Ukuran</div>
+        <div class="size-box-input-row">
+            <span>Lebar:</span>
+            <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}">
+            <span>cm</span>
+        </div>
+        <div class="size-box-input-row">
+            <span>Tinggi:</span>
+            <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}">
+            <span>cm</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:5px;">
+            <label style="display:flex; align-items:center; gap:4px;">
+                <input type="checkbox" ${t.proportional ? 'checked' : ''} 
+                       onchange="toggleProportional('${side}', this.checked)">
+                Proporsional
+            </label>
+            <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
+        </div>
+        <div class="size-box-buttons">
+            <button onclick="rotateOverlay('${side}', 90)" title="Putar 90°">↻</button>
+            <button onclick="deleteOverlay('${side}')" title="Hapus">🗑️</button>
+            <button onclick="centerOverlay('${side}')" title="Pusatkan">⨁</button>
+            <button onclick="startCrop('${side}')" title="Crop">✂️</button>
+        </div>
+    `;
+
+    // Posisikan sizebox relatif terhadap gambar desain
+    positionSizeBox(side);
+    
+    // Event listeners
+    document.getElementById(`widthInput-${side}`).addEventListener('change', () => applySizeFromInput(side, 'width'));
+    document.getElementById(`heightInput-${side}`).addEventListener('change', () => applySizeFromInput(side, 'height'));
+}
+
+function positionSizeBox(side) {
+    const t = transforms[side];
+    const cont = containers[side];
+    const box = t.box;
+    const overlay = cont.querySelector('.design-overlay');
+    
+    if (!box || !overlay) return;
+
+    const overlayRect = overlay.getBoundingClientRect();
+    const containerRect = cont.getBoundingClientRect();
+    const boxRect = box.getBoundingClientRect();
+
+    // Cari posisi optimal
+    let topPosition = overlayRect.top - containerRect.top + overlayRect.height + 10;
+    let leftPosition = overlayRect.left - containerRect.left;
+
+    // Jika tidak cukup ruang di bawah, taruh di atas
+    if (topPosition + boxRect.height > containerRect.height) {
+        topPosition = overlayRect.top - containerRect.top - boxRect.height - 10;
+    }
+
+    // Pastikan tidak keluar dari container
+    topPosition = Math.max(10, Math.min(topPosition, containerRect.height - boxRect.height - 10));
+    leftPosition = Math.max(10, Math.min(leftPosition, containerRect.width - boxRect.width - 10));
+
+    // Terapkan posisi
+    box.style.position = 'absolute';
+    box.style.top = `${topPosition}px`;
+    box.style.left = `${leftPosition}px`;
+    box.style.transform = 'none'; // Reset transform sebelumnya
+}
+
+
+function confirmSizeChange(side) {
+    const widthInput = document.getElementById(`widthInput-${side}`);
+    const heightInput = document.getElementById(`heightInput-${side}`);
     const cont = containers[side];
     const t = transforms[side];
 
-    if (t.proportional) {
-        // Prioritaskan lebar untuk menentukan tinggi
-        t.width = wVal / 104 * cont.offsetWidth;
-        t.height = t.width / t.ar;
+    const widthCm = parseFloat(widthInput.value) || 0;
+    const heightCm = parseFloat(heightInput.value) || 0;
+
+    t.width = (widthCm / 104) * cont.offsetWidth;
+    t.height = (heightCm / 104) * cont.offsetHeight;
+
+    const overlay = cont.querySelector('.design-overlay');
+    update(overlay, side);
+    updatePrice(); // Update harga setelah perubahan dikonfirmasi
+
+    // Beri feedback visual
+    const btn = t.box.querySelector('.size-box-confirm-btn');
+    if (btn) {
+        btn.textContent = '✓ UPDATED';
+        setTimeout(() => {
+            btn.textContent = 'UPDATED';
+        }, 1000);
+    }
+}
+
+
+function applySizeFromInput(side, dimension) {
+    const input = document.getElementById(`${dimension}Input-${side}`);
+    const value = parseFloat(input.value) || 0;
+    const cont = containers[side];
+    const t = transforms[side];
+
+    if (dimension === 'width') {
+        t.width = (value / 104) * cont.offsetWidth;
+        if (t.proportional) {
+            t.height = t.width / t.ar;
+            document.getElementById(`heightInput-${side}`).value = (t.height / cont.offsetHeight * 104).toFixed(1);
+        }
     } else {
-        t.width = wVal / 104 * cont.offsetWidth;
-        t.height = hVal / 104 * cont.offsetHeight;
+        t.height = (value / 104) * cont.offsetHeight;
+        if (t.proportional) {
+            t.width = t.height * t.ar;
+            document.getElementById(`widthInput-${side}`).value = (t.width / cont.offsetWidth * 104).toFixed(1);
+        }
     }
 
-    update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
-    updateBox(side);
-    updatePrice();
-};
+    const overlay = cont.querySelector('.design-overlay');
+    update(overlay, side);
+    updateBox(side); // Update box untuk menampilkan harga baru
+    
+    // Tidak otomatis update harga utama, perlu klik tombol
+    // updatePrice(); // Di-comment karena sekarang pakai tombol update
+}
 
-
-// Tambahkan checkbox proporsional secara manual (TIDAK dalam innerHTML)
-const propContainer = document.getElementById(`propBox-${side}`);
-const label = document.createElement('label');
-const checkbox = document.createElement('input');
-checkbox.type = 'checkbox';
-checkbox.checked = t.proportional;
-checkbox.onchange = () => {
-    t.proportional = checkbox.checked;
-    applyInteractOptions(side); // Terapkan ulang Interact.js
-};
-label.appendChild(checkbox);
-label.append(" Proporsional");
-propContainer.appendChild(label);
-
-box.querySelectorAll('input').forEach(input => {
-    const applySize = () => {
-        const side = input.dataset.side;
-        const dim = input.dataset.dim;
-        const valCm = parseFloat(input.value) || 0;
+function toggleProportional(side, isProportional) {
+    transforms[side].proportional = isProportional;
+    applyInteractOptions(side);
+    
+    // Jika proporsional diaktifkan, sesuaikan height berdasarkan width
+    if (isProportional) {
         const cont = containers[side];
         const t = transforms[side];
-
-        if (dim === 'width') {
-            const px = valCm / 104 * cont.offsetWidth;
-            t.width = px;
-            if (t.proportional) {
-                t.height = px / t.ar;
-            }
-        } else {
-            const px = valCm / 104 * cont.offsetHeight;
-            t.height = px;
-            if (t.proportional) {
-                t.width = px * t.ar;
-            }
+        const widthInput = document.getElementById(`widthInput-${side}`);
+        const heightInput = document.getElementById(`heightInput-${side}`);
+        
+        if (widthInput && heightInput) {
+            const widthCm = parseFloat(widthInput.value) || 0;
+            const heightCm = widthCm / t.ar;
+            heightInput.value = heightCm.toFixed(1);
         }
-
-        update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
-updateBox(side); // <-- ini akan refresh tampilan box info & harga
-updatePrice();   // <-- ini akan refresh total harga
-
-    };
-
-    // Update saat input diketik, Enter ditekan, atau blur
-    input.addEventListener('change', applySize);
-    input.addEventListener('blur', applySize);
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            applySize();
-            input.blur(); // keluar dari input
-        }
-    });
-});
-
-
-        box.style.left = `${t.x}px`;
-        box.style.top = `${t.y - box.offsetHeight - 4}px`;
     }
+}
+function calculateAreaPrice(area) {
+    const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+    return Math.round(area * ppcm);
+}
+
+function updatePriceFromBox(side) {
+    const inputWidth = document.getElementById(`widthInput-${side}`);
+    const inputHeight = document.getElementById(`heightInput-${side}`);
+    
+    if (inputWidth && inputHeight) {
+        const widthValue = parseFloat(inputWidth.value) || 0;
+        const heightValue = parseFloat(inputHeight.value) || 0;
+        
+        const cont = containers[side];
+        const t = transforms[side];
+        
+        t.width = (widthValue / 104) * cont.offsetWidth;
+        t.height = (heightValue / 104) * cont.offsetHeight;
+        
+        const overlay = cont.querySelector('.design-overlay');
+        update(overlay, side);
+        updatePrice();
+        
+        // Beri feedback visual
+        const btn = t.box.querySelector('.update-price-btn');
+        if (btn) {
+            btn.innerHTML = '<span>✓</span> Updated!';
+            setTimeout(() => {
+                btn.innerHTML = '<span>🔄</span> Update Harga';
+            }, 1500);
+        }
+    }
+}
 
     let currentCropSide = null;
         let cropInteract = null;
@@ -1019,67 +1712,117 @@ updatePrice();   // <-- ini akan refresh total harga
     if (!overlay) return;
 
     const container = document.getElementById('cropImageContainer');
-    container.innerHTML = `<div class="crop-wrapper">
-        <img src="${overlay.src}" id="cropImg" style="max-width:100%">
-        <div class="crop-box" id="cropBox"></div>
-        <div class="crop-info">
-            <label>Lebar: <input id="cropWidth" type="number" step="1"> px</label>
-            <label>Tinggi: <input id="cropHeight" type="number" step="1"> px</label>
-            <label><input type="checkbox" id="lockRatio" checked> Rasio Terkunci</label>
-            <button onclick="resetCrop()">🔄 Reset</button>
+    container.innerHTML = `
+        <div class="crop-wrapper">
+            <img src="${overlay.src}" id="cropImg" style="max-height:60vh">
+            <div class="crop-box" id="cropBox"></div>
         </div>
-    </div>`;
+        <div class="crop-controls">
+            <div class="crop-input-group">
+                <span>Lebar:</span>
+                <input type="number" id="cropWidth" value="100" min="10">
+                <span>px</span>
+            </div>
+            <div class="crop-input-group">
+                <span>Tinggi:</span>
+                <input type="number" id="cropHeight" value="100" min="10">
+                <span>px</span>
+            </div>
+            <label class="crop-input-group">
+                <input type="checkbox" id="lockRatio" checked>
+                <span>Proporsional</span>
+            </label>
+            <button onclick="resetCrop()">Reset</button>
+            <button onclick="applyCrop()">Terapkan</button>
+            <button class="secondary" onclick="closeCrop()">Batal</button>
+        </div>
+    `;
 
+    // Inisialisasi crop box
     const cropBox = document.getElementById('cropBox');
-    const cropImg = document.getElementById('cropImg');
-
-    // Interact.js
+    const img = document.getElementById('cropImg');
+    
+    // Set ukuran awal crop box
+    const initSize = Math.min(img.width, img.height) * 0.3;
+    cropBox.style.width = `${initSize}px`;
+    cropBox.style.height = `${initSize}px`;
+    cropBox.style.left = `${(img.width - initSize) / 2}px`;
+    cropBox.style.top = `${(img.height - initSize) / 2}px`;
+    
+    syncCropInputs();
+    
+    // Interact.js untuk crop box
     cropInteract = interact(cropBox)
         .draggable({
-            modifiers: [interact.modifiers.restrictRect({ restriction: cropImg })],
+            modifiers: [
+                interact.modifiers.restrict({
+                    restriction: img,
+                    endOnly: true
+                })
+            ],
             listeners: {
-                move(e) {
-                    e.target.style.left = (parseFloat(e.target.style.left || 0) + e.dx) + 'px';
-                    e.target.style.top  = (parseFloat(e.target.style.top  || 0) + e.dy) + 'px';
+                move(event) {
+                    const x = (parseFloat(cropBox.style.left) || 0) + event.dx;
+                    const y = (parseFloat(cropBox.style.top) || 0) + event.dy;
+                    cropBox.style.left = `${x}px`;
+                    cropBox.style.top = `${y}px`;
                     syncCropInputs();
                 }
             }
         })
         .resizable({
-            edges: { left:true, right:true, top:true, bottom:true },
+            edges: { left: true, right: true, top: true, bottom: true },
             modifiers: [
-                interact.modifiers.restrictEdges({ restriction: cropImg }),
-                interact.modifiers.aspectRatio({ ratio: 1, enabled: true })
+                interact.modifiers.restrictEdges({
+                    restriction: img
+                }),
+                interact.modifiers.aspectRatio({
+                    ratio: 1,
+                    enabled: document.getElementById('lockRatio').checked
+                })
             ],
             listeners: {
-                move(e) {
-                    Object.assign(e.target.style, {
-                        width: `${e.rect.width}px`,
-                        height: `${e.rect.height}px`,
-                        left: `${parseFloat(e.target.style.left || 0) + e.deltaRect.left}px`,
-                        top: `${parseFloat(e.target.style.top || 0) + e.deltaRect.top}px`,
+                move(event) {
+                    Object.assign(cropBox.style, {
+                        width: `${event.rect.width}px`,
+                        height: `${event.rect.height}px`,
+                        left: `${(parseFloat(cropBox.style.left) || 0) + event.deltaRect.left}px`,
+                        top: `${(parseFloat(cropBox.style.top) || 0) + event.deltaRect.top}px`
                     });
                     syncCropInputs();
                 }
             }
         });
 
-    document.getElementById('cropWidth').oninput = e => {
-        cropBox.style.width = e.target.value + 'px';
-    };
-    document.getElementById('cropHeight').oninput = e => {
-        cropBox.style.height = e.target.value + 'px';
-    };
-    document.getElementById('lockRatio').onchange = e => {
-        cropInteract.resizable({
-            modifiers: [interact.modifiers.aspectRatio({ ratio: 1, enabled: e.target.checked })]
-        });
-    };
+    // Event listeners untuk input
+    document.getElementById('cropWidth').addEventListener('input', function() {
+        if (document.getElementById('lockRatio').checked) {
+            const height = this.value / (cropBox.offsetWidth / cropBox.offsetHeight);
+            cropBox.style.height = `${height}px`;
+            document.getElementById('cropHeight').value = Math.round(height);
+        }
+        cropBox.style.width = `${this.value}px`;
+    });
 
-    cropBox.style.width = '100px';
-    cropBox.style.height = '100px';
-    cropBox.style.left = '50px';
-    cropBox.style.top = '50px';
+    document.getElementById('cropHeight').addEventListener('input', function() {
+        if (document.getElementById('lockRatio').checked) {
+            const width = this.value * (cropBox.offsetWidth / cropBox.offsetHeight);
+            cropBox.style.width = `${width}px`;
+            document.getElementById('cropWidth').value = Math.round(width);
+        }
+        cropBox.style.height = `${this.value}px`;
+    });
+
+    document.getElementById('lockRatio').addEventListener('change', function() {
+        cropInteract.resizable({
+            modifiers: [
+                interact.modifiers.aspectRatio({
+                    ratio: 1,
+                    enabled: this.checked
+                })
+            ]
+        });
+    });
 
     document.getElementById('cropModal').style.display = 'block';
 }
@@ -1122,17 +1865,24 @@ function applyCrop() {
     updatePrice();
 }
 
-        function syncCropInputs() {
+function syncCropInputs() {
     const box = document.getElementById('cropBox');
-    document.getElementById('cropWidth').value = parseInt(box.offsetWidth);
-    document.getElementById('cropHeight').value = parseInt(box.offsetHeight);
+    if (!box) return;
+    
+    document.getElementById('cropWidth').value = Math.round(box.offsetWidth);
+    document.getElementById('cropHeight').value = Math.round(box.offsetHeight);
 }
+
 function resetCrop() {
-    const cropBox = document.getElementById('cropBox');
-    cropBox.style.left = '50px';
-    cropBox.style.top = '50px';
-    cropBox.style.width = '100px';
-    cropBox.style.height = '100px';
+    const img = document.getElementById('cropImg');
+    const box = document.getElementById('cropBox');
+    const size = Math.min(img.width, img.height) * 0.3;
+    
+    box.style.width = `${size}px`;
+    box.style.height = `${size}px`;
+    box.style.left = `${(img.width - size) / 2}px`;
+    box.style.top = `${(img.height - size) / 2}px`;
+    
     syncCropInputs();
 }
 
@@ -1176,7 +1926,7 @@ function resetCrop() {
     }
 
     function roundSablonPrice(price) {
-    if (price < 5000) return 5000;
+    if (price < 10000) return 10000;
     const remainder = price % 1000;
     if (remainder <= 500) {
         return price - remainder; // ke bawah
@@ -1185,83 +1935,108 @@ function resetCrop() {
     }
 }
 
-    function updatePrice() {
-        const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
-        const base = parseFloat(document.getElementById('basePrice').value) || 0;
-        const fee  = parseFloat(document.getElementById('designFee').value)  || 0;
-        
-        let cf = 0, cb = 0;
-        let frontDetails = '', backDetails = '';
-        
-        ['front','back'].forEach(side => {
-            const t = transforms[side];
-            if (t.width && t.height) {
-                const cont = containers[side];
-                const wCm = (t.width / cont.offsetWidth) * 104;
-                const hCm = (t.height / cont.offsetHeight) * 104;
-                const area = wCm * hCm;
-                const cost = area * ppcm;
-                
-                const label = side === 'front' ? 'Depan' : 'Belakang';
-                const roundedCost = roundSablonPrice(cost);
-
-const detailHTML = `
-  <div class="price-row">
-      <div>🧢 Sisi ${label}</div>
-      <div>${wCm.toFixed(1)} × ${hCm.toFixed(1)} cm (${area.toFixed(0)} cm²)</div>
-      <div>Rp ${roundedCost.toLocaleString()}</div>
-  </div>
-`;
-
-                
-                if(side === 'front') {
-                    cf = roundSablonPrice(cost);
-                    frontDetails = detailHTML;
-                } else {
-                    cb = roundSablonPrice(cost);
-                    backDetails = detailHTML;
-                }
+function updatePrice() {
+    const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+    const base = parseFloat(document.getElementById('basePrice').value) || 0;
+    const fee = parseFloat(document.getElementById('designFee').value) || 0;
+    
+    let cf = 0, cb = 0;
+    let frontSize = '', backSize = '';
+    
+    ['front','back'].forEach(side => {
+        const t = transforms[side];
+        if (t.width && t.height) {
+            const cont = containers[side];
+            const wCm = (t.width / cont.offsetWidth) * 104;
+            const hCm = (t.height / cont.offsetHeight) * 104;
+            const area = wCm * hCm;
+            const cost = roundSablonPrice(area * ppcm);
+            
+            if(side === 'front') {
+                cf = cost;
+                frontSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
+            } else {
+                cb = cost;
+                backSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
             }
-        });
-        
-        const total = base + fee + cf + cb;
+        }
+    });
+    
+    const total = base + fee + cf + cb;
+    
+    // Update display
+    document.getElementById('basePriceDisplay').textContent = `Rp ${base.toLocaleString()}`;
+    document.getElementById('frontPriceDisplay').textContent = cf ? `Rp ${cf.toLocaleString()}${frontSize}` : '-';
+    document.getElementById('backPriceDisplay').textContent = cb ? `Rp ${cb.toLocaleString()}${backSize}` : '-';
+    document.getElementById('designFeeDisplay').textContent = fee ? `Rp ${fee.toLocaleString()}` : 'Free';
+    document.getElementById('designFeeDisplay').style.color = fee ? 'var(--accent-color)' : 'var(--success-color)';
+    
+    // Animasi total harga
+    const totalElement = document.getElementById('totalPrice');
+    totalElement.textContent = `Rp ${total.toLocaleString()}`;
+    totalElement.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+        totalElement.style.transform = 'scale(1)';
+    }, 300);
+    
+    // Tampilkan/sembunyikan item harga
+    document.getElementById('frontPriceItem').style.display = cf ? 'flex' : 'none';
+    document.getElementById('backPriceItem').style.display = cb ? 'flex' : 'none';
+}
 
-        
-        document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString()}`;
-        document.getElementById('priceDetails').innerHTML = `
-  <div class="price-summary">
-      <div class="price-row">
-          <div>👕 Kaos</div>
-          <div></div>
-          <div>Rp ${base.toLocaleString()}</div>
-      </div>
-      ${frontDetails}
-      ${backDetails}
-      <div class="price-row">
-          <div>🎨 Desain</div>
-          <div></div>
-          <div>Rp ${fee.toLocaleString()}</div>
-      </div>
-  </div>
-`;
+function showPreview() {
+    // Generate preview images
+    const frontCanvas = generatePreviewCanvas('front');
+    const backCanvas = generatePreviewCanvas('back');
+    
+    // Update preview images
+    document.getElementById('preview-front-img').src = frontCanvas.toDataURL();
+    document.getElementById('preview-back-img').src = backCanvas.toDataURL();
+    
+    // Get price data
+    const basePrice = parseFloat(document.getElementById('basePrice').value) || 0;
+    const designFee = parseFloat(document.getElementById('designFee').value) || 0;
+    const pricePerCm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+    
+    // Update price display
+    document.getElementById('preview-base-price').textContent = `Rp ${basePrice.toLocaleString()}`;
+    document.getElementById('preview-design-fee').textContent = designFee > 0 ? `Rp ${designFee.toLocaleString()}` : 'Free';
+    document.getElementById('preview-design-fee').style.color = designFee > 0 ? 'var(--accent-color)' : 'var(--success-color)';
 
-    }
+    // Calculate print prices
+    let frontPrice = 0;
+    let backPrice = 0;
+    
+    ['front', 'back'].forEach(side => {
+        const t = transforms[side];
+        if (t.width && t.height) {
+            const cont = containers[side];
+            const wCm = (t.width / cont.offsetWidth) * 104;
+            const hCm = (t.height / cont.offsetHeight) * 104;
+            const area = wCm * hCm;
+            const cost = roundSablonPrice(area * pricePerCm);
+            
+            document.getElementById(`preview-${side}-price`).textContent = `Rp ${cost.toLocaleString()}`;
+            document.getElementById(`preview-${side}-size`).textContent = `(${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
+            document.getElementById(`preview-${side}-row`).style.display = 'flex';
 
-    function showPreview() {
-        const frontCanvas = generatePreviewCanvas('front');
-        const backCanvas = generatePreviewCanvas('back');
-        
-        document.getElementById('preview-front-img').src = frontCanvas.toDataURL();
-        document.getElementById('preview-back-img').src = backCanvas.toDataURL();
-        
-        const priceDetails = document.getElementById('priceDetails').cloneNode(true);
-        priceDetails.id = 'preview-price-details';
-        document.getElementById('preview-price-details').replaceWith(priceDetails);
-        const total = document.getElementById('totalPrice').textContent;
-document.getElementById('preview-total').textContent = `💵 Total Harga: ${total}`;
-
-        document.querySelector('.preview-modal').style.display = 'block';
-    }
+            if (side === 'front') {
+                frontPrice = cost;
+            } else {
+                backPrice = cost;
+            }
+        } else {
+            document.getElementById(`preview-${side}-row`).style.display = 'none';
+        }
+    });
+    
+    // Calculate total
+    const total = basePrice + designFee + frontPrice + backPrice;
+    document.getElementById('preview-total-price').textContent = `Rp ${total.toLocaleString()}`;
+    
+    // Show modal
+    document.querySelector('.preview-modal').style.display = 'block';
+}
 
     function generatePreviewCanvas(side) {
         const mockup = document.getElementById(`mockup-${side}`);
@@ -1326,38 +2101,69 @@ document.getElementById('preview-total').textContent = `💵 Total Harga: ${tota
     return canvas;
 }
 function downloadCombinedPreview() {
-    // Isi ulang konten dari preview
-    document.getElementById('preview-download-front').src = generatePreviewCanvas('front').toDataURL();
-    document.getElementById('preview-download-back').src = generatePreviewCanvas('back').toDataURL();
+    // Buat container sementara untuk render
+    const container = document.createElement('div');
+    container.style.width = '800px';
+    container.style.padding = '20px';
+    container.style.background = '#2a2a2a';
+    container.style.color = 'white';
+    container.style.fontFamily = '"Exo 2", sans-serif';
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+    document.body.appendChild(container);
 
-    const priceClone = document.getElementById('priceDetails').cloneNode(true);
-    const totalText = document.getElementById('totalPrice').textContent;
+    // Isi dengan konten preview
+    container.innerHTML = `
+        <div style="text-align:center; font-size:18px; margin-bottom:20px;">
+            🖼️ Preview Desain Kaos
+        </div>
+        <div style="display:flex; gap:20px; justify-content:center; margin-bottom:20px;">
+            <div>
+                <h4 style="margin:0 0 10px 0;">Depan</h4>
+                <img id="temp-front" style="max-width:350px; border:1px solid #444;">
+            </div>
+            <div>
+                <h4 style="margin:0 0 10px 0;">Belakang</h4>
+                <img id="temp-back" style="max-width:350px; border:1px solid #444;">
+            </div>
+        </div>
+        <div id="temp-prices" style="background:#333; padding:15px; border-radius:8px;"></div>
+    `;
+
+    // Isi gambar dan harga
+    document.getElementById('temp-front').src = document.getElementById('preview-front-img').src;
+    document.getElementById('temp-back').src = document.getElementById('preview-back-img').src;
     
-    // Format ulang harga sebagai teks
-    let priceHTML = '';
-    priceClone.querySelectorAll('.price-row').forEach(row => {
-        const cols = row.querySelectorAll('div');
-        if (cols.length === 3) {
-            priceHTML += `🧾 ${cols[0].innerText}: ${cols[1].innerText} – <b>${cols[2].innerText}</b><br>`;
-        }
-    });
+    // Clone price details
+    const priceDetails = document.querySelector('.price-summary').cloneNode(true);
+    priceDetails.style.background = 'transparent';
+    priceDetails.style.boxShadow = 'none';
+    document.getElementById('temp-prices').appendChild(priceDetails);
 
-    document.getElementById('preview-download-prices').innerHTML = priceHTML;
-    document.getElementById('preview-download-total').textContent = `💵 Total Harga: ${totalText}`;
-
-    // Render menggunakan html2canvas
-    const area = document.getElementById('preview-download-area');
-    area.style.display = 'block'; // sementara tampilkan untuk render
-
-    html2canvas(area).then(canvas => {
+    // Render ke canvas
+    html2canvas(container, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: container.scrollWidth,
+        windowHeight: container.scrollHeight
+    }).then(canvas => {
+        // Download gambar
         const link = document.createElement('a');
-        link.download = 'preview-desain-kaos.png';
-        link.href = canvas.toDataURL();
+        link.download = 'desain-kaos-preview.png';
+        link.href = canvas.toDataURL('image/png');
         link.click();
-        area.style.display = 'none'; // sembunyikan lagi setelah render
+        
+        // Hapus container sementara
+        document.body.removeChild(container);
+    }).catch(err => {
+        console.error('Gagal generate preview:', err);
+        alert('Maaf, gagal mengunduh preview. Silakan coba lagi.');
+        document.body.removeChild(container);
     });
 }
-
 
 
     function downloadPreview() {
@@ -1375,33 +2181,89 @@ function downloadCombinedPreview() {
         backLink.click();
     }
 
-    function sharePreview() {
-        const price = document.getElementById('totalPrice').textContent;
-        const details = Array.from(document.querySelectorAll('#priceDetails .price-detail-item'))
-            .map(div => {
-                const spans = div.querySelectorAll('span');
-                return `${spans[0].textContent}: ${spans[1].textContent}`;
-            }).join('\n');
-        
-        const text = encodeURIComponent(
-            `📋 Rincian Pesanan Kaos Custom\n\n${details}\n\n💵 Total Harga: ${price}\n` +
-            '🎨 Desain dapat dilihat pada gambar lampiran'
-        );
-        
-        window.open(`https://wa.me/?text=${text}`, '_blank');
-    }
+    
 
     function closePreview() {
         document.querySelector('.preview-modal').style.display = 'none';
     }
 
     function updateMockupImage() {
-        mockups.front.src = colorData[currentColor].front;
-        mockups.back.src  = colorData[currentColor].back;
-        ['front','back'].forEach(side => containers[side].innerHTML = '');
+    const sleeveType = document.getElementById('sleeveType').value;
+    mockups.front.src = colorData[currentColor][sleeveType].front;
+    mockups.back.src = colorData[currentColor][sleeveType].back;
+    ['front','back'].forEach(side => containers[side].innerHTML = '');
+}
+
+// Tambahkan di bagian JavaScript
+let isAdmin = false;
+
+function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'flex';
+    document.getElementById('adminPassword').focus();
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('loginError').style.display = 'none';
+}
+
+function checkAdminPassword() {
+    const password = document.getElementById('adminPassword').value;
+    const errorElement = document.getElementById('loginError');
+    
+    if (password === '123123') {
+        isAdmin = true;
+        unlockPriceInputs();
+        closeLoginModal();
+        // Beri feedback visual bahwa mode admin aktif
+        document.querySelector('.admin-btn').textContent = '🔓 Mode Admin Aktif';
+        document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #00b09b, #96c93d)';
+        setTimeout(() => {
+            document.querySelector('.admin-btn').textContent = '🔑 Ubah Harga Dasar';
+            document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #ff5e62, #ff9966)';
+        }, 3000);
+    } else {
+        errorElement.style.display = 'block';
+        document.getElementById('adminPassword').value = '';
     }
+}
 
+function unlockPriceInputs() {
+    const inputs = document.querySelectorAll('.locked-input');
+    inputs.forEach(input => {
+        input.readOnly = false;
+        input.classList.remove('locked-input');
+    });
+}
 
+function lockPriceInputs() {
+    const inputs = document.querySelectorAll('#pricePerCm, #basePrice, #designFee');
+    inputs.forEach(input => {
+        input.readOnly = true;
+        if (!input.classList.contains('locked-input')) {
+            input.classList.add('locked-input');
+        }
+    });
+}
+
+function togglePriceSettings() {
+    const content = document.getElementById('priceSettings');
+    const icon = document.querySelector('.section-header .collapse-icon');
+    
+    content.classList.toggle('collapsed');
+    icon.style.transform = content.classList.contains('collapsed') 
+        ? 'rotate(180deg)' 
+        : 'rotate(0deg)';
+}
+
+// Untuk collapse awal (opsional)
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('priceSettings').classList.add('collapsed');
+});
+
+// Panggil lockPriceInputs saat inisialisasi
+lockPriceInputs();
 
     updateMockupImage();
 </script>
