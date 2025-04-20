@@ -62,8 +62,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.05);
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) var(--background-elevated-2);
+    max-height: fit-content;
 }
-
 .controls-panel::-webkit-scrollbar {
     width: 6px;
 }
@@ -136,7 +136,7 @@ input[type=file], input[type=color] {
 }
 
 input[type=number] {
-    width: 70px;
+    width: 120px;
     padding: 8px 10px;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1135,6 +1135,38 @@ button.icon-button {
 .color-swatch:hover::after {
     border-color: rgba(255,255,255,0.3);
 }
+.blend-options {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+
+.blend-options label {
+    font-size: 0.8rem;
+    margin-right: 8px;
+    color: var(--text-secondary);
+}
+
+.blend-select {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--primary-color);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    width: 100%;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.blend-select option {
+    background: var(--background-elevated);
+}
+
+.preview-image {
+    position: relative;
+}
+
     </style>
 </head>
 <body>
@@ -1432,8 +1464,11 @@ button.icon-button {
         angle: 0, ar: 1,
         box: null,
         proportional: true,
-        interactable: null // <== TAMBAHKAN INI
+        interactable: null
+        
+        
     };
+    
 
     el.onload = () => {
         const cont = containers[side];
@@ -1547,6 +1582,15 @@ function updateBox(side) {
             </label>
             <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
         </div>
+        <div class="blend-options">
+        <label>Blend Mode:</label>
+        <select class="blend-select" onchange="updateBlendMode('${side}', this.value)">
+            <option value="normal">Normal</option>
+            <option value="multiply">Multiply</option>
+            <option value="screen">Screen</option>
+            <option value="overlay">Overlay</option>
+        </select>
+    </div>
         <div class="size-box-buttons">
             <button onclick="rotateOverlay('${side}', 90)" title="Putar 90°">↻</button>
             <button onclick="deleteOverlay('${side}')" title="Hapus">🗑️</button>
@@ -2029,6 +2073,7 @@ function showPreview() {
             document.getElementById(`preview-${side}-row`).style.display = 'none';
         }
     });
+
     
     // Calculate total
     const total = basePrice + designFee + frontPrice + backPrice;
@@ -2045,22 +2090,20 @@ function showPreview() {
     const ctx = canvas.getContext('2d');
     
     // Dapatkan dimensi asli mockup
-    const naturalWidth = mockup.naturalWidth;
-    const naturalHeight = mockup.naturalHeight;
-    canvas.width = naturalWidth;
-    canvas.height = naturalHeight;
+    canvas.width = mockup.naturalWidth;
+    canvas.height = mockup.naturalHeight;
     
     // Gambar mockup ke canvas
-    ctx.drawImage(mockup, 0, 0, naturalWidth, naturalHeight);
+    ctx.drawImage(mockup, 0, 0, canvas.width, canvas.height);
     
     if (overlay) {
-        const container = mockup.parentElement;
         const t = transforms[side];
+        const container = mockup.parentElement;
         
-        // Hitung skala dan posisi mockup yang sebenarnya di dalam container
+        // Hitung posisi dan ukuran overlay
         const containerWidth = container.offsetWidth;
         const containerHeight = container.offsetHeight;
-        const imageAspect = naturalWidth / naturalHeight;
+        const imageAspect = mockup.naturalWidth / mockup.naturalHeight;
         const containerAspect = containerWidth / containerHeight;
         
         let renderedWidth, renderedHeight, renderedLeft, renderedTop;
@@ -2074,27 +2117,51 @@ function showPreview() {
         renderedLeft = (containerWidth - renderedWidth) / 2;
         renderedTop = (containerHeight - renderedHeight) / 2;
         
-        // Faktor skala antara container dan gambar asli
-        const scaleX = renderedWidth / naturalWidth;
-        const scaleY = renderedHeight / naturalHeight;
+        // Faktor skala
+        const scaleX = renderedWidth / mockup.naturalWidth;
+        const scaleY = renderedHeight / mockup.naturalHeight;
         
-        // Konversi posisi overlay ke koordinat gambar asli
+        // Buat temporary canvas untuk blending
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        
+        // Gambar overlay ke temp canvas
         const imageX = (t.x - renderedLeft) / scaleX;
         const imageY = (t.y - renderedTop) / scaleY;
         const imageWidth = t.width / scaleX;
         const imageHeight = t.height / scaleY;
         
-        // Gambar overlay dengan transformasi yang sesuai
-        ctx.save();
-        ctx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
-        ctx.rotate(t.angle * Math.PI / 180);
-        ctx.drawImage(
+        tempCtx.save();
+        tempCtx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
+        tempCtx.rotate(t.angle * Math.PI / 180);
+        tempCtx.drawImage(
             overlay,
             -imageWidth/2,
             -imageHeight/2,
             imageWidth,
             imageHeight
         );
+        tempCtx.restore();
+        
+        // Aplikasikan blend mode
+        ctx.save();
+        switch(t.blendMode) {
+            case 'multiply':
+                ctx.globalCompositeOperation = 'multiply';
+                break;
+            case 'screen':
+                ctx.globalCompositeOperation = 'screen';
+                break;
+            case 'overlay':
+                ctx.globalCompositeOperation = 'overlay';
+                break;
+            default:
+                ctx.globalCompositeOperation = 'source-over';
+        }
+        
+        ctx.drawImage(tempCanvas, 0, 0);
         ctx.restore();
     }
     
@@ -2139,6 +2206,8 @@ function downloadCombinedPreview() {
     priceDetails.style.background = 'transparent';
     priceDetails.style.boxShadow = 'none';
     document.getElementById('temp-prices').appendChild(priceDetails);
+
+    
 
     // Render ke canvas
     html2canvas(container, {
@@ -2262,6 +2331,16 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('priceSettings').classList.add('collapsed');
 });
 
+function updateBlendMode(side, mode) {
+    const overlay = containers[side].querySelector('.design-overlay');
+    if (overlay) {
+        transforms[side].blendMode = mode;
+        overlay.style.mixBlendMode = mode;
+        
+        // Untuk browser yang tidak support mix-blend-mode
+        overlay.style.opacity = mode === 'normal' ? '1' : '0.9';
+    }
+}
 // Panggil lockPriceInputs saat inisialisasi
 lockPriceInputs();
 
