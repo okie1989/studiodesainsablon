@@ -8,8 +8,10 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/calculator.svg" 
           type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
     <style>
 :root {
     --primary-color: #4d8eff;
@@ -291,29 +293,27 @@ button.icon-button {
 
 .size-box {
     position: absolute;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 12px;
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid #444;
     border-radius: 8px;
-    color: #fff;
-    font-size: 13px;
-    pointer-events: all;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    min-width: 180px;
-    transition: top 0.2s ease-out, left 0.2s ease-out;
+    z-index: 100;
+    width: fit-content;
+    font-size: 14px;
+    color: #eee;
+    backdrop-filter: blur(4px);
 }
 
 .size-box-input-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
     margin: 5px 0;
 }
 
 .size-box-input-row input {
-    width: 50px;
+    width: 20px;
     padding: 4px 6px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -323,17 +323,50 @@ button.icon-button {
     text-align: center;
 }
 
+.size-box-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
 .size-box-input-group {
     display: flex;
-    gap: 6px;
     align-items: center;
-    margin: 5px 0;
+    gap: 4px;
 }
 
 .size-box-input-group label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
     min-width: 40px;
+}
+
+.size-box-input-group input {
+    width: 40px;
+    padding: 2px 4px;
+    background: #222;
+    border: 1px solid #444;
+    color: #eee;
+    border-radius: 3px;
+}
+
+.size-box-options {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.size-box-actions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
 }
 
 .size-box input[type="number"] {
@@ -393,13 +426,7 @@ button.icon-button {
 .size-box-buttons button:hover::after {
     opacity: 1;
 }
-.size-box-header {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 0.85rem;
-    color: var(--accent-color);
-}
+
 
 .size-box-input-row {
     display: flex;
@@ -437,6 +464,7 @@ button.icon-button {
     padding: 6px 10px;
     margin: 2px;
     font-size: 0.85rem;
+    width: max-content;
 }
 
 .price-display {
@@ -557,7 +585,22 @@ button.icon-button {
 }
 
 .btn-icon {
-    font-size: 1.2rem;
+    background: #333;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: #444;
+}
+
+.btn-icon.active {
+    background: var(--primary-color);
+    color: white;
 }
 
 .btn-text {
@@ -1148,15 +1191,13 @@ button.icon-button {
 }
 
 .blend-select {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--primary-color);
-    color: white;
-    padding: 5px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    width: 100%;
-    margin-top: 5px;
-    cursor: pointer;
+    flex-grow: 1;
+    background: #222;
+    border: 1px solid #444;
+    color: #eee;
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 12px;
 }
 
 .blend-select option {
@@ -1167,6 +1208,370 @@ button.icon-button {
     position: relative;
 }
 
+.image-options {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+
+.image-options button {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.image-options button:hover {
+    background: rgba(0,0,0,0.5);
+}
+
+.image-options .icon {
+    font-size: 1rem;
+}
+
+/* Style untuk toggle switch */
+.toggle-box {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin-left: 8px;
+}
+
+.toggle-box input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #555;
+    transition: .2s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Style untuk input number yang lebih baik */
+.size-input {
+    width: 50px;
+    padding: 4px;
+    background: #222;
+    border: 1px solid #444;
+    color: #eee;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.size-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+/* Animasi untuk size box */
+.size-box {
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.size-box-content {
+    transition: all 0.2s ease;
+}
+
+/* Container Utama */
+.size-box-container {
+    position: absolute;
+    background: rgba(40, 40, 40, 0.95);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    width: 260px;
+    z-index: 1000;
+    border: 1px solid #555;
+    backdrop-filter: blur(5px);
+    border-bottom-left-radius: 13%;
+}
+
+/* Header */
+.size-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #555;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.btn-close:hover {
+    color: #fff;
+}
+
+/* Grid Layout */
+.size-box-grid {
+    display: grid;
+    gap: 12px;
+}
+
+/* Input Group */
+.size-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.size-input-group label {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.size-input-group input {
+    padding: 6px 8px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.size-input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+/* Position Controls */
+.position-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0;
+}
+
+.position-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-nav {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #555;
+    transform: scale(1.1);
+}
+
+.btn-center {
+    background: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.btn-center:hover {
+    background: var(--primary-dark);
+}
+
+/* Advanced Options */
+.advanced-options {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.option-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.blend-mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.blend-mode-selector label {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.blend-mode-selector select {
+    padding: 5px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.btn-invert {
+    padding: 6px 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-invert:hover {
+    background: #444;
+}
+
+.btn-invert.active {
+    background: var(--primary-color);
+    border-color: var(--primary-dark);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-action {
+    padding: 6px;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.btn-action:hover {
+    background: #444;
+}
+
+.btn-action .icon {
+    font-size: 14px;
+}
+
+.btn-delete {
+    background: #5a1a1a;
+    border-color: #7a2a2a;
+}
+
+.btn-delete:hover {
+    background: #7a2a2a;
+}
+
+.footer-note {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    font-family: "Exo 2", sans-serif;
+}
+
+.footer-text {
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.social-link i {
+    font-size: 1.2rem;
+}
     </style>
 </head>
 <body>
@@ -1288,7 +1693,28 @@ button.icon-button {
                 <div class="overlay-container" id="overlay-container-back"></div>
             </div>
         </div>
+        <div class="footer-note">
+            <div class="footer-text">
+                Aplikasi dibuat oleh Kanvas Merchandise - Workshop: Jl. Riau Barat No.21, Kec. Sananwetan, Kota Blitar
+            </div>
+            <div class="social-links">
+                <a href="https://wa.me/6282257423324" class="social-link" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>082257423324</span>
+                </a>
+                <a href="https://instagram.com/kanvas.merch" class="social-link" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>kanvas.merch</span>
+                </a>
+                <a href="https://tiktok.com/@kanvasmerch" class="social-link" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    <span>kanvasmerch</span>
+                </a>
+            </div>
+        </div>
     </div>
+
+    
 
     <div class="preview-modal">
         <div class="preview-content">
@@ -1305,6 +1731,8 @@ button.icon-button {
                     <img id="preview-back-img">
                 </div>
             </div>
+
+            
             
             <div class="price-summary">
                 <h3 style="margin-bottom:15px;color:var(--primary-color);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;">
@@ -1339,6 +1767,8 @@ button.icon-button {
                     
                 </div>
             </div>
+
+            
             
             <div class="preview-actions">
                 <button onclick="downloadCombinedPreview()" class="combined-btn">⬇ Download </button>
@@ -1377,6 +1807,8 @@ button.icon-button {
         </div>
         <div id="preview-download-total"></div>
     </div>
+
+
     
 <script>
     const colorData = {
@@ -1403,6 +1835,10 @@ button.icon-button {
     // Tambahkan warna lain dengan URL gambar yang sesuai
 };
     
+let sizeBoxVisible = {
+    front: true,
+    back: true
+};
     let currentColor = 'white';
     const uploadFront = document.getElementById('uploadFront');
     const uploadBack = document.getElementById('uploadBack');
@@ -1446,15 +1882,15 @@ button.icon-button {
     }
 
     function createOverlay(src, side) {
-        const el = document.createElement('img'); 
-        el.src = src; 
-        el.className = 'design-overlay';
-        containers[side].appendChild(el); 
-        initOverlay(el, side);
-        const interactable = interact(el)
-        .draggable({ /* ... */ })
-        .resizable({ /* ... */ })
-        .on('dragmove resizemove', () => positionSizeBox(side));
+    const el = document.createElement('img');
+    el.src = src;
+    el.className = 'design-overlay';
+    containers[side].appendChild(el);
+    
+    // Terapkan filter awal
+    applyImageFilters(el, transforms[side] || { inverted: false });
+    
+    initOverlay(el, side);
 }
     
 
@@ -1493,6 +1929,32 @@ button.icon-button {
         update(el, side);
         updatePrice();
     };
+}
+function toggleInvert(side) {
+    const overlay = containers[side].querySelector('.design-overlay');
+    if (overlay) {
+        transforms[side].inverted = !transforms[side].inverted;
+        applyImageFilters(overlay, transforms[side]);
+        updateBox(side); // Refresh tampilan sizebox
+    }
+}
+
+function applyImageFilters(element, transform) {
+    let filter = '';
+    
+    if (transform.inverted) {
+        filter += 'invert(1) ';
+    }
+    
+    // Tambahkan blend mode jika ada
+    if (transform.blendMode && transform.blendMode !== 'normal') {
+        element.style.mixBlendMode = transform.blendMode;
+    } else {
+        element.style.mixBlendMode = 'normal';
+    }
+    
+    element.style.filter = filter;
+    element.style.opacity = transform.inverted ? '0.9' : '1';
 }
 
 function applyInteractOptions(side) {
@@ -1563,48 +2025,196 @@ function updateBox(side) {
     const hCm = (t.height / cont.offsetHeight) * 104;
 
     box.innerHTML = `
-        <div class="size-box-header">Edit Ukuran</div>
-        <div class="size-box-input-row">
-            <span>Lebar:</span>
-            <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}">
-            <span>cm</span>
-        </div>
-        <div class="size-box-input-row">
-            <span>Tinggi:</span>
-            <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}">
-            <span>cm</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-top:5px;">
-            <label style="display:flex; align-items:center; gap:4px;">
-                <input type="checkbox" ${t.proportional ? 'checked' : ''} 
-                       onchange="toggleProportional('${side}', this.checked)">
-                Proporsional
-            </label>
-            <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
-        </div>
-        <div class="blend-options">
-        <label>Blend Mode:</label>
-        <select class="blend-select" onchange="updateBlendMode('${side}', this.value)">
-            <option value="normal">Normal</option>
-            <option value="multiply">Multiply</option>
-            <option value="screen">Screen</option>
-            <option value="overlay">Overlay</option>
-        </select>
-    </div>
-        <div class="size-box-buttons">
-            <button onclick="rotateOverlay('${side}', 90)" title="Putar 90°">↻</button>
-            <button onclick="deleteOverlay('${side}')" title="Hapus">🗑️</button>
-            <button onclick="centerOverlay('${side}')" title="Pusatkan">⨁</button>
-            <button onclick="startCrop('${side}')" title="Crop">✂️</button>
+        <div class="size-box-container">
+            <div class="size-box-header">
+                <span>Edit Design</span>
+                <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
+            </div>
+            
+            <div class="size-box-grid">
+                <!-- Dimensi -->
+                <div class="size-input-group">
+                    <label>Width (cm):</label>
+                    <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}">
+                </div>
+                <div class="size-input-group">
+                    <label>Height (cm):</label>
+                    <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}">
+                </div>
+                
+                <!-- Kontrol Navigasi -->
+                <div class="position-controls">
+                    <div class="position-row">
+                        <button class="btn-nav" onclick="moveOverlay('${side}', 0, -10)">↑</button>
+                    </div>
+                    <div class="position-row">
+                        <button class="btn-nav" onclick="moveOverlay('${side}', -10, 0)">←</button>
+                        <button class="btn-nav btn-center" onclick="centerOverlay('${side}')">○</button>
+                        <button class="btn-nav" onclick="moveOverlay('${side}', 10, 0)">→</button>
+                    </div>
+                    <div class="position-row">
+                        <button class="btn-nav" onclick="moveOverlay('${side}', 0, 10)">↓</button>
+                    </div>
+                </div>
+                
+                <!-- Opsi Lanjutan -->
+                <div class="advanced-options">
+                    <label class="option-checkbox">
+                        <input type="checkbox" ${t.proportional ? 'checked' : ''} 
+                               onchange="toggleProportional('${side}', this.checked)">
+                        Lock Aspect Ratio
+                    </label>
+                    
+                    <div class="blend-mode-selector">
+                        <label>Blend Mode:</label>
+                        <select onchange="updateBlendMode('${side}', this.value)">
+                            <option value="normal" ${t.blendMode === 'normal' ? 'selected' : ''}>Normal</option>
+                            <option value="multiply" ${t.blendMode === 'multiply' ? 'selected' : ''}>Multiply</option>
+                            <option value="screen" ${t.blendMode === 'screen' ? 'selected' : ''}>Screen</option>
+                            <option value="overlay" ${t.blendMode === 'overlay' ? 'selected' : ''}>Overlay</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-invert ${t.inverted ? 'active' : ''}" 
+                            onclick="toggleInvert('${side}')">
+                        ${t.inverted ? '☀️ Original Colors' : '🌑 Invert Colors'}
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-action" onclick="rotateOverlay('${side}', 90)">
+                    <span class="icon">↻</span> Rotate
+                </button>
+                <button class="btn-action" onclick="startCrop('${side}')">
+                    <span class="icon">✂️</span> Crop
+                </button>
+                <button class="btn-action btn-delete" onclick="deleteOverlay('${side}')">
+                    <span class="icon">🗑️</span> Delete
+                </button>
+                
+            </div>
         </div>
     `;
 
-    // Posisikan sizebox relatif terhadap gambar desain
+    // Setup event listeners
+    setupEnhancedInputControls(side);
     positionSizeBox(side);
+}
+
+// Fungsi untuk pergerakan overlay
+function moveOverlay(side, dx, dy) {
+    const t = transforms[side];
+    t.x += dx;
+    t.y += dy;
+    update(containers[side].querySelector('.design-overlay'), side);
+}
+
+// Fungsi setup kontrol input yang lebih baik
+function setupEnhancedInputControls(side) {
+    const widthInput = document.getElementById(`widthInput-${side}`);
+    const heightInput = document.getElementById(`heightInput-${side}`);
     
-    // Event listeners
-    document.getElementById(`widthInput-${side}`).addEventListener('change', () => applySizeFromInput(side, 'width'));
-    document.getElementById(`heightInput-${side}`).addEventListener('change', () => applySizeFromInput(side, 'height'));
+    if (widthInput && heightInput) {
+        // Gunakan input yang lebih responsif
+        widthInput.addEventListener('change', () => applySizeFromInput(side, 'width'));
+        heightInput.addEventListener('change', () => applySizeFromInput(side, 'height'));
+        
+        // Keyboard controls
+        widthInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') applySizeFromInput(side, 'width');
+        });
+        heightInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') applySizeFromInput(side, 'height');
+        });
+    }
+}
+
+function toggleSizeBoxVisibility(side, isVisible) {
+    sizeBoxVisible[side] = isVisible;
+    const box = transforms[side].box;
+    if (box) {
+        const content = box.querySelector('.size-box-content');
+        if (content) {
+            content.style.display = isVisible ? 'block' : 'none';
+        }
+    }
+}
+
+function setupSizeInputs(side) {
+    const widthInput = document.getElementById(`widthInput-${side}`);
+    const heightInput = document.getElementById(`heightInput-${side}`);
+    
+    if (widthInput && heightInput) {
+        // Hapus event listener lama jika ada
+        widthInput.oninput = null;
+        heightInput.oninput = null;
+        
+        // Tambahkan event listener baru dengan debounce
+        widthInput.oninput = debounce(() => applySizeFromInput(side, 'width'), 300);
+        heightInput.oninput = debounce(() => applySizeFromInput(side, 'height'), 300);
+        
+        // Tambahkan keyboard shortcuts
+        widthInput.addEventListener('keydown', handleSizeInputKeydown);
+        heightInput.addEventListener('keydown', handleSizeInputKeydown);
+    }
+}
+
+// Fungsi debounce untuk input
+function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}
+
+// Keyboard shortcuts untuk input ukuran
+function handleSizeInputKeydown(e) {
+    const input = e.target;
+    const side = input.dataset.side;
+    const dim = input.dataset.dim;
+    
+    // Enter untuk apply perubahan
+    if (e.key === 'Enter') {
+        confirmSizeChange(side);
+        e.preventDefault();
+    }
+    // Arrow up/down untuk increment/decrement
+    else if (e.key === 'ArrowUp') {
+        input.stepUp();
+        applySizeFromInput(side, dim);
+        e.preventDefault();
+    }
+    else if (e.key === 'ArrowDown') {
+        input.stepDown();
+        applySizeFromInput(side, dim);
+        e.preventDefault();
+    }
+}
+
+// Fungsi untuk setup klik overlay
+function setupOverlayClickHandler(side) {
+    const overlay = containers[side].querySelector('.design-overlay');
+    if (overlay) {
+        // Hapus event listener lama jika ada
+        overlay.onclick = null;
+        
+        // Tambahkan event listener baru
+        overlay.onclick = (e) => {
+            // Jika size box hidden, tampilkan saat overlay diklik
+            if (!sizeBoxVisible[side]) {
+                toggleSizeBoxVisibility(side, true);
+                // Update checkbox
+                const checkbox = transforms[side].box?.querySelector('.toggle-box input');
+                if (checkbox) checkbox.checked = true;
+            }
+            
+            // Hentikan propagasi agar tidak mengganggu drag
+            e.stopPropagation();
+        };
+    }
 }
 
 function positionSizeBox(side) {
@@ -1619,24 +2229,39 @@ function positionSizeBox(side) {
     const containerRect = cont.getBoundingClientRect();
     const boxRect = box.getBoundingClientRect();
 
-    // Cari posisi optimal
-    let topPosition = overlayRect.top - containerRect.top + overlayRect.height + 10;
-    let leftPosition = overlayRect.left - containerRect.left;
-
-    // Jika tidak cukup ruang di bawah, taruh di atas
-    if (topPosition + boxRect.height > containerRect.height) {
-        topPosition = overlayRect.top - containerRect.top - boxRect.height - 10;
+    // Cari posisi optimal - prioritaskan pojok kanan atas overlay
+    let topPosition = overlayRect.top - containerRect.top - boxRect.height - 5;
+    let leftPosition = overlayRect.right - containerRect.left - boxRect.width;
+    
+    // Jika tidak cukup ruang di atas, taruh di bawah
+    if (topPosition < 10) {
+        topPosition = overlayRect.bottom - containerRect.top + 5;
+    }
+    
+    // Jika tidak cukup ruang di kanan, taruh di kiri
+    if (leftPosition + boxRect.width > containerRect.width - 10) {
+        leftPosition = overlayRect.left - containerRect.left - boxRect.width;
+        
+        // Jika masih tidak cukup, paksa di dalam container
+        if (leftPosition < 10) {
+            leftPosition = 10;
+        }
     }
 
     // Pastikan tidak keluar dari container
     topPosition = Math.max(10, Math.min(topPosition, containerRect.height - boxRect.height - 10));
     leftPosition = Math.max(10, Math.min(leftPosition, containerRect.width - boxRect.width - 10));
 
-    // Terapkan posisi
+    // Terapkan posisi dengan animasi halus
     box.style.position = 'absolute';
     box.style.top = `${topPosition}px`;
     box.style.left = `${leftPosition}px`;
-    box.style.transform = 'none'; // Reset transform sebelumnya
+    box.style.opacity = '0';
+    box.style.transition = 'opacity 0.2s, top 0.2s, left 0.2s';
+    
+    setTimeout(() => {
+        box.style.opacity = '1';
+    }, 10);
 }
 
 
@@ -1677,22 +2302,22 @@ function applySizeFromInput(side, dimension) {
         t.width = (value / 104) * cont.offsetWidth;
         if (t.proportional) {
             t.height = t.width / t.ar;
-            document.getElementById(`heightInput-${side}`).value = (t.height / cont.offsetHeight * 104).toFixed(1);
+            const heightInput = document.getElementById(`heightInput-${side}`);
+            if (heightInput) heightInput.value = (t.height / cont.offsetHeight * 104).toFixed(1);
         }
     } else {
         t.height = (value / 104) * cont.offsetHeight;
         if (t.proportional) {
             t.width = t.height * t.ar;
-            document.getElementById(`widthInput-${side}`).value = (t.width / cont.offsetWidth * 104).toFixed(1);
+            const widthInput = document.getElementById(`widthInput-${side}`);
+            if (widthInput) widthInput.value = (t.width / cont.offsetWidth * 104).toFixed(1);
         }
     }
 
     const overlay = cont.querySelector('.design-overlay');
-    update(overlay, side);
-    updateBox(side); // Update box untuk menampilkan harga baru
-    
-    // Tidak otomatis update harga utama, perlu klik tombol
-    // updatePrice(); // Di-comment karena sekarang pakai tombol update
+    if (overlay) {
+        update(overlay, side);
+    }
 }
 
 function toggleProportional(side, isProportional) {
@@ -2088,6 +2713,12 @@ function showPreview() {
     const overlay = document.querySelector(`#overlay-container-${side} .design-overlay`);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
+
+    // Buat temporary canvas untuk filter
+         const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
     
     // Dapatkan dimensi asli mockup
     canvas.width = mockup.naturalWidth;
@@ -2099,6 +2730,9 @@ function showPreview() {
     if (overlay) {
         const t = transforms[side];
         const container = mockup.parentElement;
+
+         
+        
         
         // Hitung posisi dan ukuran overlay
         const containerWidth = container.offsetWidth;
@@ -2163,6 +2797,16 @@ function showPreview() {
         
         ctx.drawImage(tempCanvas, 0, 0);
         ctx.restore();
+    // Terapkan filter
+    if (t.inverted) {
+            tempCtx.globalCompositeOperation = 'difference';
+            tempCtx.fillStyle = 'white';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        }
+        
+        // Gambar ke canvas utama dengan blend mode
+        ctx.globalCompositeOperation = t.blendMode || 'source-over';
+        ctx.drawImage(tempCanvas, 0, 0);
     }
     
     return canvas;
