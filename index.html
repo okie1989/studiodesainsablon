@@ -1,11 +1,10 @@
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio Desain Kaos</title>
     <!-- Favicon Kalkulator -->
-    <link rel="icon" 
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/calculator.svg" 
-          type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M11.5 2a1.5 1.5 0 1 0-3 0H7v3h10V2h-1.5ZM7 6h10v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6h4Zm2 2.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3 0a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3 0a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Z'/></svg>" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
@@ -35,7 +34,7 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 30px;
-    background: var(--background-color);
+    background-image: url(https://i.imgur.com/QBdh9bC.jpeg);
     color: var(--text-color);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -55,8 +54,8 @@ body {
 }
 
 .controls-panel {
-    background: var(--background-elevated);
-    padding: 20px;
+    background: #2525257a;
+    padding: 6px;
     border-radius: var(--border-radius);
     overflow-y: auto;
     box-shadow: var(--box-shadow);
@@ -196,6 +195,31 @@ input[type=number]:focus {
     margin-top: 5px;
 }
 
+.preview-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.preview-actions button {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.preview-actions button:hover {
+    background: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
 button {
     background: var(--primary-color);
     color: #fff;
@@ -243,7 +267,8 @@ button.icon-button {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 100%;
+    height: 110%;
+    width: auto;
 }
 
 .mockup-frame {
@@ -254,6 +279,7 @@ button.icon-button {
     flex: 0 0 36%;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    display: flex;
 }
 
 .mockup-frame:hover {
@@ -290,180 +316,226 @@ button.icon-button {
     box-shadow: 0 0 0 2px rgba(0, 200, 255, 0.3);
 }
 
-.size-box {
-    position: absolute;
-    background: rgba(30, 30, 30, 0.9);
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-    width: fit-content;
-    font-size: 14px;
-    color: #eee;
-    backdrop-filter: blur(4px);
+.size-box-container {
+    position: static;
+    background: rgb(40 40 40 / 44%);
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    border: 1px solid #555;
+    backdrop-filter: blur(5px);
+    transition: var(--transition);
+    max-height: 97vh;
+    overflow-y: auto;
 }
 
-.size-box-input-row {
+/* Pastikan hanya ada satu size box yang terlihat */
+.size-box-container:not(:first-child) {
+    display: none !important;
+}
+
+.size-box-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 2px;
-    margin: 5px 0;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #555;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-.size-box-input-row input {
-    width: 20px;
-    padding: 4px 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    color: white;
-    font-size: 0.8rem;
-    text-align: center;
-}
+
+
 
 .size-box-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 12px;
 }
 
-.size-box-input-group {
+.size-input-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 4px;
 }
 
-.size-box-input-group label {
-    min-width: 40px;
+.size-input-group label {
+    font-size: 12px;
+    color: #ccc;
 }
 
-.size-box-input-group input {
-    width: 40px;
-    padding: 2px 4px;
-    background: #222;
-    border: 1px solid #444;
-    color: #eee;
-    border-radius: 3px;
-}
-
-.size-box-options {
-    grid-column: span 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2px;
-}
-
-.checkbox-option {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.size-box-actions {
-    grid-column: span 2;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 4px;
-}
-
-.size-box input[type="number"] {
-    width: 80px;
-    padding: 4px 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.size-input-group input {
+    padding: 6px 8px;
+    background: #333;
+    border: 1px solid #555;
     border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.size-input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.position-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0;
+}
+
+.position-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-nav {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #444;
+    border: none;
     color: white;
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-.size-box-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-    margin-top: 8px;
-}
-
-.size-box-buttons button {
-    padding: 4px;
-    margin: 0;
-    font-size: 0.7rem;
-    min-width: 0;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.size-box-buttons button i {
-    font-size: 0.8rem;
+.btn-nav:hover {
+    background: #555;
+    transform: scale(1.1);
 }
 
-.size-box-buttons button {
-    position: relative;
+.btn-center {
+    background: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
 }
 
-
-.size-box-buttons button::after {
-    content: attr(title);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
+.btn-center:hover {
+    background: var(--primary-hover);
 }
 
-.size-box-buttons button:hover::after {
-    opacity: 1;
+.advanced-options {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
 }
 
-
-.size-box-input-row {
+.option-checkbox {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 8px;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
 }
 
-.size-box-input-row input {
-    width: 50px;
-    padding: 4px;
-    font-size: 0.8rem;
-    text-align: center;
+.blend-mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.blend-mode-selector label {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.blend-mode-selector select {
+    padding: 5px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.btn-invert {
+    padding: 6px 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-invert:hover {
+    background: #444;
+}
+
+.btn-invert.active {
+    background: var(--primary-color);
+    border-color: var(--primary-hover);
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-action {
+    padding: 6px;
+    background: #333;
+    border: 1px solid #555;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.btn-action:hover {
+    background: #444;
+}
+
+.btn-action .icon {
+    font-size: 14px;
+}
+
+.btn-delete {
+    background: #5a1a1a;
+    border-color: #7a2a2a;
+}
+
+.btn-delete:hover {
+    background: #7a2a2a;
 }
 
 .size-box-confirm-btn {
     width: 100%;
-    padding: 6px;
-    margin-top: 5px;
+    padding: 8px;
+    margin-top: 8px;
     background: var(--success-color);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
 }
 
 .size-box-confirm-btn:hover {
     background: #218838;
-}
-
-
-@keyframes popIn {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.size-box button {
-    padding: 6px 10px;
-    margin: 2px;
-    font-size: 0.85rem;
-    width: max-content;
 }
 
 .price-display {
@@ -642,10 +714,11 @@ button.icon-button {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.05);
     animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Pastikan konten tidak kepotong */
     max-height: calc(100vh - 80px);
     overflow-y: auto;
+    
 }
+
 
 @keyframes slideUp {
     from { transform: translateY(20px); opacity: 0; }
@@ -701,21 +774,11 @@ button.icon-button {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.close-btn::before, .close-btn::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: white;
-}
 
-.close-btn::before {
-    transform: rotate(45deg);
-}
 
-.close-btn::after {
-    transform: rotate(-45deg);
-}
+
+
+
 
 .price-detail-item {
     display: flex;
@@ -890,8 +953,6 @@ button.icon-button {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-
-
 /* Tooltip styles */
 .tooltip {
     position: relative;
@@ -969,9 +1030,6 @@ button.icon-button {
 @keyframes slideDown {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
-}
-.size-box.position-top {
-    animation: slideDown 0.3s ease-out;
 }
 
 /* Tambahkan di bagian CSS */
@@ -1055,6 +1113,13 @@ button.icon-button {
     width: 1000px;
     max-width: 100%;
     box-sizing: border-box;
+}
+.preview-actions button:nth-child(2) {
+    background: #27ae60;
+}
+
+.preview-actions button:nth-child(2):hover {
+    background: #219a52;
 }
 
 #preview-download-header {
@@ -1145,6 +1210,22 @@ button.icon-button {
     transition: transform 0.3s ease;
     font-size: 0.8rem;
     margin-left: 10px;
+}
+
+.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+}
+
+.size-box-content {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.size-box-container.collapsed .size-box-content {
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
 }
 
 .section-content {
@@ -1294,230 +1375,6 @@ input:checked + .slider:before {
     box-shadow: 0 0 0 1px var(--primary-color);
 }
 
-/* Animasi untuk size box */
-.size-box {
-    transition: opacity 0.2s, transform 0.2s;
-}
-
-.size-box-content {
-    transition: all 0.2s ease;
-}
-
-/* Container Utama */
-.size-box-container {
-    position: absolute;
-    background: rgba(40, 40, 40, 0.95);
-    border-radius: 10px;
-    padding: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    width: 260px;
-    z-index: 1000;
-    border: 1px solid #555;
-    backdrop-filter: blur(5px);
-    border-bottom-left-radius: 13%;
-}
-
-/* Header */
-.size-box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #555;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    color: #aaa;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0 5px;
-}
-
-.btn-close:hover {
-    color: #fff;
-}
-
-/* Grid Layout */
-.size-box-grid {
-    display: grid;
-    gap: 12px;
-}
-
-/* Input Group */
-.size-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.size-input-group label {
-    font-size: 12px;
-    color: #ccc;
-}
-
-.size-input-group input {
-    padding: 6px 8px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 13px;
-}
-
-.size-input-group input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 1px var(--primary-color);
-}
-
-/* Position Controls */
-.position-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin: 8px 0;
-}
-
-.position-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.btn-nav {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #444;
-    border: none;
-    color: white;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #555;
-    transform: scale(1.1);
-}
-
-.btn-center {
-    background: var(--primary-color);
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-}
-
-.btn-center:hover {
-    background: var(--primary-dark);
-}
-
-/* Advanced Options */
-.advanced-options {
-    display: grid;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.option-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.blend-mode-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.blend-mode-selector label {
-    font-size: 12px;
-    color: #ccc;
-}
-
-.blend-mode-selector select {
-    padding: 5px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 12px;
-}
-
-.btn-invert {
-    padding: 6px 10px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-}
-
-.btn-invert:hover {
-    background: #444;
-}
-
-.btn-invert.active {
-    background: var(--primary-color);
-    border-color: var(--primary-dark);
-}
-
-/* Action Buttons */
-.action-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.btn-action {
-    padding: 6px;
-    background: #333;
-    border: 1px solid #555;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    transition: all 0.2s;
-}
-
-.btn-action:hover {
-    background: #444;
-}
-
-.btn-action .icon {
-    font-size: 14px;
-}
-
-.btn-delete {
-    background: #5a1a1a;
-    border-color: #7a2a2a;
-}
-
-.btn-delete:hover {
-    background: #7a2a2a;
-}
-
 .footer-note {
     position: fixed;
     bottom: 0;
@@ -1538,6 +1395,7 @@ input:checked + .slider:before {
     font-style: italic;
     color: rgba(255,255,255,0.7);
     font-size: 0.9rem;
+    position: static;
 }
 
 .social-links {
@@ -1563,9 +1421,148 @@ input:checked + .slider:before {
 .social-link i {
     font-size: 1.2rem;
 }
+
+.mockup-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.size-box-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    z-index: 10;
+}
+
+.size-box-scrollable {
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-elevated-2);
+}
+
+.size-box-scrollable::-webkit-scrollbar {
+    width: 4px;
+}
+
+.size-box-scrollable::-webkit-scrollbar-track {
+    background: var(--background-elevated-2);
+    border-radius: 2px;
+}
+
+.size-box-scrollable::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: all 1s ease-out;
+    animation: fadeOut 2s 2s forwards;
+}
+
+.splash-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-content {
+    text-align: center;
+    transform: translateY(-20px);
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+.splash-content h1 {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.splash-content p {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    width: 40%;
+    height: 100%;
+    background: var(--primary-color);
+    animation: loading 2s ease-in-out infinite;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes loading {
+    0% {
+        left: -40%;
+    }
+    100% {
+        left: 120%;
+    }
+}
     </style>
 </head>
 <body>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1>Selamat Datang</h1>
+            <p>di Aplikasi Custom T-Shirt Pricing</p>
+            <p2>by. kanvas merchandise</p2>
+            <div class="loading-bar"></div>
+        </div>
+    </div>
     <div class="studio-container">
         <div class="controls-panel">
             <h2>APLIKASI CUSTOM TSHIRT PRICING</h2>
@@ -1598,95 +1595,96 @@ input:checked + .slider:before {
                 <button onclick="uploadBack.click()">📁 Belakang</button>
             </div>
             
-            <!-- Ganti bagian controls-section pengaturan harga dengan ini -->
-<!-- Di dalam controls-panel -->
-<div class="controls-section">
-    <div class="section-header" onclick="togglePriceSettings()">
-        <h3>⚙️ Pengaturan Harga</h3>
-        <span class="collapse-icon">▼</span>
-    </div>
-    <div class="section-content" id="priceSettings">
-        <div class="input-group">
-            <label>Harga per cm²:
-                <input type="number" id="pricePerCm" value="20" class="locked-input" readonly>
-            </label>
-        </div>
-        <div class="input-group">
-            <label>Harga Kaos:
-                <input type="number" id="basePrice" value="40000" class="locked-input" readonly>
-            </label>
-        </div>
-        <div class="input-group">
-            <label>Biaya Desain:
-                <input type="number" id="designFee" value="0" class="locked-input" readonly>
-            </label>
-        </div>
-        <button class="admin-btn" onclick="showLoginModal()">🔑 Ubah Harga Dasar</button>
-    </div>
-</div>
+            <div class="controls-section">
+                <div class="section-header" onclick="togglePriceSettings()">
+                    <h3>⚙️ Pengaturan Harga</h3>
+                    <span class="collapse-icon">▼</span>
+                </div>
+                <div class="section-content" id="priceSettings">
+                    <div class="input-group">
+                        <label>Harga per cm²:
+                            <input type="number" id="pricePerCm" value="20" class="locked-input" readonly>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label>Harga Kaos:
+                            <input type="number" id="basePrice" value="40000" class="locked-input" readonly>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label>Biaya Desain:
+                            <input type="number" id="designFee" value="0" class="locked-input" readonly>
+                        </label>
+                    </div>
+                    <button class="admin-btn" onclick="showLoginModal()">🔑 Ubah Harga Dasar</button>
+                </div>
+            </div>
 
-<!-- Tambahkan modal login sebelum penutup body -->
-<div class="login-modal" id="loginModal">
-    <div class="login-box">
-        <h3>Login Admin</h3>
-        <p>Masukkan password untuk mengubah harga:</p>
-        <input type="password" id="adminPassword" placeholder="Password">
-        <div class="error-message" id="loginError">Password salah!</div>
-        <button onclick="checkAdminPassword()">Masuk</button>
-        <button class="secondary" onclick="closeLoginModal()">Batal</button>
-    </div>
-</div>
-<div class="price-display">
-    <div class="price-total">
-        <div class="total-label">TOTAL HARGA</div>
-        <div class="total-amount" id="totalPrice">Rp 0</div>
-    </div>
+            <div class="login-modal" id="loginModal">
+                <div class="login-box">
+                    <h3>Login Admin</h3>
+                    <p>Masukkan password untuk mengubah harga:</p>
+                    <input type="password" id="adminPassword" placeholder="Password">
+                    <div class="error-message" id="loginError">Password salah!</div>
+                    <button onclick="checkAdminPassword()">Masuk</button>
+                    <button class="secondary" onclick="closeLoginModal()">Batal</button>
+                </div>
+            </div>
+            <div class="price-display">
+                <div class="price-total">
+                    <div class="total-label">TOTAL HARGA</div>
+                    <div class="total-amount" id="totalPrice">Rp 0</div>
+                </div>
 
-    <div class="price-header">
-        <div class="price-icon">💵</div>
-        <h3>RINCIAN HARGA</h3>
-    </div>
-    
-    <div class="price-items">
-        <div class="price-item">
-            <span class="price-label">Kaos Polos</span>
-            <span class="price-value" id="basePriceDisplay">Rp 0</span>
-        </div>
-        <div class="price-item" id="frontPriceItem">
-            <span class="price-label">Sablon Depan</span>
-            <span class="price-value" id="frontPriceDisplay">-</span>
-        </div>
-        <div class="price-item" id="backPriceItem">
-            <span class="price-label">Sablon Belakang</span>
-            <span class="price-value" id="backPriceDisplay">-</span>
-        </div>
-        <div class="price-item">
-            <span class="price-label">Biaya Desain</span>
-            <span class="price-value" id="designFeeDisplay">Free</span>
-        </div>
-    </div>
-    
-    
-    
-    <button class="preview-btn" onclick="showPreview()">
-        <span class="btn-icon">👁️</span>
-        <span class="btn-text">PREVIEW DESAIN</span>
-    </button>
-</div>
+                <div class="price-header">
+                    <div class="price-icon">💵</div>
+                    <h3>RINCIAN HARGA</h3>
+                </div>
+                
+                <div class="price-items">
+                    <div class="price-item">
+                        <span class="price-label">Kaos Polos</span>
+                        <span class="price-value" id="basePriceDisplay">Rp 0</span>
+                    </div>
+                    <div class="price-item" id="frontPriceItem">
+                        <span class="price-label">Sablon Depan</span>
+                        <span class="price-value" id="frontPriceDisplay">-</span>
+                    </div>
+                    <div class="price-item" id="backPriceItem">
+                        <span class="price-label">Sablon Belakang</span>
+                        <span class="price-value" id="backPriceDisplay">-</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="price-label">Biaya Desain</span>
+                        <span class="price-value" id="designFeeDisplay">Free</span>
+                    </div>
+                </div>
+                
+                <button class="preview-btn" onclick="showPreview()">
+                    <span class="btn-icon">👁️</span>
+                    <span class="btn-text">PREVIEW DESAIN</span>
+                </button>
+            </div>
         </div>
         <div class="design-canvas">
             <div class="mockup-frame" id="frame-front">
-                <img id="mockup-front" class="mockup" src="https://i.imgur.com/kXuLU9B.jpeg" crossorigin="anonymous">
-                <div class="overlay-container" id="overlay-container-front"></div>
+                <div class="mockup-container">
+                    <img id="mockup-front" class="mockup" src="https://i.imgur.com/kXuLU9B.jpeg" crossorigin="anonymous">
+                    <div class="overlay-container" id="overlay-container-front"></div>
+                    <div class="size-box-wrapper" id="size-box-wrapper-front"></div>
+                </div>
             </div>
             <div class="mockup-frame" id="frame-back">
-                <img id="mockup-back" class="mockup" src="https://i.imgur.com/hUyJtaF.jpeg" crossorigin="anonymous">
-                <div class="overlay-container" id="overlay-container-back"></div>
+                <div class="mockup-container">
+                    <img id="mockup-back" class="mockup" src="https://i.imgur.com/hUyJtaF.jpeg" crossorigin="anonymous">
+                    <div class="overlay-container" id="overlay-container-back"></div>
+                    <div class="size-box-wrapper" id="size-box-wrapper-back"></div>
+                </div>
             </div>
         </div>
         <div class="footer-note">
             <div class="footer-text">
-                Aplikasi dibuat oleh Kanvas Merchandise - Workshop: Jl. Riau Barat No.21, Kec. Sananwetan, Kota Blitar
+                All right reserved | Kanvas Merchandise - Workshop: Jl. Riau Barat No.21, Kec. Sananwetan, Kota Blitar
             </div>
             <div class="social-links">
                 <a href="https://wa.me/6282257423324" class="social-link" target="_blank">
@@ -1705,7 +1703,14 @@ input:checked + .slider:before {
         </div>
     </div>
 
-    
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-container">
+            <div id="cropImageContainer" style="position:relative"></div>
+            <div style="text-align:center; margin-top:20px;">
+               
+            </div>
+        </div>
+    </div>
 
     <div class="preview-modal">
         <div class="preview-content">
@@ -1723,8 +1728,6 @@ input:checked + .slider:before {
                 </div>
             </div>
 
-            
-            
             <div class="price-summary">
                 <h3 style="margin-bottom:15px;color:var(--primary-color);border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;">
                     📋 Rincian Biaya
@@ -1754,26 +1757,18 @@ input:checked + .slider:before {
                 
                 <div class="price-total">
                     <div class="total-label">TOTAL HARGA SATUAN</div>
-                    <div class="total-amount" id="preview-total-price">Rp 0</div>
-                    
+                    <div class="total-amount" id="preview-total-price">Rp 0</span>
                 </div>
             </div>
 
-            
-            
             <div class="preview-actions">
-                <button onclick="downloadCombinedPreview()" class="combined-btn">⬇ Download </button>
+                <button onclick="downloadExactPreview()">⬇ Unduh Desain Saja</button>
+                <button onclick="downloadCombinedPreview()">⬇ Unduh Desain + Harga</button>
+                
             </div>
         </div>
     </div>
-    <div class="crop-modal" id="cropModal">
-        <div class="crop-container">
-            <div id="cropImageContainer" style="position:relative"></div>
-            <div style="text-align:center; margin-top:20px;">
-               
-            </div>
-        </div>
-    </div>
+    
     <div id="preview-download-area" style="display:none;">
         <div id="preview-download-header">
             <span>🖼️</span>
@@ -1800,66 +1795,64 @@ input:checked + .slider:before {
     </div>
 
 
-    
+
+
 <script>
     const colorData = {
-    white: {
-        short: {
-            front: 'https://i.imgur.com/kXuLU9B.jpeg',
-            back: 'https://i.imgur.com/hUyJtaF.jpeg'
+        white: {
+            short: {
+                front: 'https://i.imgur.com/kXuLU9B.jpeg',
+                back: 'https://i.imgur.com/hUyJtaF.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/XIPmA9f.jpeg',
+                back: 'https://i.imgur.com/Xc7DXCN.jpeg'
+            }
         },
-        long: {
-            front: 'https://i.imgur.com/XIPmA9f.jpeg',
-            back: 'https://i.imgur.com/Xc7DXCN.jpeg'
-        }
-    },
-    black: {
-        short: {
-            front: 'https://i.imgur.com/IkCWJ36.jpeg',
-            back: 'https://i.imgur.com/0xVvoQN.jpeg'
+        black: {
+            short: {
+                front: 'https://i.imgur.com/IkCWJ36.jpeg',
+                back: 'https://i.imgur.com/0xVvoQN.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/zeO3yPX.jpeg',
+                back: 'https://i.imgur.com/1Zgey6R.jpeg'
+            }
         },
-        long: {
-            front: 'https://i.imgur.com/zeO3yPX.jpeg',
-            back: 'https://i.imgur.com/1Zgey6R.jpeg'
-        }
-    },
-    red: {
-        short: {
-            front: 'https://i.imgur.com/LOyOlVq.jpeg',
-            back: 'https://i.imgur.com/5URYLlI.jpeg'
+        red: {
+            short: {
+                front: 'https://i.imgur.com/LOyOlVq.jpeg',
+                back: 'https://i.imgur.com/5URYLlI.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/PoZw4T8.jpeg',
+                back: 'https://i.imgur.com/nONwGpc.jpeg'
+            }
         },
-        long: {
-            front: 'https://i.imgur.com/PoZw4T8.jpeg',
-            back: 'https://i.imgur.com/nONwGpc.jpeg'
+        navyblue: {
+            short: {
+                front: 'https://i.imgur.com/iwEUANU.jpeg',
+                back: 'https://i.imgur.com/hL2zqOk.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/IJHOODo.jpeg',
+                back: 'https://i.imgur.com/pUJDUvo.jpeg'
+            }
         }
-    },
-    navyblue: {
-        short: {
-            front: 'https://i.imgur.com/iwEUANU.jpeg',
-            back: 'https://i.imgur.com/hL2zqOk.jpeg'
-        },
-        long: {
-            front: 'https://i.imgur.com/IJHOODo.jpeg',
-            back: 'https://i.imgur.com/pUJDUvo.jpeg'
-        }
-    },
-};
+    };
     
-let sizeBoxVisible = {
-    front: true,
-    back: true
-};
     let currentColor = 'white';
     const uploadFront = document.getElementById('uploadFront');
     const uploadBack = document.getElementById('uploadBack');
     const mockups = { front: document.getElementById('mockup-front'), back: document.getElementById('mockup-back') };
     const containers = { front: document.getElementById('overlay-container-front'), back: document.getElementById('overlay-container-back') };
+    const sizeBoxWrappers = { front: document.getElementById('size-box-wrapper-front'), back: document.getElementById('size-box-wrapper-back') };
     const transforms = { front: {}, back: {} };
 
     document.getElementById('sleeveType').addEventListener('change', function() {
-    updateMockupImage();
-    updatePrice();
-});
+        updateMockupImage();
+        updatePrice();
+    });
 
     document.querySelectorAll('.color-swatch').forEach(s => s.addEventListener('click', () => {
         document.querySelectorAll('.color-swatch').forEach(e => e.classList.remove('selected'));
@@ -1870,17 +1863,17 @@ let sizeBoxVisible = {
 
     uploadFront.addEventListener('change', e => handleUpload(e, 'front'));
     uploadBack.addEventListener('change', e => handleUpload(e, 'back'));
+
     ['pricePerCm','basePrice','designFee'].forEach(id => {
-    const input = document.getElementById(id);
-    input.addEventListener('input', function() {
-        if (isAdmin) {
-            updatePrice();
-        } else {
-            // Reset nilai jika bukan admin mencoba mengubah
-            this.value = this.defaultValue;
-        }
+        const input = document.getElementById(id);
+        input.addEventListener('input', function() {
+            if (isAdmin) {
+                updatePrice();
+            } else {
+                this.value = this.defaultValue;
+            }
+        });
     });
-});
 
     function handleUpload(e, side) {
         const file = e.target.files[0]; 
@@ -1892,29 +1885,31 @@ let sizeBoxVisible = {
     }
 
     function createOverlay(src, side) {
-    const el = document.createElement('img');
-    el.src = src;
-    el.className = 'design-overlay';
-    containers[side].appendChild(el);
-    
-    // Terapkan filter awal
-    applyImageFilters(el, transforms[side] || { inverted: false });
-    
-    initOverlay(el, side);
-}
-    
+        const el = document.createElement('img');
+        el.src = src;
+        el.className = 'design-overlay';
+        containers[side].appendChild(el);
+        
+        applyImageFilters(el, transforms[side] || { inverted: false });
+        
+        initOverlay(el, side);
+    }
 
     function initOverlay(el, side) {
-        transforms[side] = {
+    // HENTIKAN INTERAKSI SEBELUMNYA JIKA ADA
+    if (transforms[side]?.interactable) {
+        transforms[side].interactable.unset();
+    }
+
+    transforms[side] = {
         x: 0, y: 0, width: 0, height: 0,
         angle: 0, ar: 1,
         box: null,
         proportional: true,
-        interactable: null
-        
-        
+        interactable: null,
+        inverted: false,
+        blendMode: 'normal'
     };
-    
 
     el.onload = () => {
         const cont = containers[side];
@@ -1926,123 +1921,107 @@ let sizeBoxVisible = {
         transforms[side].height = w / ar;
         centerOverlay(side);
 
-        const box = document.createElement('div');
-        box.className = 'size-box';
-        cont.appendChild(box);
-        transforms[side].box = box;
-
-        const interactable = interact(el);
-        transforms[side].interactable = interactable; // <== SIMPAN INTERACT INSTANCE
-
-        applyInteractOptions(side); // <== PANGGIL KONFIGURASI
-
+        // PASTIKAN HANYA ADA SATU SIZE BOX
+        if (!transforms[side].box) {
+            createSizeBox(side);
+        }
+        
+        transforms[side].interactable = interact(el);
+        applyInteractOptions(side);
         update(el, side);
         updatePrice();
     };
 }
-function toggleInvert(side) {
-    const overlay = containers[side].querySelector('.design-overlay');
-    if (overlay) {
-        transforms[side].inverted = !transforms[side].inverted;
-        applyImageFilters(overlay, transforms[side]);
-        updateBox(side); // Refresh tampilan sizebox
-    }
+
+    function createSizeBox(side) {
+    // HAPUS DULU SEMUA SIZE BOX YANG ADA
+    sizeBoxWrappers[side].innerHTML = '';
+    
+    const box = document.createElement('div');
+    box.className = 'size-box-container';
+    sizeBoxWrappers[side].appendChild(box);
+    transforms[side].box = box;
+    updateBox(side);
 }
 
-function applyImageFilters(element, transform) {
-    let filter = '';
-    
-    if (transform.inverted) {
-        filter += 'invert(1) ';
+    function applyInteractOptions(side) {
+        const el = containers[side].querySelector('.design-overlay');
+        const t = transforms[side];
+
+        if (!el || !t || !t.interactable) return;
+
+        const interactable = t.interactable;
+        interactable.unset();
+
+        interact(el)
+            .draggable({
+                listeners: {
+                    move(ev) {
+                        t.x += ev.dx;
+                        t.y += ev.dy;
+                        update(el, side);
+                    }
+                }
+            })
+            .resizable({
+                edges: { left: true, right: true, top: true, bottom: true },
+                modifiers: [
+                    interact.modifiers.aspectRatio({
+                        ratio: t.proportional ? t.ar : 'preserve',
+                        enabled: t.proportional
+                    })
+                ],
+                listeners: {
+                    move(ev) {
+                        t.width = ev.rect.width;
+                        t.height = ev.rect.height;
+                        t.x += ev.deltaRect.left;
+                        t.y += ev.deltaRect.top;
+                        update(el, side);
+                    }
+                }
+            })
+            .gesturable({
+                listeners: {
+                    move(ev) {
+                        t.angle += ev.da;
+                        update(el, side);
+                    }
+                }
+            });
+
+        t.interactable = interactable;
     }
-    
-    // Tambahkan blend mode jika ada
-    if (transform.blendMode && transform.blendMode !== 'normal') {
-        element.style.mixBlendMode = transform.blendMode;
-    } else {
-        element.style.mixBlendMode = 'normal';
-    }
-    
-    element.style.filter = filter;
-    element.style.opacity = transform.inverted ? '0.9' : '1';
-}
-
-function applyInteractOptions(side) {
-    const el = containers[side].querySelector('.design-overlay');
-    const t = transforms[side];
-
-    if (!el || !t || !t.interactable) return;
-
-    const interactable = t.interactable;
-    interactable.unset(); // reset dulu agar tidak conflict
-
-    interact(el)
-        .draggable({
-            listeners: {
-                move(ev) {
-                    t.x += ev.dx;
-                    t.y += ev.dy;
-                    update(el, side);
-                }
-            }
-        })
-        .resizable({
-            edges: { left: true, right: true, top: true, bottom: true },
-            modifiers: [
-                interact.modifiers.aspectRatio({
-                    ratio: t.proportional ? t.ar : 'preserve',
-                    enabled: t.proportional // ini penting!
-                })
-            ],
-            listeners: {
-                move(ev) {
-                    t.width = ev.rect.width;
-                    t.height = ev.rect.height;
-                    t.x += ev.deltaRect.left;
-                    t.y += ev.deltaRect.top;
-                    update(el, side);
-                }
-            }
-        })
-        .gesturable({
-            listeners: {
-                move(ev) {
-                    t.angle += ev.da;
-                    update(el, side);
-                }
-            }
-        });
-
-    t.interactable = interactable;
-}
-
 
     function update(el, side) {
         const t = transforms[side]; 
-    el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
-    el.style.width = t.width + 'px'; 
-    el.style.height = t.height + 'px'; 
-    updateBox(side); // Pastikan ini tetap ada!
-}
+        el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
+        el.style.width = t.width + 'px'; 
+        el.style.height = t.height + 'px'; 
+        updateBox(side);
+    }
 
-function updateBox(side) {
-    const t = transforms[side];
-    const cont = containers[side];
-    const box = t.box;
-    if (!box) return;
+    function updateBox(side) {
+        const t = transforms[side];
+        const cont = containers[side];
+        const box = t.box;
+        if (!box) return;
 
-    const wCm = (t.width / cont.offsetWidth) * 104;
-    const hCm = (t.height / cont.offsetHeight) * 104;
+        const wCm = (t.width / cont.offsetWidth) * 104;
+        const hCm = (t.height / cont.offsetHeight) * 104;
+        const isCollapsed = box.classList.contains('collapsed');
 
-    box.innerHTML = `
-        <div class="size-box-container">
+        box.innerHTML = `
+        <div class="size-box-header" onclick="toggleSizeBox('${side}')">
+            <span>Edit Design</span>
+            <span class="collapse-icon">▼</span>
+        </div>
+        <div class="size-box-content" style="${isCollapsed ? 'display:none' : ''}">
             <div class="size-box-header">
                 <span>Edit Design</span>
-                <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
             </div>
             
             <div class="size-box-grid">
-                <!-- Dimensi -->
                 <div class="size-input-group">
                     <label>Width (cm):</label>
                     <input type="number" step="0.1" value="${wCm.toFixed(1)}" id="widthInput-${side}">
@@ -2052,7 +2031,6 @@ function updateBox(side) {
                     <input type="number" step="0.1" value="${hCm.toFixed(1)}" id="heightInput-${side}">
                 </div>
                 
-                <!-- Kontrol Navigasi -->
                 <div class="position-controls">
                     <div class="position-row">
                         <button class="btn-nav" onclick="moveOverlay('${side}', 0, -10)">↑</button>
@@ -2067,7 +2045,6 @@ function updateBox(side) {
                     </div>
                 </div>
                 
-                <!-- Opsi Lanjutan -->
                 <div class="advanced-options">
                     <label class="option-checkbox">
                         <input type="checkbox" ${t.proportional ? 'checked' : ''} 
@@ -2083,8 +2060,7 @@ function updateBox(side) {
                             <option value="screen" ${t.blendMode === 'screen' ? 'selected' : ''}>Screen</option>
                             <option value="overlay" ${t.blendMode === 'overlay' ? 'selected' : ''}>Overlay</option>
                         </select>
-                    </div>
-                    
+                    </div>                 
                     <button class="btn-invert ${t.inverted ? 'active' : ''}" 
                             onclick="toggleInvert('${side}')">
                         ${t.inverted ? '☀️ Original Colors' : '🌑 Invert Colors'}
@@ -2092,7 +2068,6 @@ function updateBox(side) {
                 </div>
             </div>
             
-            <!-- Action Buttons -->
             <div class="action-buttons">
                 <button class="btn-action" onclick="rotateOverlay('${side}', 90)">
                     <span class="icon">↻</span> Rotate
@@ -2103,415 +2078,330 @@ function updateBox(side) {
                 <button class="btn-action btn-delete" onclick="deleteOverlay('${side}')">
                     <span class="icon">🗑️</span> Delete
                 </button>
-                
             </div>
-        </div>
-    `;
-
-    // Setup event listeners
-    setupEnhancedInputControls(side);
-    positionSizeBox(side);
-}
-
-// Fungsi untuk pergerakan overlay
-function moveOverlay(side, dx, dy) {
-    const t = transforms[side];
-    t.x += dx;
-    t.y += dy;
-    update(containers[side].querySelector('.design-overlay'), side);
-}
-
-// Fungsi setup kontrol input yang lebih baik
-function setupEnhancedInputControls(side) {
-    const widthInput = document.getElementById(`widthInput-${side}`);
-    const heightInput = document.getElementById(`heightInput-${side}`);
-    
-    if (widthInput && heightInput) {
-        // Gunakan input yang lebih responsif
-        widthInput.addEventListener('change', () => applySizeFromInput(side, 'width'));
-        heightInput.addEventListener('change', () => applySizeFromInput(side, 'height'));
-        
-        // Keyboard controls
-        widthInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') applySizeFromInput(side, 'width');
-        });
-        heightInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') applySizeFromInput(side, 'height');
-        });
-    }
-}
-
-function toggleSizeBoxVisibility(side, isVisible) {
-    sizeBoxVisible[side] = isVisible;
-    const box = transforms[side].box;
-    if (box) {
-        const content = box.querySelector('.size-box-content');
-        if (content) {
-            content.style.display = isVisible ? 'block' : 'none';
-        }
-    }
-}
-
-function setupSizeInputs(side) {
-    const widthInput = document.getElementById(`widthInput-${side}`);
-    const heightInput = document.getElementById(`heightInput-${side}`);
-    
-    if (widthInput && heightInput) {
-        // Hapus event listener lama jika ada
-        widthInput.oninput = null;
-        heightInput.oninput = null;
-        
-        // Tambahkan event listener baru dengan debounce
-        widthInput.oninput = debounce(() => applySizeFromInput(side, 'width'), 300);
-        heightInput.oninput = debounce(() => applySizeFromInput(side, 'height'), 300);
-        
-        // Tambahkan keyboard shortcuts
-        widthInput.addEventListener('keydown', handleSizeInputKeydown);
-        heightInput.addEventListener('keydown', handleSizeInputKeydown);
-    }
-}
-
-// Fungsi debounce untuk input
-function debounce(func, timeout = 300) {
-    let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => { func.apply(this, args); }, timeout);
-    };
-}
-
-// Keyboard shortcuts untuk input ukuran
-function handleSizeInputKeydown(e) {
-    const input = e.target;
-    const side = input.dataset.side;
-    const dim = input.dataset.dim;
-    
-    // Enter untuk apply perubahan
-    if (e.key === 'Enter') {
-        confirmSizeChange(side);
-        e.preventDefault();
-    }
-    // Arrow up/down untuk increment/decrement
-    else if (e.key === 'ArrowUp') {
-        input.stepUp();
-        applySizeFromInput(side, dim);
-        e.preventDefault();
-    }
-    else if (e.key === 'ArrowDown') {
-        input.stepDown();
-        applySizeFromInput(side, dim);
-        e.preventDefault();
-    }
-}
-
-// Fungsi untuk setup klik overlay
-function setupOverlayClickHandler(side) {
-    const overlay = containers[side].querySelector('.design-overlay');
-    if (overlay) {
-        // Hapus event listener lama jika ada
-        overlay.onclick = null;
-        
-        // Tambahkan event listener baru
-        overlay.onclick = (e) => {
-            // Jika size box hidden, tampilkan saat overlay diklik
-            if (!sizeBoxVisible[side]) {
-                toggleSizeBoxVisibility(side, true);
-                // Update checkbox
-                const checkbox = transforms[side].box?.querySelector('.toggle-box input');
-                if (checkbox) checkbox.checked = true;
-            }
             
-            // Hentikan propagasi agar tidak mengganggu drag
-            e.stopPropagation();
-        };
-    }
-}
+            <button class="size-box-confirm-btn" onclick="confirmSizeChange('${side}')">UPDATE</button>
+        `;
 
-function positionSizeBox(side) {
+        if (isCollapsed) {
+        box.classList.add('collapsed');
+    }
+
+        setupInputControls(side);
+    }
+
+    function toggleSizeBox(side) {
     const t = transforms[side];
-    const cont = containers[side];
-    const box = t.box;
-    const overlay = cont.querySelector('.design-overlay');
+    if (!t.box) return;
     
-    if (!box || !overlay) return;
-
-    const overlayRect = overlay.getBoundingClientRect();
-    const containerRect = cont.getBoundingClientRect();
-    const boxRect = box.getBoundingClientRect();
-
-    // Cari posisi optimal - prioritaskan pojok kanan atas overlay
-    let topPosition = overlayRect.top - containerRect.top - boxRect.height - 5;
-    let leftPosition = overlayRect.right - containerRect.left - boxRect.width;
-    
-    // Jika tidak cukup ruang di atas, taruh di bawah
-    if (topPosition < 10) {
-        topPosition = overlayRect.bottom - containerRect.top + 5;
-    }
-    
-    // Jika tidak cukup ruang di kanan, taruh di kiri
-    if (leftPosition + boxRect.width > containerRect.width - 10) {
-        leftPosition = overlayRect.left - containerRect.left - boxRect.width;
-        
-        // Jika masih tidak cukup, paksa di dalam container
-        if (leftPosition < 10) {
-            leftPosition = 10;
-        }
-    }
-
-    // Pastikan tidak keluar dari container
-    topPosition = Math.max(10, Math.min(topPosition, containerRect.height - boxRect.height - 10));
-    leftPosition = Math.max(10, Math.min(leftPosition, containerRect.width - boxRect.width - 10));
-
-    // Terapkan posisi dengan animasi halus
-    box.style.position = 'absolute';
-    box.style.top = `${topPosition}px`;
-    box.style.left = `${leftPosition}px`;
-    box.style.opacity = '0';
-    box.style.transition = 'opacity 0.2s, top 0.2s, left 0.2s';
-    
-    setTimeout(() => {
-        box.style.opacity = '1';
-    }, 10);
-}
-
-
-function confirmSizeChange(side) {
-    const widthInput = document.getElementById(`widthInput-${side}`);
-    const heightInput = document.getElementById(`heightInput-${side}`);
-    const cont = containers[side];
-    const t = transforms[side];
-
-    const widthCm = parseFloat(widthInput.value) || 0;
-    const heightCm = parseFloat(heightInput.value) || 0;
-
-    t.width = (widthCm / 104) * cont.offsetWidth;
-    t.height = (heightCm / 104) * cont.offsetHeight;
-
-    const overlay = cont.querySelector('.design-overlay');
-    update(overlay, side);
-    updatePrice(); // Update harga setelah perubahan dikonfirmasi
-
-    // Beri feedback visual
-    const btn = t.box.querySelector('.size-box-confirm-btn');
-    if (btn) {
-        btn.textContent = '✓ UPDATED';
-        setTimeout(() => {
-            btn.textContent = 'UPDATED';
-        }, 1000);
-    }
-}
-
-
-function applySizeFromInput(side, dimension) {
-    const input = document.getElementById(`${dimension}Input-${side}`);
-    const value = parseFloat(input.value) || 0;
-    const cont = containers[side];
-    const t = transforms[side];
-
-    if (dimension === 'width') {
-        t.width = (value / 104) * cont.offsetWidth;
-        if (t.proportional) {
-            t.height = t.width / t.ar;
-            const heightInput = document.getElementById(`heightInput-${side}`);
-            if (heightInput) heightInput.value = (t.height / cont.offsetHeight * 104).toFixed(1);
-        }
+    t.box.classList.toggle('collapsed');
+    const content = t.box.querySelector('.size-box-content');
+    if (t.box.classList.contains('collapsed')) {
+        content.style.display = 'none';
     } else {
-        t.height = (value / 104) * cont.offsetHeight;
-        if (t.proportional) {
-            t.width = t.height * t.ar;
-            const widthInput = document.getElementById(`widthInput-${side}`);
-            if (widthInput) widthInput.value = (t.width / cont.offsetWidth * 104).toFixed(1);
-        }
-    }
-
-    const overlay = cont.querySelector('.design-overlay');
-    if (overlay) {
-        update(overlay, side);
+        content.style.display = 'block';
     }
 }
 
-function toggleProportional(side, isProportional) {
-    transforms[side].proportional = isProportional;
-    applyInteractOptions(side);
-    
-    // Jika proporsional diaktifkan, sesuaikan height berdasarkan width
-    if (isProportional) {
-        const cont = containers[side];
-        const t = transforms[side];
+    function setupInputControls(side) {
         const widthInput = document.getElementById(`widthInput-${side}`);
         const heightInput = document.getElementById(`heightInput-${side}`);
         
         if (widthInput && heightInput) {
-            const widthCm = parseFloat(widthInput.value) || 0;
-            const heightCm = widthCm / t.ar;
-            heightInput.value = heightCm.toFixed(1);
+            widthInput.addEventListener('change', () => applySizeFromInput(side, 'width'));
+            heightInput.addEventListener('change', () => applySizeFromInput(side, 'height'));
+            
+            widthInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') applySizeFromInput(side, 'width');
+            });
+            heightInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') applySizeFromInput(side, 'height');
+            });
         }
     }
-}
-function calculateAreaPrice(area) {
-    const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
-    return Math.round(area * ppcm);
-}
 
-function updatePriceFromBox(side) {
-    const inputWidth = document.getElementById(`widthInput-${side}`);
-    const inputHeight = document.getElementById(`heightInput-${side}`);
-    
-    if (inputWidth && inputHeight) {
-        const widthValue = parseFloat(inputWidth.value) || 0;
-        const heightValue = parseFloat(inputHeight.value) || 0;
-        
+    function applySizeFromInput(side, dimension) {
+        const input = document.getElementById(`${dimension}Input-${side}`);
+        const value = parseFloat(input.value) || 0;
         const cont = containers[side];
         const t = transforms[side];
-        
-        t.width = (widthValue / 104) * cont.offsetWidth;
-        t.height = (heightValue / 104) * cont.offsetHeight;
-        
+
+        if (dimension === 'width') {
+            t.width = (value / 104) * cont.offsetWidth;
+            if (t.proportional) {
+                t.height = t.width / t.ar;
+                const heightInput = document.getElementById(`heightInput-${side}`);
+                if (heightInput) heightInput.value = (t.height / cont.offsetHeight * 104).toFixed(1);
+            }
+        } else {
+            t.height = (value / 104) * cont.offsetHeight;
+            if (t.proportional) {
+                t.width = t.height * t.ar;
+                const widthInput = document.getElementById(`widthInput-${side}`);
+                if (widthInput) widthInput.value = (t.width / cont.offsetWidth * 104).toFixed(1);
+            }
+        }
+
+        const overlay = cont.querySelector('.design-overlay');
+        if (overlay) {
+            update(overlay, side);
+        }
+    }
+
+    function confirmSizeChange(side) {
+        const widthInput = document.getElementById(`widthInput-${side}`);
+        const heightInput = document.getElementById(`heightInput-${side}`);
+        const cont = containers[side];
+        const t = transforms[side];
+
+        const widthCm = parseFloat(widthInput.value) || 0;
+        const heightCm = parseFloat(heightInput.value) || 0;
+
+        t.width = (widthCm / 104) * cont.offsetWidth;
+        t.height = (heightCm / 104) * cont.offsetHeight;
+
         const overlay = cont.querySelector('.design-overlay');
         update(overlay, side);
         updatePrice();
-        
-        // Beri feedback visual
-        const btn = t.box.querySelector('.update-price-btn');
+
+        const btn = t.box.querySelector('.size-box-confirm-btn');
         if (btn) {
-            btn.innerHTML = '<span>✓</span> Updated!';
+            btn.textContent = '✓ UPDATED';
             setTimeout(() => {
-                btn.innerHTML = '<span>🔄</span> Update Harga';
-            }, 1500);
+                btn.textContent = 'UPDATE';
+            }, 1000);
         }
     }
-}
+
+    function moveOverlay(side, dx, dy) {
+        const t = transforms[side];
+        t.x += dx;
+        t.y += dy;
+        update(containers[side].querySelector('.design-overlay'), side);
+    }
+
+    function toggleProportional(side, isProportional) {
+        transforms[side].proportional = isProportional;
+        applyInteractOptions(side);
+        
+        if (isProportional) {
+            const cont = containers[side];
+            const t = transforms[side];
+            const widthInput = document.getElementById(`widthInput-${side}`);
+            const heightInput = document.getElementById(`heightInput-${side}`);
+            
+            if (widthInput && heightInput) {
+                const widthCm = parseFloat(widthInput.value) || 0;
+                const heightCm = widthCm / t.ar;
+                heightInput.value = heightCm.toFixed(1);
+            }
+        }
+    }
+
+    function toggleInvert(side) {
+        const overlay = containers[side].querySelector('.design-overlay');
+        if (overlay) {
+            transforms[side].inverted = !transforms[side].inverted;
+            applyImageFilters(overlay, transforms[side]);
+            updateBox(side);
+        }
+    }
+
+    function applyImageFilters(element, transform) {
+        let filter = '';
+        
+        if (transform.inverted) {
+            filter += 'invert(1) ';
+        }
+        
+        if (transform.blendMode && transform.blendMode !== 'normal') {
+            element.style.mixBlendMode = transform.blendMode;
+        } else {
+            element.style.mixBlendMode = 'normal';
+        }
+        
+        element.style.filter = filter;
+        element.style.opacity = transform.inverted ? '0.9' : '1';
+    }
+
+    function updateBlendMode(side, mode) {
+        const overlay = containers[side].querySelector('.design-overlay');
+        if (overlay) {
+            transforms[side].blendMode = mode;
+            overlay.style.mixBlendMode = mode;
+            overlay.style.opacity = mode === 'normal' ? '1' : '0.9';
+        }
+    }
 
     let currentCropSide = null;
-        let cropInteract = null;
+    let cropInteract = null;
 
-        function startCrop(side) {
-    currentCropSide = side;
+    function startCrop(side) {
+        currentCropSide = side;
     const overlay = containers[side].querySelector('.design-overlay');
     if (!overlay) return;
 
-    const container = document.getElementById('cropImageContainer');
-    container.innerHTML = `
-        <div class="crop-wrapper">
-            <img src="${overlay.src}" id="cropImg" style="max-height:60vh">
-            <div class="crop-box" id="cropBox"></div>
-        </div>
-        <div class="crop-controls">
-            <div class="crop-input-group">
-                <span>Lebar:</span>
-                <input type="number" id="cropWidth" value="100" min="10">
-                <span>px</span>
+    // Periksa jika gambar sudah dimuat
+    if (!overlay.complete || overlay.naturalWidth === 0) {
+        overlay.onload = function() {
+            startCrop(side); // Panggil lagi setelah gambar dimuat
+        };
+        return;
+    }
+        const container = document.getElementById('cropImageContainer');
+        container.innerHTML = `
+            <div class="crop-wrapper">
+                <img src="${overlay.src}" id="cropImg" style="max-height:60vh">
+                <div class="crop-box" id="cropBox"></div>
             </div>
-            <div class="crop-input-group">
-                <span>Tinggi:</span>
-                <input type="number" id="cropHeight" value="100" min="10">
-                <span>px</span>
+            <div class="crop-controls">
+                <div class="crop-input-group">
+                    <span>Lebar:</span>
+                    <input type="number" id="cropWidth" value="100" min="10">
+                    <span>px</span>
+                </div>
+                <div class="crop-input-group">
+                    <span>Tinggi:</span>
+                    <input type="number" id="cropHeight" value="100" min="10">
+                    <span>px</span>
+                </div>
+                <label class="crop-input-group">
+                    <input type="checkbox" id="lockRatio" checked>
+                    <span>Proporsional</span>
+                </label>
+                <button onclick="resetCrop()">Reset</button>
+                <button onclick="applyCrop()">Terapkan</button>
+                <button class="secondary" onclick="closeCrop()">Batal</button>
             </div>
-            <label class="crop-input-group">
-                <input type="checkbox" id="lockRatio" checked>
-                <span>Proporsional</span>
-            </label>
-            <button onclick="resetCrop()">Reset</button>
-            <button onclick="applyCrop()">Terapkan</button>
-            <button class="secondary" onclick="closeCrop()">Batal</button>
-        </div>
-    `;
+        `;
 
-    // Inisialisasi crop box
-    const cropBox = document.getElementById('cropBox');
-    const img = document.getElementById('cropImg');
-    
-    // Set ukuran awal crop box
-    const initSize = Math.min(img.width, img.height) * 0.3;
-    cropBox.style.width = `${initSize}px`;
-    cropBox.style.height = `${initSize}px`;
-    cropBox.style.left = `${(img.width - initSize) / 2}px`;
-    cropBox.style.top = `${(img.height - initSize) / 2}px`;
-    
-    syncCropInputs();
-    
-    // Interact.js untuk crop box
-    cropInteract = interact(cropBox)
-        .draggable({
-            modifiers: [
-                interact.modifiers.restrict({
-                    restriction: img,
-                    endOnly: true
-                })
-            ],
-            listeners: {
-                move(event) {
-                    const x = (parseFloat(cropBox.style.left) || 0) + event.dx;
-                    const y = (parseFloat(cropBox.style.top) || 0) + event.dy;
-                    cropBox.style.left = `${x}px`;
-                    cropBox.style.top = `${y}px`;
-                    syncCropInputs();
+        const cropBox = document.getElementById('cropBox');
+        const img = document.getElementById('cropImg');
+        
+        const initSize = Math.min(img.width, img.height) * 0.3;
+        cropBox.style.width = `${initSize}px`;
+        cropBox.style.height = `${initSize}px`;
+        cropBox.style.left = `${(img.width - initSize) / 2}px`;
+        cropBox.style.top = `${(img.height - initSize) / 2}px`;
+        
+        syncCropInputs();
+        
+        cropInteract = interact(cropBox)
+            .draggable({
+                modifiers: [
+                    interact.modifiers.restrict({
+                        restriction: img,
+                        endOnly: true
+                    })
+                ],
+                listeners: {
+                    move(event) {
+                        const x = (parseFloat(cropBox.style.left) || 0) + event.dx;
+                        const y = (parseFloat(cropBox.style.top) || 0) + event.dy;
+                        cropBox.style.left = `${x}px`;
+                        cropBox.style.top = `${y}px`;
+                        syncCropInputs();
+                    }
                 }
-            }
-        })
-        .resizable({
-            edges: { left: true, right: true, top: true, bottom: true },
-            modifiers: [
-                interact.modifiers.restrictEdges({
-                    restriction: img
-                }),
-                interact.modifiers.aspectRatio({
-                    ratio: 1,
-                    enabled: document.getElementById('lockRatio').checked
-                })
-            ],
-            listeners: {
-                move(event) {
-                    Object.assign(cropBox.style, {
-                        width: `${event.rect.width}px`,
-                        height: `${event.rect.height}px`,
-                        left: `${(parseFloat(cropBox.style.left) || 0) + event.deltaRect.left}px`,
-                        top: `${(parseFloat(cropBox.style.top) || 0) + event.deltaRect.top}px`
-                    });
-                    syncCropInputs();
+            })
+            .resizable({
+                edges: { left: true, right: true, top: true, bottom: true },
+                modifiers: [
+                    interact.modifiers.restrictEdges({
+                        restriction: img
+                    }),
+                    interact.modifiers.aspectRatio({
+                        ratio: 1,
+                        enabled: document.getElementById('lockRatio').checked
+                    })
+                ],
+                listeners: {
+                    move(event) {
+                        Object.assign(cropBox.style, {
+                            width: `${event.rect.width}px`,
+                            height: `${event.rect.height}px`,
+                            left: `${(parseFloat(cropBox.style.left) || 0) + event.deltaRect.left}px`,
+                            top: `${(parseFloat(cropBox.style.top) || 0) + event.deltaRect.top}px`
+                        });
+                        syncCropInputs();
+                    }
                 }
+            });
+
+        document.getElementById('cropWidth').addEventListener('input', function() {
+            if (document.getElementById('lockRatio').checked) {
+                const height = this.value / (cropBox.offsetWidth / cropBox.offsetHeight);
+                cropBox.style.height = `${height}px`;
+                document.getElementById('cropHeight').value = Math.round(height);
             }
+            cropBox.style.width = `${this.value}px`;
         });
 
-    // Event listeners untuk input
-    document.getElementById('cropWidth').addEventListener('input', function() {
-        if (document.getElementById('lockRatio').checked) {
-            const height = this.value / (cropBox.offsetWidth / cropBox.offsetHeight);
-            cropBox.style.height = `${height}px`;
-            document.getElementById('cropHeight').value = Math.round(height);
-        }
-        cropBox.style.width = `${this.value}px`;
-    });
-
-    document.getElementById('cropHeight').addEventListener('input', function() {
-        if (document.getElementById('lockRatio').checked) {
-            const width = this.value * (cropBox.offsetWidth / cropBox.offsetHeight);
-            cropBox.style.width = `${width}px`;
-            document.getElementById('cropWidth').value = Math.round(width);
-        }
-        cropBox.style.height = `${this.value}px`;
-    });
-
-    document.getElementById('lockRatio').addEventListener('change', function() {
-        cropInteract.resizable({
-            modifiers: [
-                interact.modifiers.aspectRatio({
-                    ratio: 1,
-                    enabled: this.checked
-                })
-            ]
+        document.getElementById('cropHeight').addEventListener('input', function() {
+            if (document.getElementById('lockRatio').checked) {
+                const width = this.value * (cropBox.offsetWidth / cropBox.offsetHeight);
+                cropBox.style.width = `${width}px`;
+                document.getElementById('cropWidth').value = Math.round(width);
+            }
+            cropBox.style.height = `${this.value}px`;
         });
-    });
 
-    document.getElementById('cropModal').style.display = 'block';
-}
+        document.getElementById('lockRatio').addEventListener('change', function() {
+            cropInteract.resizable({
+                modifiers: [
+                    interact.modifiers.aspectRatio({
+                        ratio: 1,
+                        enabled: this.checked
+                    })
+                ]
+            });
+        });
 
+        document.getElementById('cropModal').style.display = 'block';
+    }
 
-function applyCrop() {
+    function syncCropInputs() {
+        const box = document.getElementById('cropBox');
+        if (!box) return;
+        
+        document.getElementById('cropWidth').value = Math.round(box.offsetWidth);
+        document.getElementById('cropHeight').value = Math.round(box.offsetHeight);
+    }
+
+    function resetCrop() {
+        const img = document.getElementById('cropImg');
+        const box = document.getElementById('cropBox');
+        const size = Math.min(img.width, img.height) * 0.3;
+        
+        box.style.width = `${size}px`;
+        box.style.height = `${size}px`;
+        box.style.left = `${(img.width - size) / 2}px`;
+        box.style.top = `${(img.height - size) / 2}px`;
+        
+        syncCropInputs();
+    }
+
+    function applyCrop() {
     const container = document.getElementById('cropImageContainer');
-    const img = container.querySelector('img');
-    const cropBox = container.querySelector('.crop-box');
+    const img = container.querySelector('#cropImg');
+    const cropBox = container.querySelector('#cropBox');
     
+    if (!img || !cropBox) return;
+
+    const side = currentCropSide;
+    const containerOverlay = containers[side];
+    const existingOverlay = containerOverlay.querySelector('.design-overlay');
+    
+    if (!existingOverlay) return;
+
+    // 1. HAPUS SIZE BOX YANG ADA SEBELUMNYA
+    sizeBoxWrappers[side].innerHTML = '';
+    
+    // 2. HENTIKAN INTERAKSI SEBELUMNYA
+    if (transforms[side].interactable) {
+        transforms[side].interactable.unset();
+    }
+
     const scaleX = img.naturalWidth / img.offsetWidth;
     const scaleY = img.naturalHeight / img.offsetHeight;
     
@@ -2531,47 +2421,33 @@ function applyCrop() {
         canvas.height
     );
 
-    // Hapus overlay dan size box lama
-    const containerOverlay = containers[currentCropSide];
-    containerOverlay.querySelector('.design-overlay')?.remove();
-    containerOverlay.querySelector('.size-box')?.remove();
-    transforms[currentCropSide] = {};
-
-    // Buat overlay baru dari hasil crop
-    createOverlay(canvas.toDataURL(), currentCropSide);
-
+    // 3. UPDATE OVERLAY YANG SUDAH ADA
+    existingOverlay.src = canvas.toDataURL();
+    
+    // 4. UPDATE TRANSFORM DATA DENGAN BENAR
+    transforms[side] = {
+        ...transforms[side], // Pertahankan properti yang ada
+        width: (cropBox.offsetWidth / img.width) * containerOverlay.offsetWidth,
+        height: (cropBox.offsetHeight / img.height) * containerOverlay.offsetHeight,
+        ar: canvas.width / canvas.height,
+        box: null // Reset box karena akan dibuat baru
+    };
+    
+    // 5. BUAT SIZE BOX BARU (HANYA SATU KALI)
+    createSizeBox(side);
+    
+    // 6. INISIALISASI ULANG INTERAKSI
+    initOverlay(existingOverlay, side);
+    
     closeCrop();
     updatePrice();
 }
 
-function syncCropInputs() {
-    const box = document.getElementById('cropBox');
-    if (!box) return;
-    
-    document.getElementById('cropWidth').value = Math.round(box.offsetWidth);
-    document.getElementById('cropHeight').value = Math.round(box.offsetHeight);
-}
-
-function resetCrop() {
-    const img = document.getElementById('cropImg');
-    const box = document.getElementById('cropBox');
-    const size = Math.min(img.width, img.height) * 0.3;
-    
-    box.style.width = `${size}px`;
-    box.style.height = `${size}px`;
-    box.style.left = `${(img.width - size) / 2}px`;
-    box.style.top = `${(img.height - size) / 2}px`;
-    
-    syncCropInputs();
-}
-
-
-        function closeCrop() {
-            document.getElementById('cropModal').style.display = 'none';
-            if (cropInteract) cropInteract.unset();
-            currentCropSide = null;
-        }
-
+    function closeCrop() {
+        document.getElementById('cropModal').style.display = 'none';
+        if (cropInteract) cropInteract.unset();
+        currentCropSide = null;
+    }
 
     function rotateOverlay(side, degrees) {
         transforms[side].angle += degrees;
@@ -2581,415 +2457,454 @@ function resetCrop() {
     function deleteOverlay(side) {
         const container = containers[side];
         container.querySelector('.design-overlay')?.remove();
-        container.querySelector('.size-box')?.remove();
+        sizeBoxWrappers[side].innerHTML = '';
         transforms[side] = {};
         updatePrice();
     }
 
     function centerOverlay(side) {
-    const t = transforms[side];
+        const t = transforms[side];
     const cont = containers[side];
-
-    // hanya mengatur posisi horizontal (tengah kiri-kanan)
     t.x = (cont.offsetWidth - t.width) / 2;
-
-    // posisi vertikal tetap (jangan sentuh t.y)
+    // t.y tetap tidak diubah agar vertikal tidak berubah
     update(document.querySelector(`#overlay-container-${side} .design-overlay`), side);
 }
 
-
-    function centerAllOverlays() {
-        ['front','back'].forEach(side => {
-            if (transforms[side].width) centerOverlay(side);
-        });
-    }
-
     function roundSablonPrice(price) {
-    if (price < 10000) return 10000;
-    const remainder = price % 1000;
-    if (remainder <= 500) {
-        return price - remainder; // ke bawah
-    } else {
-        return price + (1000 - remainder); // ke atas
-    }
-}
-
-function updatePrice() {
-    const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
-    const base = parseFloat(document.getElementById('basePrice').value) || 0;
-    const fee = parseFloat(document.getElementById('designFee').value) || 0;
-    
-    let cf = 0, cb = 0;
-    let frontSize = '', backSize = '';
-    
-    ['front','back'].forEach(side => {
-        const t = transforms[side];
-        if (t.width && t.height) {
-            const cont = containers[side];
-            const wCm = (t.width / cont.offsetWidth) * 104;
-            const hCm = (t.height / cont.offsetHeight) * 104;
-            const area = wCm * hCm;
-            const cost = roundSablonPrice(area * ppcm);
-            
-            if(side === 'front') {
-                cf = cost;
-                frontSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
-            } else {
-                cb = cost;
-                backSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
-            }
+        if (price < 10000) return 10000;
+        const remainder = price % 1000;
+        if (remainder <= 500) {
+            return price - remainder;
+        } else {
+            return price + (1000 - remainder);
         }
-    });
-    
-    const total = base + fee + cf + cb;
-    
-    // Update display
-    document.getElementById('basePriceDisplay').textContent = `Rp ${base.toLocaleString()}`;
-    document.getElementById('frontPriceDisplay').textContent = cf ? `Rp ${cf.toLocaleString()}${frontSize}` : '-';
-    document.getElementById('backPriceDisplay').textContent = cb ? `Rp ${cb.toLocaleString()}${backSize}` : '-';
-    document.getElementById('designFeeDisplay').textContent = fee ? `Rp ${fee.toLocaleString()}` : 'Free';
-    document.getElementById('designFeeDisplay').style.color = fee ? 'var(--accent-color)' : 'var(--success-color)';
-    
-    // Animasi total harga
-    const totalElement = document.getElementById('totalPrice');
-    totalElement.textContent = `Rp ${total.toLocaleString()}`;
-    totalElement.style.transform = 'scale(1.1)';
-    setTimeout(() => {
-        totalElement.style.transform = 'scale(1)';
-    }, 300);
-    
-    // Tampilkan/sembunyikan item harga
-    document.getElementById('frontPriceItem').style.display = cf ? 'flex' : 'none';
-    document.getElementById('backPriceItem').style.display = cb ? 'flex' : 'none';
-}
+    }
 
-function showPreview() {
-    // Generate preview images
-    const frontCanvas = generatePreviewCanvas('front');
-    const backCanvas = generatePreviewCanvas('back');
-    
-    // Update preview images
-    const frontPreview = document.getElementById('preview-front-img');
-    const backPreview = document.getElementById('preview-back-img');
-    
-    frontPreview.src = frontCanvas.toDataURL();
-    backPreview.src = backCanvas.toDataURL();
-    
-    // Pastikan gambar sudah dimuat sebelum ditampilkan
-    frontPreview.onload = backPreview.onload = function() {
-        // Get price data
-        const basePrice = parseFloat(document.getElementById('basePrice').value) || 0;
-        const designFee = parseFloat(document.getElementById('designFee').value) || 0;
-        const pricePerCm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+    function updatePrice() {
+        const ppcm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+        const base = parseFloat(document.getElementById('basePrice').value) || 0;
+        const fee = parseFloat(document.getElementById('designFee').value) || 0;
         
-        // Update price display
-        document.getElementById('preview-base-price').textContent = `Rp ${basePrice.toLocaleString()}`;
-        document.getElementById('preview-design-fee').textContent = designFee > 0 ? `Rp ${designFee.toLocaleString()}` : 'Free';
-        document.getElementById('preview-design-fee').style.color = designFee > 0 ? 'var(--accent-color)' : 'var(--success-color)';
-
-        // Calculate print prices
-        let frontPrice = 0;
-        let backPrice = 0;
+        let cf = 0, cb = 0;
+        let frontSize = '', backSize = '';
         
-        ['front', 'back'].forEach(side => {
+        ['front','back'].forEach(side => {
             const t = transforms[side];
             if (t.width && t.height) {
                 const cont = containers[side];
                 const wCm = (t.width / cont.offsetWidth) * 104;
                 const hCm = (t.height / cont.offsetHeight) * 104;
                 const area = wCm * hCm;
-                const cost = roundSablonPrice(area * pricePerCm);
+                const cost = roundSablonPrice(area * ppcm);
                 
-                document.getElementById(`preview-${side}-price`).textContent = `Rp ${cost.toLocaleString()}`;
-                document.getElementById(`preview-${side}-size`).textContent = `(${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
-                document.getElementById(`preview-${side}-row`).style.display = 'flex';
-
-                if (side === 'front') {
-                    frontPrice = cost;
+                if(side === 'front') {
+                    cf = cost;
+                    frontSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
                 } else {
-                    backPrice = cost;
+                    cb = cost;
+                    backSize = ` (${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
                 }
-            } else {
-                document.getElementById(`preview-${side}-row`).style.display = 'none';
             }
         });
-
-        // Calculate total
-        const total = basePrice + designFee + frontPrice + backPrice;
-        document.getElementById('preview-total-price').textContent = `Rp ${total.toLocaleString()}`;
         
-        // Show modal
-        document.querySelector('.preview-modal').style.display = 'block';
-    };
-}
-
-function generatePreviewCanvas(side) {
-    const mockup = document.getElementById(`mockup-${side}`);
-    const overlay = document.querySelector(`#overlay-container-${side} .design-overlay`);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    // Set canvas size to mockup natural size
-    canvas.width = mockup.naturalWidth;
-    canvas.height = mockup.naturalHeight;
-
-    // Draw mockup first
-    ctx.drawImage(mockup, 0, 0, canvas.width, canvas.height);
-
-    if (overlay) {
-        const t = transforms[side];
-        const container = mockup.parentElement;
-
-        // Calculate container dimensions
-        const containerWidth = container.offsetWidth;
-        const containerHeight = container.offsetHeight;
-        const imageAspect = mockup.naturalWidth / mockup.naturalHeight;
-        const containerAspect = containerWidth / containerHeight;
-
-        // Calculate rendered dimensions
-        let renderedWidth, renderedHeight, renderedLeft, renderedTop;
-        if (imageAspect > containerAspect) {
-            renderedWidth = containerWidth;
-            renderedHeight = containerWidth / imageAspect;
-        } else {
-            renderedHeight = containerHeight;
-            renderedWidth = containerHeight * imageAspect;
-        }
-        renderedLeft = (containerWidth - renderedWidth) / 2;
-        renderedTop = (containerHeight - renderedHeight) / 2;
-
-        // Calculate scale factors
-        const scaleX = renderedWidth / mockup.naturalWidth;
-        const scaleY = renderedHeight / mockup.naturalHeight;
-
-        // Create temporary canvas for overlay
-        const overlayCanvas = document.createElement('canvas');
-        overlayCanvas.width = canvas.width;
-        overlayCanvas.height = canvas.height;
-        const overlayCtx = overlayCanvas.getContext('2d');
-
-        // Calculate overlay position and size in image coordinates
-        const imageX = (t.x - renderedLeft) / scaleX;
-        const imageY = (t.y - renderedTop) / scaleY;
-        const imageWidth = t.width / scaleX;
-        const imageHeight = t.height / scaleY;
-
-        // Draw overlay with rotation
-        overlayCtx.save();
-        overlayCtx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
-        overlayCtx.rotate(t.angle * Math.PI / 180);
+        const total = base + fee + cf + cb;
         
-        // Apply inversion if needed
-        if (t.inverted) {
-            overlayCtx.filter = 'invert(1)';
-        } else {
-            overlayCtx.filter = 'none';
-        }
+        document.getElementById('basePriceDisplay').textContent = `Rp ${base.toLocaleString()}`;
+        document.getElementById('frontPriceDisplay').textContent = cf ? `Rp ${cf.toLocaleString()}${frontSize}` : '-';
+        document.getElementById('backPriceDisplay').textContent = cb ? `Rp ${cb.toLocaleString()}${backSize}` : '-';
+        document.getElementById('designFeeDisplay').textContent = fee ? `Rp ${fee.toLocaleString()}` : 'Free';
+        document.getElementById('designFeeDisplay').style.color = fee ? 'var(--accent-color)' : 'var(--success-color)';
         
-        overlayCtx.drawImage(
-            overlay,
-            -imageWidth/2,
-            -imageHeight/2,
-            imageWidth,
-            imageHeight
-        );
-        overlayCtx.restore();
-
-        // Apply blend mode to main canvas
-        ctx.save();
-        if (t.blendMode && t.blendMode !== 'normal') {
-            ctx.globalCompositeOperation = t.blendMode;
-        }
+        const totalElement = document.getElementById('totalPrice');
+        totalElement.textContent = `Rp ${total.toLocaleString()}`;
+        totalElement.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            totalElement.style.transform = 'scale(1)';
+        }, 300);
         
-        // Draw the overlay onto main canvas
-        ctx.drawImage(overlayCanvas, 0, 0);
-        ctx.restore();
+        document.getElementById('frontPriceItem').style.display = cf ? 'flex' : 'none';
+        document.getElementById('backPriceItem').style.display = cb ? 'flex' : 'none';
     }
 
-    return canvas;
-}
-
-
-function downloadCombinedPreview() {
-    // Buat container sementara untuk render
-    const container = document.createElement('div');
-    container.style.width = '800px';
-    container.style.padding = '20px';
-    container.style.background = '#2a2a2a';
-    container.style.color = 'white';
-    container.style.fontFamily = '"Exo 2", sans-serif';
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
-    document.body.appendChild(container);
-
-    // Isi dengan konten preview
-    container.innerHTML = `
-        <div style="text-align:center; font-size:18px; margin-bottom:20px;">
-            🖼️ Preview Desain Kaos
-        </div>
-        <div style="display:flex; gap:20px; justify-content:center; margin-bottom:20px;">
-            <div>
-                <h4 style="margin:0 0 10px 0;">Depan</h4>
-                <img id="temp-front" style="max-width:350px; border:1px solid #444;">
-            </div>
-            <div>
-                <h4 style="margin:0 0 10px 0;">Belakang</h4>
-                <img id="temp-back" style="max-width:350px; border:1px solid #444;">
-            </div>
-        </div>
-        <div id="temp-prices" style="background:#333; padding:15px; border-radius:8px;"></div>
-    `;
-
-    // Isi gambar dan harga
-    document.getElementById('temp-front').src = document.getElementById('preview-front-img').src;
-    document.getElementById('temp-back').src = document.getElementById('preview-back-img').src;
-    
-    // Clone price details
-    const priceDetails = document.querySelector('.price-summary').cloneNode(true);
-    priceDetails.style.background = 'transparent';
-    priceDetails.style.boxShadow = 'none';
-    document.getElementById('temp-prices').appendChild(priceDetails);
-
-    
-
-    // Render ke canvas
-    html2canvas(container, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: container.scrollWidth,
-        windowHeight: container.scrollHeight
-    }).then(canvas => {
-        // Download gambar
-        const link = document.createElement('a');
-        link.download = 'desain-kaos-preview.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        
-        // Hapus container sementara
-        document.body.removeChild(container);
-    }).catch(err => {
-        console.error('Gagal generate preview:', err);
-        alert('Maaf, gagal mengunduh preview. Silakan coba lagi.');
-        document.body.removeChild(container);
-    });
-}
-
-
-    function downloadPreview() {
+    function showPreview() {
         const frontCanvas = generatePreviewCanvas('front');
         const backCanvas = generatePreviewCanvas('back');
         
-        const frontLink = document.createElement('a');
-        frontLink.download = 'desain-depan.png';
-        frontLink.href = frontCanvas.toDataURL();
-        frontLink.click();
+        const frontPreview = document.getElementById('preview-front-img');
+        const backPreview = document.getElementById('preview-back-img');
         
-        const backLink = document.createElement('a');
-        backLink.download = 'desain-belakang.png';
-        backLink.href = backCanvas.toDataURL();
-        backLink.click();
+        frontPreview.src = frontCanvas.toDataURL();
+        backPreview.src = backCanvas.toDataURL();
+        
+        frontPreview.onload = backPreview.onload = function() {
+            const basePrice = parseFloat(document.getElementById('basePrice').value) || 0;
+            const designFee = parseFloat(document.getElementById('designFee').value) || 0;
+            const pricePerCm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+            
+            document.getElementById('preview-base-price').textContent = `Rp ${basePrice.toLocaleString()}`;
+            document.getElementById('preview-design-fee').textContent = designFee > 0 ? `Rp ${designFee.toLocaleString()}` : 'Free';
+            document.getElementById('preview-design-fee').style.color = designFee > 0 ? 'var(--accent-color)' : 'var(--success-color)';
+
+            let frontPrice = 0;
+            let backPrice = 0;
+            
+            ['front', 'back'].forEach(side => {
+                const t = transforms[side];
+                if (t.width && t.height) {
+                    const cont = containers[side];
+                    const wCm = (t.width / cont.offsetWidth) * 104;
+                    const hCm = (t.height / cont.offsetHeight) * 104;
+                    const area = wCm * hCm;
+                    const cost = roundSablonPrice(area * pricePerCm);
+                    
+                    document.getElementById(`preview-${side}-price`).textContent = `Rp ${cost.toLocaleString()}`;
+                    document.getElementById(`preview-${side}-size`).textContent = `(${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
+                    document.getElementById(`preview-${side}-row`).style.display = 'flex';
+
+                    if (side === 'front') {
+                        frontPrice = cost;
+                    } else {
+                        backPrice = cost;
+                    }
+                } else {
+                    document.getElementById(`preview-${side}-row`).style.display = 'none';
+                }
+            });
+
+            const total = basePrice + designFee + frontPrice + backPrice;
+            document.getElementById('preview-total-price').textContent = `Rp ${total.toLocaleString()}`;
+            
+            document.querySelector('.preview-modal').style.display = 'block';
+        };
     }
 
+    function generatePreviewCanvas(side) {
+        const mockup = document.getElementById(`mockup-${side}`);
+        const overlay = document.querySelector(`#overlay-container-${side} .design-overlay`);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = mockup.naturalWidth;
+        canvas.height = mockup.naturalHeight;
+
+        ctx.drawImage(mockup, 0, 0, canvas.width, canvas.height);
+
+        if (overlay) {
+            const t = transforms[side];
+            const container = mockup.parentElement;
+
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+            const imageAspect = mockup.naturalWidth / mockup.naturalHeight;
+            const containerAspect = containerWidth / containerHeight;
+
+            let renderedWidth, renderedHeight, renderedLeft, renderedTop;
+            if (imageAspect > containerAspect) {
+                renderedWidth = containerWidth;
+                renderedHeight = containerWidth / imageAspect;
+            } else {
+                renderedHeight = containerHeight;
+                renderedWidth = containerHeight * imageAspect;
+            }
+            renderedLeft = (containerWidth - renderedWidth) / 2;
+            renderedTop = (containerHeight - renderedHeight) / 2;
+
+            const scaleX = renderedWidth / mockup.naturalWidth;
+            const scaleY = renderedHeight / mockup.naturalHeight;
+
+            const overlayCanvas = document.createElement('canvas');
+            overlayCanvas.width = canvas.width;
+            overlayCanvas.height = canvas.height;
+            const overlayCtx = overlayCanvas.getContext('2d');
+
+            const imageX = (t.x - renderedLeft) / scaleX;
+            const imageY = (t.y - renderedTop) / scaleY;
+            const imageWidth = t.width / scaleX;
+            const imageHeight = t.height / scaleY;
+
+            overlayCtx.save();
+            overlayCtx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
+            overlayCtx.rotate(t.angle * Math.PI / 180);
+            
+            if (t.inverted) {
+                overlayCtx.filter = 'invert(1)';
+            } else {
+                overlayCtx.filter = 'none';
+            }
+            
+            overlayCtx.drawImage(
+                overlay,
+                -imageWidth/2,
+                -imageHeight/2,
+                imageWidth,
+                imageHeight
+            );
+            overlayCtx.restore();
+
+            ctx.save();
+            if (t.blendMode && t.blendMode !== 'normal') {
+                ctx.globalCompositeOperation = t.blendMode;
+            }
+            
+            ctx.drawImage(overlayCanvas, 0, 0);
+            ctx.restore();
+        }
+
+        return canvas;
+    }
+
+    async function downloadCombinedPreview() {
+    const previewModal = document.querySelector('.preview-modal');
+    const originalStyle = previewModal.style.cssText;
     
+    try {
+        // 1. Tampilkan modal dan pindahkan ke atas halaman
+        previewModal.style.display = 'block';
+        previewModal.style.position = 'fixed';
+        previewModal.style.top = '0';
+        previewModal.style.left = '0';
+        previewModal.style.zIndex = '99999';
+        previewModal.style.background = 'rgba(0,0,0,0.96)';
+        previewModal.style.padding = '20px';
+        
+        // 2. Sembunyikan tombol download
+        const downloadBtn = document.querySelector('.preview-actions');
+        downloadBtn.style.display = 'none';
+        
+        // 3. Tunggu 500ms untuk render ulang
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // 4. Ambil konten preview
+        const previewContent = document.querySelector('.preview-content');
+        
+        // 5. Atur ulang styling untuk kebutuhan capture
+        previewContent.style.width = '900px';
+        previewContent.style.margin = '0 auto';
+        previewContent.style.padding = '30px';
+        previewContent.style.boxSizing = 'border-box';
+        
+        // 6. Tambahkan padding ekstra untuk total harga
+        const priceTotal = previewContent.querySelector('.price-total');
+        priceTotal.style.paddingBottom = '40px';
+        
+        // 7. Capture dengan html2canvas
+        const canvas = await html2canvas(previewContent, {
+            scale: 1.5,
+            logging: false,
+            useCORS: true,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            backgroundColor: '#252525',
+            allowTaint: true,
+            letterRendering: true,
+            windowHeight: previewContent.scrollHeight + 200
+        });
+        
+        // 8. Buat link download
+        const link = document.createElement('a');
+        link.download = `desain-kaos-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+    } catch (error) {
+        console.error('Download error:', error);
+        alert('Gagal mengunduh preview. Silakan coba lagi.');
+    } finally {
+        // 9. Reset semua perubahan
+        previewModal.style.cssText = originalStyle;
+        document.querySelector('.preview-actions').style.display = 'flex';
+        const priceTotal = document.querySelector('.price-total');
+        if(priceTotal) priceTotal.style.paddingBottom = '15px';
+    }
+}
 
     function closePreview() {
         document.querySelector('.preview-modal').style.display = 'none';
     }
 
     function updateMockupImage() {
-    const sleeveType = document.getElementById('sleeveType').value;
-    mockups.front.src = colorData[currentColor][sleeveType].front;
-    mockups.back.src = colorData[currentColor][sleeveType].back;
-    ['front','back'].forEach(side => containers[side].innerHTML = '');
-}
+        const sleeveType = document.getElementById('sleeveType').value;
+        mockups.front.src = colorData[currentColor][sleeveType].front;
+        mockups.back.src = colorData[currentColor][sleeveType].back;
+        ['front','back'].forEach(side => {
+            containers[side].innerHTML = '';
+            sizeBoxWrappers[side].innerHTML = '';
+            transforms[side] = {};
+        });
+    }
 
-// Tambahkan di bagian JavaScript
-let isAdmin = false;
+    let isAdmin = false;
 
-function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'flex';
-    document.getElementById('adminPassword').focus();
-}
+    function showLoginModal() {
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('adminPassword').focus();
+    }
 
-function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('adminPassword').value = '';
-    document.getElementById('loginError').style.display = 'none';
-}
-
-function checkAdminPassword() {
-    const password = document.getElementById('adminPassword').value;
-    const errorElement = document.getElementById('loginError');
-    
-    if (password === '123123') {
-        isAdmin = true;
-        unlockPriceInputs();
-        closeLoginModal();
-        // Beri feedback visual bahwa mode admin aktif
-        document.querySelector('.admin-btn').textContent = '🔓 Mode Admin Aktif';
-        document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #00b09b, #96c93d)';
-        setTimeout(() => {
-            document.querySelector('.admin-btn').textContent = '🔑 Ubah Harga Dasar';
-            document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #ff5e62, #ff9966)';
-        }, 3000);
-    } else {
-        errorElement.style.display = 'block';
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
         document.getElementById('adminPassword').value = '';
+        document.getElementById('loginError').style.display = 'none';
     }
-}
 
-function unlockPriceInputs() {
-    const inputs = document.querySelectorAll('.locked-input');
-    inputs.forEach(input => {
-        input.readOnly = false;
-        input.classList.remove('locked-input');
-    });
-}
-
-function lockPriceInputs() {
-    const inputs = document.querySelectorAll('#pricePerCm, #basePrice, #designFee');
-    inputs.forEach(input => {
-        input.readOnly = true;
-        if (!input.classList.contains('locked-input')) {
-            input.classList.add('locked-input');
-        }
-    });
-}
-
-function togglePriceSettings() {
-    const content = document.getElementById('priceSettings');
-    const icon = document.querySelector('.section-header .collapse-icon');
-    
-    content.classList.toggle('collapsed');
-    icon.style.transform = content.classList.contains('collapsed') 
-        ? 'rotate(180deg)' 
-        : 'rotate(0deg)';
-}
-
-// Untuk collapse awal (opsional)
-window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('priceSettings').classList.add('collapsed');
-});
-
-function updateBlendMode(side, mode) {
-    const overlay = containers[side].querySelector('.design-overlay');
-    if (overlay) {
-        transforms[side].blendMode = mode;
-        overlay.style.mixBlendMode = mode;
+    function checkAdminPassword() {
+        const password = document.getElementById('adminPassword').value;
+        const errorElement = document.getElementById('loginError');
         
-        // Untuk browser yang tidak support mix-blend-mode
-        overlay.style.opacity = mode === 'normal' ? '1' : '0.9';
+        if (password === '123123') {
+            isAdmin = true;
+            unlockPriceInputs();
+            closeLoginModal();
+            document.querySelector('.admin-btn').textContent = '🔓 Mode Admin Aktif';
+            document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #00b09b, #96c93d)';
+            setTimeout(() => {
+                document.querySelector('.admin-btn').textContent = '🔑 Ubah Harga Dasar';
+                document.querySelector('.admin-btn').style.background = 'linear-gradient(135deg, #ff5e62, #ff9966)';
+            }, 3000);
+        } else {
+            errorElement.style.display = 'block';
+            document.getElementById('adminPassword').value = '';
+        }
     }
+
+    function unlockPriceInputs() {
+        const inputs = document.querySelectorAll('.locked-input');
+        inputs.forEach(input => {
+            input.readOnly = false;
+            input.classList.remove('locked-input');
+        });
+    }
+
+    function lockPriceInputs() {
+        const inputs = document.querySelectorAll('#pricePerCm, #basePrice, #designFee');
+        inputs.forEach(input => {
+            input.readOnly = true;
+            if (!input.classList.contains('locked-input')) {
+                input.classList.add('locked-input');
+            }
+        });
+    }
+
+    function togglePriceSettings() {
+        const content = document.getElementById('priceSettings');
+        const icon = document.querySelector('.section-header .collapse-icon');
+        
+        content.classList.toggle('collapsed');
+        icon.style.transform = content.classList.contains('collapsed') 
+            ? 'rotate(180deg)' 
+            : 'rotate(0deg)';
+    }
+
+    function downloadCombinedPreviewImages() {
+    const frontImg = document.getElementById('preview-front-img');
+    const backImg = document.getElementById('preview-back-img');
+    
+    // Pastikan gambar sudah dimuat
+    Promise.all([loadImage(frontImg.src), loadImage(backImg.src)]).then(images => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Hitung ukuran canvas
+        const padding = 40;
+        const imgWidth = Math.max(images[0].width, images[1].width);
+        const imgHeight = Math.max(images[0].height, images[1].height);
+        
+        canvas.width = (imgWidth * 2) + (padding * 3);
+        canvas.height = imgHeight + (padding * 2);
+        
+        // Background putih
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Gambar frame
+        ctx.strokeStyle = '#e0e0e0';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(10, 10, canvas.width-20, canvas.height-20);
+        
+        // Posisi gambar
+        let xPos = padding;
+        const yPos = padding;
+        
+        // Gambar depan
+        ctx.drawImage(images[0], xPos, yPos);
+        addTextLabel(ctx, 'DEPAN', xPos + (images[0].width/2), yPos + images[0].height + 15);
+        
+        // Gambar belakang
+        xPos += images[0].width + padding;
+        ctx.drawImage(images[1], xPos, yPos);
+        addTextLabel(ctx, 'BELAKANG', xPos + (images[1].width/2), yPos + images[1].height + 15);
+        
+        // Download
+        const link = document.createElement('a');
+        link.download = `desain-kaos-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
 }
-// Panggil lockPriceInputs saat inisialisasi
-lockPriceInputs();
+
+
+
+function addTextLabel(ctx, text, x, y) {
+    ctx.fillStyle = '#2c3e50';
+    ctx.font = '18px "Exo 2"';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(text, x, y);
+}
+
+function downloadExactPreview() {
+    const frontImg = document.getElementById('preview-front-img');
+    const backImg = document.getElementById('preview-back-img');
+    
+    Promise.all([loadImage(frontImg.src), loadImage(backImg.src)]).then(images => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Hitung ukuran canvas berdasarkan gambar aktual
+        const gap = 0; // Jarak antar gambar
+        canvas.width = images[0].width + images[1].width + gap;
+        canvas.height = Math.max(images[0].height, images[1].height);
+        
+        // Gambar langsung tanpa background
+        ctx.drawImage(images[0], 0, (canvas.height - images[0].height)/2); // Tengahkan vertikal
+        ctx.drawImage(images[1], images[0].width + gap, (canvas.height - images[1].height)/2);
+        
+        // Download
+        const link = document.createElement('a');
+        link.download = `desain-kaos-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// Fungsi loadImage tetap sama
+function loadImage(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+    });
+}
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('priceSettings').classList.add('collapsed');
+        lockPriceInputs();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+    const splashScreen = document.querySelector('.splash-screen');
+    
+    // Set timeout untuk hide splash screen
+    setTimeout(() => {
+        splashScreen.classList.add('hide');
+        
+        // Hapus element setelah animasi selesai
+        setTimeout(() => {
+            splashScreen.remove();
+        }, 1000);
+    }, 2000); // Tampilkan selama 2 detik
+});
 
     updateMockupImage();
 </script>
 </body>
 </html>
-
-
