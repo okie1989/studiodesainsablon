@@ -1,4 +1,6 @@
 
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -657,10 +659,10 @@ button.icon-button {
 .preview-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    gap: 0px;
     margin: 25px 0;
+    BORDER-RADIUS: 5PX;
 }
-
 .preview-image {
     position: relative;
     overflow: hidden;
@@ -668,18 +670,12 @@ button.icon-button {
     transition: var(--transition);
 }
 
-.preview-image:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
 
 .preview-image img {
     width: 100%;
-    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     height: auto;
     object-fit: contain;
-    background: #fff;
     display: block;
 }
 
@@ -2659,87 +2655,84 @@ function showPreview() {
     const backCanvas = generatePreviewCanvas('back');
     
     // Update preview images
-    document.getElementById('preview-front-img').src = frontCanvas.toDataURL();
-    document.getElementById('preview-back-img').src = backCanvas.toDataURL();
+    const frontPreview = document.getElementById('preview-front-img');
+    const backPreview = document.getElementById('preview-back-img');
     
-    // Get price data
-    const basePrice = parseFloat(document.getElementById('basePrice').value) || 0;
-    const designFee = parseFloat(document.getElementById('designFee').value) || 0;
-    const pricePerCm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+    frontPreview.src = frontCanvas.toDataURL();
+    backPreview.src = backCanvas.toDataURL();
     
-    // Update price display
-    document.getElementById('preview-base-price').textContent = `Rp ${basePrice.toLocaleString()}`;
-    document.getElementById('preview-design-fee').textContent = designFee > 0 ? `Rp ${designFee.toLocaleString()}` : 'Free';
-    document.getElementById('preview-design-fee').style.color = designFee > 0 ? 'var(--accent-color)' : 'var(--success-color)';
+    // Pastikan gambar sudah dimuat sebelum ditampilkan
+    frontPreview.onload = backPreview.onload = function() {
+        // Get price data
+        const basePrice = parseFloat(document.getElementById('basePrice').value) || 0;
+        const designFee = parseFloat(document.getElementById('designFee').value) || 0;
+        const pricePerCm = parseFloat(document.getElementById('pricePerCm').value) || 0;
+        
+        // Update price display
+        document.getElementById('preview-base-price').textContent = `Rp ${basePrice.toLocaleString()}`;
+        document.getElementById('preview-design-fee').textContent = designFee > 0 ? `Rp ${designFee.toLocaleString()}` : 'Free';
+        document.getElementById('preview-design-fee').style.color = designFee > 0 ? 'var(--accent-color)' : 'var(--success-color)';
 
-    // Calculate print prices
-    let frontPrice = 0;
-    let backPrice = 0;
-    
-    ['front', 'back'].forEach(side => {
-        const t = transforms[side];
-        if (t.width && t.height) {
-            const cont = containers[side];
-            const wCm = (t.width / cont.offsetWidth) * 104;
-            const hCm = (t.height / cont.offsetHeight) * 104;
-            const area = wCm * hCm;
-            const cost = roundSablonPrice(area * pricePerCm);
-            
-            document.getElementById(`preview-${side}-price`).textContent = `Rp ${cost.toLocaleString()}`;
-            document.getElementById(`preview-${side}-size`).textContent = `(${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
-            document.getElementById(`preview-${side}-row`).style.display = 'flex';
+        // Calculate print prices
+        let frontPrice = 0;
+        let backPrice = 0;
+        
+        ['front', 'back'].forEach(side => {
+            const t = transforms[side];
+            if (t.width && t.height) {
+                const cont = containers[side];
+                const wCm = (t.width / cont.offsetWidth) * 104;
+                const hCm = (t.height / cont.offsetHeight) * 104;
+                const area = wCm * hCm;
+                const cost = roundSablonPrice(area * pricePerCm);
+                
+                document.getElementById(`preview-${side}-price`).textContent = `Rp ${cost.toLocaleString()}`;
+                document.getElementById(`preview-${side}-size`).textContent = `(${wCm.toFixed(1)}×${hCm.toFixed(1)} cm)`;
+                document.getElementById(`preview-${side}-row`).style.display = 'flex';
 
-            if (side === 'front') {
-                frontPrice = cost;
+                if (side === 'front') {
+                    frontPrice = cost;
+                } else {
+                    backPrice = cost;
+                }
             } else {
-                backPrice = cost;
+                document.getElementById(`preview-${side}-row`).style.display = 'none';
             }
-        } else {
-            document.getElementById(`preview-${side}-row`).style.display = 'none';
-        }
-    });
+        });
 
-    
-    // Calculate total
-    const total = basePrice + designFee + frontPrice + backPrice;
-    document.getElementById('preview-total-price').textContent = `Rp ${total.toLocaleString()}`;
-    
-    // Show modal
-    document.querySelector('.preview-modal').style.display = 'block';
+        // Calculate total
+        const total = basePrice + designFee + frontPrice + backPrice;
+        document.getElementById('preview-total-price').textContent = `Rp ${total.toLocaleString()}`;
+        
+        // Show modal
+        document.querySelector('.preview-modal').style.display = 'block';
+    };
 }
 
-    function generatePreviewCanvas(side) {
-        const mockup = document.getElementById(`mockup-${side}`);
+function generatePreviewCanvas(side) {
+    const mockup = document.getElementById(`mockup-${side}`);
     const overlay = document.querySelector(`#overlay-container-${side} .design-overlay`);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
-    // Buat temporary canvas untuk filter
-         const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext('2d');
-    
-    // Dapatkan dimensi asli mockup
+    // Set canvas size to mockup natural size
     canvas.width = mockup.naturalWidth;
     canvas.height = mockup.naturalHeight;
-    
-    // Gambar mockup ke canvas
+
+    // Draw mockup first
     ctx.drawImage(mockup, 0, 0, canvas.width, canvas.height);
-    
+
     if (overlay) {
         const t = transforms[side];
         const container = mockup.parentElement;
 
-         
-        
-        
-        // Hitung posisi dan ukuran overlay
+        // Calculate container dimensions
         const containerWidth = container.offsetWidth;
         const containerHeight = container.offsetHeight;
         const imageAspect = mockup.naturalWidth / mockup.naturalHeight;
         const containerAspect = containerWidth / containerHeight;
-        
+
+        // Calculate rendered dimensions
         let renderedWidth, renderedHeight, renderedLeft, renderedTop;
         if (imageAspect > containerAspect) {
             renderedWidth = containerWidth;
@@ -2750,67 +2743,59 @@ function showPreview() {
         }
         renderedLeft = (containerWidth - renderedWidth) / 2;
         renderedTop = (containerHeight - renderedHeight) / 2;
-        
-        // Faktor skala
+
+        // Calculate scale factors
         const scaleX = renderedWidth / mockup.naturalWidth;
         const scaleY = renderedHeight / mockup.naturalHeight;
-        
-        // Buat temporary canvas untuk blending
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext('2d');
-        
-        // Gambar overlay ke temp canvas
+
+        // Create temporary canvas for overlay
+        const overlayCanvas = document.createElement('canvas');
+        overlayCanvas.width = canvas.width;
+        overlayCanvas.height = canvas.height;
+        const overlayCtx = overlayCanvas.getContext('2d');
+
+        // Calculate overlay position and size in image coordinates
         const imageX = (t.x - renderedLeft) / scaleX;
         const imageY = (t.y - renderedTop) / scaleY;
         const imageWidth = t.width / scaleX;
         const imageHeight = t.height / scaleY;
+
+        // Draw overlay with rotation
+        overlayCtx.save();
+        overlayCtx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
+        overlayCtx.rotate(t.angle * Math.PI / 180);
         
-        tempCtx.save();
-        tempCtx.translate(imageX + imageWidth/2, imageY + imageHeight/2);
-        tempCtx.rotate(t.angle * Math.PI / 180);
-        tempCtx.drawImage(
+        // Apply inversion if needed
+        if (t.inverted) {
+            overlayCtx.filter = 'invert(1)';
+        } else {
+            overlayCtx.filter = 'none';
+        }
+        
+        overlayCtx.drawImage(
             overlay,
             -imageWidth/2,
             -imageHeight/2,
             imageWidth,
             imageHeight
         );
-        tempCtx.restore();
-        
-        // Aplikasikan blend mode
+        overlayCtx.restore();
+
+        // Apply blend mode to main canvas
         ctx.save();
-        switch(t.blendMode) {
-            case 'multiply':
-                ctx.globalCompositeOperation = 'multiply';
-                break;
-            case 'screen':
-                ctx.globalCompositeOperation = 'screen';
-                break;
-            case 'overlay':
-                ctx.globalCompositeOperation = 'overlay';
-                break;
-            default:
-                ctx.globalCompositeOperation = 'source-over';
+        if (t.blendMode && t.blendMode !== 'normal') {
+            ctx.globalCompositeOperation = t.blendMode;
         }
         
-        ctx.drawImage(tempCanvas, 0, 0);
+        // Draw the overlay onto main canvas
+        ctx.drawImage(overlayCanvas, 0, 0);
         ctx.restore();
-    // Terapkan filter
-    if (t.inverted) {
-            tempCtx.globalCompositeOperation = 'difference';
-            tempCtx.fillStyle = 'white';
-            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-        }
-        
-        // Gambar ke canvas utama dengan blend mode
-        ctx.globalCompositeOperation = t.blendMode || 'source-over';
-        ctx.drawImage(tempCanvas, 0, 0);
     }
-    
+
     return canvas;
 }
+
+
 function downloadCombinedPreview() {
     // Buat container sementara untuk render
     const container = document.createElement('div');
