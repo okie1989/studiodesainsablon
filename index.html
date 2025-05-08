@@ -1,12 +1,13 @@
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APLIKASI CTP</title>
     <!-- Favicon Kalkulator -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
@@ -49,9 +50,10 @@ body {
 .studio-container {
     display: grid;
     grid-template-columns: 320px 1fr;
-    gap: 30px;
+    gap: 0px;
     height: 90vh;
     animation: fadeIn 0.5s ease-out;
+    width: auto;
 }
 
 @keyframes fadeIn {
@@ -163,15 +165,15 @@ input[type=number]:focus {
 /* Tata Letak Warna */
 .color-options {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 10px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+    margin-top: 2px;
 }
 
 .color-swatch {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
+    width: 31px;
+    height: 28px;
+    border-radius: 1px;
     cursor: pointer;
     position: relative;
     transition: var(--transition);
@@ -329,14 +331,16 @@ button.icon-button {
     position: static;
     background: rgb(40 40 40 / 44%);
     border-radius: 10px;
-    padding: 6px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     border: 1px solid #555;
     backdrop-filter: blur(5px);
     transition: var(--transition);
-    max-height: 97vh;
+    max-height: 80vh;
     overflow-y: auto;
+    width: 280px;
+    font-size: 0.85rem;
 }
 
 /* Pastikan hanya ada satu size box yang terlihat */
@@ -348,11 +352,11 @@ button.icon-button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
     border-bottom: 1px solid #555;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
 }
 
@@ -361,27 +365,27 @@ button.icon-button {
 
 .size-box-grid {
     display: grid;
-    gap: 12px;
+    gap: 8px;
 }
 
 .size-input-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .size-input-group label {
-    font-size: 12px;
+    font-size: 11px;
     color: #ccc;
 }
 
 .size-input-group input {
-    padding: 6px 8px;
+    padding: 4px 6px;
     background: #333;
     border: 1px solid #555;
     border-radius: 4px;
     color: #fff;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .size-input-group input:focus {
@@ -394,24 +398,24 @@ button.icon-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    margin: 8px 0;
+    gap: 4px;
+    margin: 6px 0;
 }
 
 .position-row {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
 }
 
 .btn-nav {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: #444;
     border: none;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -426,9 +430,9 @@ button.icon-button {
 
 .btn-center {
     background: var(--primary-color);
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
 }
 
 .btn-center:hover {
@@ -437,49 +441,49 @@ button.icon-button {
 
 .advanced-options {
     display: grid;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 6px;
+    margin-top: 6px;
 }
 
 .option-checkbox {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 12px;
+    gap: 4px;
+    font-size: 11px;
     cursor: pointer;
 }
 
 .blend-mode-selector {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .blend-mode-selector label {
-    font-size: 12px;
+    font-size: 11px;
     color: #ccc;
 }
 
 .blend-mode-selector select {
-    padding: 5px;
+    padding: 4px;
     background: #333;
     border: 1px solid #555;
     border-radius: 4px;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .btn-invert {
-    padding: 6px 10px;
+    padding: 4px 8px;
     background: #333;
     border: 1px solid #555;
     border-radius: 4px;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     transition: all 0.2s;
 }
 
@@ -686,7 +690,7 @@ button.icon-button {
     font-size: 0.95rem;
 }
 
-@keyframes pulse {
+@keyframes pulse-scale {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
@@ -836,40 +840,42 @@ button.icon-button {
     border-radius: 8px;
 }
 
-.crop-box {
-    position: absolute;
-    border: 2px dashed var(--accent-color);
-    background-color: rgba(0, 200, 255, 0.1);
-    cursor: move;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
-}
+    .crop-box {
+        position: absolute;
+        border: 2px dashed var(--accent-color);
+        background-color: rgba(0, 200, 255, 0.1);
+        cursor: move;
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+        touch-action: none; /* Prevent default touch actions for better mobile interaction */
+        user-select: none;
+    }
 
-.crop-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-    align-items: center;
-    justify-content: center;
-}
+    .crop-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+        align-items: center;
+        justify-content: center;
+    }
 
-.crop-controls button {
-    padding: 8px 12px;
-    font-size: 0.85rem;
-}
+    .crop-controls button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
 
-.crop-input-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-}
+    .crop-input-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
 
-.crop-input-group input {
-    width: 60px;
-    padding: 6px;
-    text-align: center;
-}
+    .crop-input-group input {
+        width: 60px;
+        padding: 6px;
+        text-align: center;
+    }
 
 .price-summary {
     background: var(--background-elevated-2);
@@ -994,21 +1000,25 @@ button.icon-button {
 }
 
 /* Responsive adjustments */
+/* Override to keep layout consistent on mobile */
 @media (max-width: 1200px) {
     .studio-container {
-        grid-template-columns: 280px 1fr;
-        gap: 20px;
+        grid-template-columns: 320px 1fr !important;
+        gap: 30px !important;
+        height: 90vh !important;
     }
 }
 
 @media (max-width: 992px) {
     .studio-container {
-        grid-template-columns: 1fr;
-        height: auto;
+        grid-template-columns: 320px 1fr !important;
+        height: 90vh !important;
+        overflow-x: auto;
     }
     
     .mockup-frame {
-        flex: 0 0 300px;
+        flex: 0 0 36% !important;
+        min-width: 300px;
     }
 }
 
@@ -1020,7 +1030,7 @@ button.icon-button {
 }
 
 .loading {
-    animation: pulse 1.5s infinite ease-in-out;
+    animation: pulse-scale 1.5s infinite ease-in-out;
 }
 /* Responsive untuk modal */
 @media (max-width: 768px) {
@@ -1390,7 +1400,7 @@ input:checked + .slider:before {
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.8);
-    padding: 15px 30px;
+    padding: 8px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1399,13 +1409,6 @@ input:checked + .slider:before {
     font-family: "Exo 2", sans-serif;
 }
 
-.footer-text {
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(255,255,255,0.7);
-    font-size: 0.9rem;
-    position: static;
-}
 
 .social-links {
     display: flex;
@@ -1667,11 +1670,15 @@ input:checked + .slider:before {
             <div class="controls-section">
                 <h3>🎨 Warna Kaos</h3>
                 <div class="color-options">
-                    <div class="color-swatch selected" data-color="white" style="background:#ffffff" data-sleeve="short"></div>
-                    <div class="color-swatch" data-color="black" style="background:#000000" data-sleeve="short"></div>
-                    <div class="color-swatch" data-color="red" style="background:#ff0000" data-sleeve="short"></div>
-                    <div class="color-swatch" data-color="navyblue" style="background:#223152" data-sleeve="short"></div>
-                    <div class="color-swatch" data-color="burgundy" style="background:#5E0010" data-sleeve="short"></div>
+                    <div class="color-swatch selected" data-color="white" style="background:#ffffff" data-sleeve="short" title="Putih"></div>
+                    <div class="color-swatch" data-color="black" style="background:#000000" data-sleeve="short" title="Hitam"></div>  
+                    <div class="color-swatch" data-color="red" style="background:#ff0000" data-sleeve="short" title="Merah"></div>
+                    <div class="color-swatch" data-color="merahmarun" style="background:#942A38" data-sleeve="short" title="Merah Marun"></div>
+                    <div class="color-swatch" data-color="burgundy" style="background:#5E0010" data-sleeve="short" title="Burgundy"></div>
+                    <div class="color-swatch" data-color="navyblue" style="background:#223152" data-sleeve="short" title="Biru Navy"></div>
+                    <div class="color-swatch" data-color="birubenhur" style="background:#264588" data-sleeve="short" title="Biru Benhur"></div>
+                    <div class="color-swatch" data-color="hijaubotol" style="background:#2E4944" data-sleeve="short" title="Hijau Botol"></div>
+                    <div class="color-swatch" data-color="hijauarmy" style="background:#454833" data-sleeve="short" title="Hijau Army"></div>
                 </div>
                 
                 <div class="input-group" style="margin-top:15px;">
@@ -1691,6 +1698,7 @@ input:checked + .slider:before {
                 <button onclick="uploadFront.click()">📁 Depan</button>
                 <button onclick="uploadBack.click()">📁 Belakang</button>
             </div>
+            
             
             <div class="controls-section">
                 <div class="section-header" onclick="togglePriceSettings()">
@@ -1940,54 +1948,94 @@ let currentDesignId = null;
         white: {
             short: {
                 front: 'https://i.imgur.com/kXuLU9B.jpeg',
-                back: 'https://i.imgur.com/hUyJtaF.jpeg'
+                back: 'https://i.imgur.com/zDreOs2.jpeg'
             },
             long: {
                 front: 'https://i.imgur.com/XIPmA9f.jpeg',
-                back: 'https://i.imgur.com/Xc7DXCN.jpeg'
+                back: 'https://i.imgur.com/9OHzCYt.jpeg'
             }
         },
         black: {
             short: {
                 front: 'https://i.imgur.com/IkCWJ36.jpeg',
-                back: 'https://i.imgur.com/0xVvoQN.jpeg'
+                back: 'https://i.imgur.com/QdZeuw2.jpeg'
             },
             long: {
                 front: 'https://i.imgur.com/zeO3yPX.jpeg',
-                back: 'https://i.imgur.com/1Zgey6R.jpeg'
+                back: 'https://i.imgur.com/CHx83er.jpeg'
             }
         },
         red: {
             short: {
                 front: 'https://i.imgur.com/LOyOlVq.jpeg',
-                back: 'https://i.imgur.com/5URYLlI.jpeg'
+                back: 'https://i.imgur.com/I4TwZyS.jpeg'
             },
             long: {
                 front: 'https://i.imgur.com/PoZw4T8.jpeg',
-                back: 'https://i.imgur.com/nONwGpc.jpeg'
+                back: 'https://i.imgur.com/rfAxQB5.jpeg'
             }
         },
         navyblue: {
             short: {
                 front: 'https://i.imgur.com/iwEUANU.jpeg',
-                back: 'https://i.imgur.com/hL2zqOk.jpeg'
+                back: 'https://i.imgur.com/1WBUIpv.jpeg'
             },
             long: {
                 front: 'https://i.imgur.com/IJHOODo.jpeg',
-                back: 'https://i.imgur.com/pUJDUvo.jpeg'
+                back: 'https://i.imgur.com/U6vJrPD.jpeg'
             }
         },
         burgundy: {
             short: {
                 front: 'https://i.imgur.com/FOxwXtU.jpeg',
-                back: 'https://i.imgur.com/1nHQ7X4.jpeg'
+                back: 'https://i.imgur.com/9Rbf2qR.jpeg'
             },
             long: {
                 front: 'https://i.imgur.com/j7KsmGU.jpeg',
-                back: 'https://i.imgur.com/hVuAe80.jpeg'
+                back: 'https://i.imgur.com/egwnzV3.jpeg'
+            }
+        },
+        birubenhur: {
+            short: {
+                front: 'https://i.imgur.com/RL8nHDy.jpeg',
+                back: 'https://i.imgur.com/kNdK021.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/NvlcCH7.jpeg',
+                back: 'https://i.imgur.com/8CjEWQC.jpeg'
+            }
+        },
+        hijaubotol: {
+            short: {
+                front: 'https://i.imgur.com/Q0qSkEp.jpeg',
+                back: 'https://i.imgur.com/ciM999H.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/tWBf9Ew.jpeg',
+                back: 'https://i.imgur.com/WfMXI99.jpeg'
+            }
+        },
+        merahmarun: {
+            short: {
+                front: 'https://i.imgur.com/AbKJfQR.jpeg',
+                back: 'https://i.imgur.com/9eEvTKF.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/S034FVn.jpeg',
+                back: 'https://i.imgur.com/FuqpjV9.jpeg'
+            }
+        },
+        hijauarmy: {
+            short: {
+                front: 'https://i.imgur.com/p4DQ6lJ.jpeg',
+                back: 'https://i.imgur.com/mgISdkF.jpeg'
+            },
+            long: {
+                front: 'https://i.imgur.com/EE8drhy.jpeg',
+                back: 'https://i.imgur.com/IHG6mOf.jpeg'
             }
         }
-    };
+        };
     
     let currentColor = 'white';
     const uploadFront = document.getElementById('uploadFront');
@@ -2043,28 +2091,39 @@ let currentDesignId = null;
         initOverlay(el, side);
     }
 
-    function initOverlay(el, side) {
-    // Stop previous interaction if exists
-    if (transforms[side]?.interactable) {
-        transforms[side].interactable.unset();
-    }
+function initOverlay(el, side) {
+    // Cleanup previous interaction
+    cleanupOverlay(side);
 
-    // Initialize default values if not set
+    // Initialize transform object with defaults
     transforms[side] = transforms[side] || {};
-    transforms[side].x = transforms[side].x || 0;
-    transforms[side].y = transforms[side].y || 0;
-    transforms[side].width = transforms[side].width || 0;
-    transforms[side].height = transforms[side].height || 0;
-    transforms[side].angle = transforms[side].angle || 0;
-    transforms[side].proportional = transforms[side].proportional !== undefined ? transforms[side].proportional : true;
-    transforms[side].inverted = transforms[side].inverted || false;
-    transforms[side].blendMode = transforms[side].blendMode || 'normal';
+    const defaults = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        angle: 0,
+        ar: 1,
+        proportional: true,
+        inverted: false,
+        blendMode: 'normal',
+        brightness: 100,
+        contrast: 100,
+        opacity: 100
+    };
 
-    el.onload = () => {
+    // Apply defaults only for undefined properties
+    transforms[side] = { ...defaults, ...transforms[side] };
+
+    const handleImageReady = () => {
         const cont = containers[side];
-        transforms[side].ar = el.naturalWidth / el.naturalHeight;
+        
+        // Calculate aspect ratio if not set
+        if (el.naturalWidth && el.naturalHeight) {
+            transforms[side].ar = el.naturalWidth / el.naturalHeight;
+        }
 
-        // Set default size if not already set
+        // Set reasonable default size if not set
         if (!transforms[side].width || !transforms[side].height) {
             const w = Math.min(cont.offsetWidth * 0.7, 300);
             transforms[side].width = w;
@@ -2072,10 +2131,13 @@ let currentDesignId = null;
             centerOverlay(side);
         }
 
-        // Create size box if not exists
-        if (!transforms[side].box) {
-            createSizeBox(side);
+        // Clean up existing size box if any
+        if (transforms[side].box && transforms[side].box.parentNode) {
+            transforms[side].box.parentNode.removeChild(transforms[side].box);
         }
+        
+        // Create new size box
+        createSizeBox(side);
         
         // Initialize interactivity
         transforms[side].interactable = interact(el);
@@ -2083,6 +2145,30 @@ let currentDesignId = null;
         update(el, side);
         updatePrice();
     };
+
+    // Handle both cases: image already loaded or not
+    if (el.complete || el.naturalWidth > 0) {
+        handleImageReady();
+    } else {
+        el.onload = handleImageReady;
+        el.onerror = () => console.error('Gagal memuat gambar', el.src);
+    }
+}
+
+function cleanupOverlay(side) {
+    if (!transforms[side]) return;
+    
+    // Cleanup interactable
+    if (transforms[side].interactable) {
+        transforms[side].interactable.unset();
+        transforms[side].interactable = null;
+    }
+    
+    // Cleanup size box
+    if (transforms[side].box && transforms[side].box.parentNode) {
+        transforms[side].box.parentNode.removeChild(transforms[side].box);
+        transforms[side].box = null;
+    }
 }
 
     function createSizeBox(side) {
@@ -2100,17 +2186,29 @@ let currentDesignId = null;
         const el = containers[side].querySelector('.design-overlay');
         const t = transforms[side];
 
-        if (!el || !t || !t.interactable) return;
+        if (!el || !t) return;
 
-        const interactable = t.interactable;
-        interactable.unset();
+        // Unset previous interactable if exists
+        if (t.interactable) {
+            t.interactable.unset();
+        }
 
-        interact(el)
+        t.interactable = interact(el)
             .draggable({
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: containers[side],
+                        endOnly: true
+                    })
+                ],
                 listeners: {
                     move(ev) {
                         t.x += ev.dx;
                         t.y += ev.dy;
+                        // Keep overlay within container bounds
+                        const cont = containers[side];
+                        t.x = Math.min(Math.max(t.x, 0), cont.offsetWidth - t.width);
+                        t.y = Math.min(Math.max(t.y, 0), cont.offsetHeight - t.height);
                         update(el, side);
                     }
                 }
@@ -2118,6 +2216,10 @@ let currentDesignId = null;
             .resizable({
                 edges: { left: true, right: true, top: true, bottom: true },
                 modifiers: [
+                    interact.modifiers.restrictEdges({
+                        outer: containers[side],
+                        endOnly: true
+                    }),
                     interact.modifiers.aspectRatio({
                         ratio: t.proportional ? t.ar : 'preserve',
                         enabled: t.proportional
@@ -2129,6 +2231,10 @@ let currentDesignId = null;
                         t.height = ev.rect.height;
                         t.x += ev.deltaRect.left;
                         t.y += ev.deltaRect.top;
+                        // Keep overlay within container bounds
+                        const cont = containers[side];
+                        t.x = Math.min(Math.max(t.x, 0), cont.offsetWidth - t.width);
+                        t.y = Math.min(Math.max(t.y, 0), cont.offsetHeight - t.height);
                         update(el, side);
                     }
                 }
@@ -2141,8 +2247,6 @@ let currentDesignId = null;
                     }
                 }
             });
-
-        t.interactable = interactable;
     }
 
     function update(el, side) {
@@ -2150,6 +2254,7 @@ let currentDesignId = null;
         el.style.transform = `translate(${t.x}px,${t.y}px) rotate(${t.angle}deg)`;
         el.style.width = t.width + 'px'; 
         el.style.height = t.height + 'px'; 
+        el.style.touchAction = 'none'; // Prevent default touch actions on overlay for better mobile UX
         updateBox(side);
     }
 
@@ -2170,7 +2275,6 @@ let currentDesignId = null;
         </div>
         <div class="size-box-content" style="${isCollapsed ? 'display:none' : ''}">
             <div class="size-box-header">
-                <span>Edit Design</span>
             </div>
             
             <div class="size-box-grid">
@@ -2313,7 +2417,9 @@ let currentDesignId = null;
         t.height = (heightCm / 104) * cont.offsetHeight;
 
         const overlay = cont.querySelector('.design-overlay');
-        update(overlay, side);
+        if (overlay) {
+            update(overlay, side);
+        }
         updatePrice();
 
         const btn = t.box.querySelector('.size-box-confirm-btn');
@@ -3011,20 +3117,54 @@ function downloadExactPreview() {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         
-        // Hitung ukuran canvas berdasarkan gambar aktual
-        const gap = 0; // Jarak antar gambar
+        // Hitung ukuran canvas
+        const gap = 0;
         canvas.width = images[0].width + images[1].width + gap;
         canvas.height = Math.max(images[0].height, images[1].height);
         
         // Gambar langsung tanpa background
-        ctx.drawImage(images[0], 0, (canvas.height - images[0].height)/2); // Tengahkan vertikal
+        ctx.drawImage(images[0], 0, (canvas.height - images[0].height)/2);
         ctx.drawImage(images[1], images[0].width + gap, (canvas.height - images[1].height)/2);
         
-        // Download
-        const link = document.createElement('a');
-        link.download = `desain-kaos-${Date.now()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        // Fungsi untuk kompresi gambar
+        const compressImage = (dataUrl, targetSizeKB = 500, quality = 0.9, step = 0.05) => {
+            return new Promise((resolve) => {
+                let newDataUrl = dataUrl;
+                
+                const checkSize = (currentQuality) => {
+                    canvas.toBlob((blob) => {
+                        if (blob.size / 1024 <= targetSizeKB || currentQuality <= 0.1) {
+                            resolve(newDataUrl);
+                        } else {
+                            currentQuality -= step;
+                            newDataUrl = canvas.toDataURL('image/jpeg', currentQuality);
+                            checkSize(currentQuality);
+                        }
+                    }, 'image/jpeg', currentQuality);
+                };
+                
+                checkSize(quality);
+            });
+        };
+        
+        // Kompresi sebelum download
+        compressImage(canvas.toDataURL('image/jpeg', 0.9)).then(compressedDataUrl => {
+            const link = document.createElement('a');
+            link.download = `desain-kaos-${Date.now()}.jpg`;
+            link.href = compressedDataUrl;
+            link.click();
+        });
+    });
+}
+
+// Helper function untuk load image
+function loadImage(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
     });
 }
 
@@ -3066,28 +3206,34 @@ function saveDesign() {
     // Generate a unique ID if this is a new design
     const designId = currentDesignId || generateId();
     
-    // Prepare transform data, ensuring no NaN values
+    // Enhanced transform data preparation with all properties
     const prepareTransformData = (side) => {
         const t = transforms[side] || {};
+        const overlay = containers[side].querySelector('.design-overlay');
+        
         return {
             x: t.x || 0,
             y: t.y || 0,
-            width: t.width || 0,
-            height: t.height || 0,
+            width: t.width || (overlay ? overlay.naturalWidth : 0),
+            height: t.height || (overlay ? overlay.naturalHeight : 0),
             angle: t.angle || 0,
             ar: t.ar || 1,
             proportional: t.proportional !== undefined ? t.proportional : true,
             inverted: t.inverted || false,
-            blendMode: t.blendMode || 'normal'
+            blendMode: t.blendMode || 'normal',
+            // Additional visual properties
+            brightness: t.brightness || 100,
+            contrast: t.contrast || 100,
+            opacity: t.opacity !== undefined ? t.opacity : 100
         };
     };
 
-    // Get all design data
+    // Get all design data with enhanced validation
     const designData = {
         name: designName,
         timestamp: firebase.database.ServerValue.TIMESTAMP,
-        color: currentColor,
-        sleeveType: document.getElementById('sleeveType').value,
+        color: currentColor || document.getElementById('colorPicker').value,
+        sleeveType: document.getElementById('sleeveType').value || 'short',
         pricePerCm: parseFloat(document.getElementById('pricePerCm').value) || 0,
         basePrice: parseFloat(document.getElementById('basePrice').value) || 0,
         designFee: parseFloat(document.getElementById('designFee').value) || 0,
@@ -3101,10 +3247,14 @@ function saveDesign() {
         },
         priceDetails: {
             base: parseFloat(document.getElementById('basePrice').value) || 0,
-            front: document.getElementById('frontPriceDisplay').textContent,
-            back: document.getElementById('backPriceDisplay').textContent,
-            fee: document.getElementById('designFeeDisplay').textContent,
-            total: document.getElementById('totalPrice').textContent
+            front: document.getElementById('frontPriceDisplay').textContent || 'Rp 0',
+            back: document.getElementById('backPriceDisplay').textContent || 'Rp 0',
+            fee: document.getElementById('designFeeDisplay').textContent || 'Rp 0',
+            total: document.getElementById('totalPrice').textContent || 'Rp 0'
+        },
+        // Additional design settings (removed mirrorCheckbox and lockAspectRatioCheckbox)
+        settings: {
+            // No mirrorDesign or lockAspectRatio, as no such checkboxes exist
         }
     };
 
@@ -3113,6 +3263,8 @@ function saveDesign() {
         .then(() => {
             alert('Desain berhasil disimpan!');
             currentDesignId = designId;
+            // Update UI to reflect saved state
+            updateSaveButtonState();
         })
         .catch(error => {
             console.error('Error saving design:', error);
@@ -3194,27 +3346,27 @@ function loadDesign(id, event) {
             currentDesignId = id;
             document.getElementById('designName').value = design.name || '';
             
-            // Safely set color
+            // Restore color
             if (design.color) {
                 const colorSwatch = document.querySelector(`.color-swatch[data-color="${design.color}"]`);
                 if (colorSwatch) colorSwatch.click();
             }
             
-            // Safely set sleeve type
+            // Restore sleeve type
             if (design.sleeveType) {
                 document.getElementById('sleeveType').value = design.sleeveType;
             }
             updateMockupImage();
             
-            // Safely set prices
-            if (typeof design.pricePerCm === 'number') {
-                document.getElementById('pricePerCm').value = design.pricePerCm;
-            }
-            if (typeof design.basePrice === 'number') {
-                document.getElementById('basePrice').value = design.basePrice;
-            }
-            if (typeof design.designFee === 'number') {
-                document.getElementById('designFee').value = design.designFee;
+            // Restore prices
+            document.getElementById('pricePerCm').value = design.pricePerCm || 0;
+            document.getElementById('basePrice').value = design.basePrice || 0;
+            document.getElementById('designFee').value = design.designFee || 0;
+            
+            // Restore additional settings
+            if (design.settings) {
+                mirrorCheckbox.checked = design.settings.mirrorDesign || false;
+                lockAspectRatioCheckbox.checked = design.settings.lockAspectRatio !== false;
             }
             
             // Clear existing overlays
@@ -3223,52 +3375,77 @@ function loadDesign(id, event) {
             sizeBoxWrappers.front.innerHTML = '';
             sizeBoxWrappers.back.innerHTML = '';
             
-            // Load front design if exists
-            if (design.images?.front) {
-                // Add error handling for image loading
+            // Function to restore overlay with all properties
+            const restoreOverlay = (side) => {
+                if (!design.images?.[side]) return;
+                
                 try {
-                    createOverlay(design.images.front, 'front');
+                    createOverlay(design.images[side], side);
                     setTimeout(() => {
-                        if (design.transforms?.front) {
-                            transforms.front = {
-                                ...(design.transforms.front || {}),
+                        const overlay = containers[side].querySelector('.design-overlay');
+                        if (overlay && design.transforms?.[side]) {
+                            const t = design.transforms[side];
+                            
+                            // Restore transform properties
+                            transforms[side] = {
+                                x: t.x || 0,
+                                y: t.y || 0,
+                                width: t.width || overlay.naturalWidth,
+                                height: t.height || overlay.naturalHeight,
+                                angle: t.angle || 0,
+                                ar: t.ar || 1,
+                                proportional: t.proportional !== undefined ? t.proportional : true,
+                                inverted: t.inverted || false,
+                                blendMode: t.blendMode || 'normal',
+                                brightness: t.brightness || 100,
+                                contrast: t.contrast || 100,
+                                opacity: t.opacity !== undefined ? t.opacity : 100,
                                 interactable: null,
                                 box: null
                             };
-                            const overlay = containers.front.querySelector('.design-overlay');
-                            if (overlay) {
-                                initOverlay(overlay, 'front');
-                                update(overlay, 'front');
+                            
+                            // Apply visual properties
+                            overlay.style.filter = `
+                                brightness(${transforms[side].brightness}%)
+                                contrast(${transforms[side].contrast}%)
+                                ${transforms[side].inverted ? 'invert(1)' : ''}
+                            `;
+                            overlay.style.opacity = (transforms[side].opacity / 100);
+                            overlay.style.mixBlendMode = transforms[side].blendMode;
+                            
+                            // Initialize interactable and bounding box
+                            initOverlay(overlay, side);
+                            
+                            // Apply the saved transform
+                            update(overlay, side);
+                            
+                            // Force update the bounding box
+                            if (transforms[side].interactable) {
+                                transforms[side].interactable.position({
+                                    x: transforms[side].x,
+                                    y: transforms[side].y
+                                });
+                                transforms[side].interactable.style({
+                                    width: `${transforms[side].width}px`,
+                                    height: `${transforms[side].height}px`,
+                                    transform: `rotate(${transforms[side].angle}deg)`
+                                });
                             }
+                            
+                            // Update UI controls
+                            updateBlendModeSelect(side, transforms[side].blendMode);
+                            updateInvertCheckbox(side, transforms[side].inverted);
+                            updateSliderValues(side);
                         }
                     }, 500);
                 } catch (e) {
-                    console.error('Error loading front image:', e);
+                    console.error(`Error loading ${side} image:`, e);
                 }
-            }
+            };
             
-            // Load back design if exists
-            if (design.images?.back) {
-                try {
-                    createOverlay(design.images.back, 'back');
-                    setTimeout(() => {
-                        if (design.transforms?.back) {
-                            transforms.back = {
-                                ...(design.transforms.back || {}),
-                                interactable: null,
-                                box: null
-                            };
-                            const overlay = containers.back.querySelector('.design-overlay');
-                            if (overlay) {
-                                initOverlay(overlay, 'back');
-                                update(overlay, 'back');
-                            }
-                        }
-                    }, 500);
-                } catch (e) {
-                    console.error('Error loading back image:', e);
-                }
-            }
+            // Restore both sides
+            restoreOverlay('front');
+            restoreOverlay('back');
             
             // Update price display
             setTimeout(updatePrice, 1000);
@@ -3279,6 +3456,35 @@ function loadDesign(id, event) {
             console.error('Error loading design:', error);
             alert('Gagal memuat desain: ' + error.message);
         });
+}
+
+
+// Helper functions to update UI controls
+function updateBlendModeSelect(side, blendMode) {
+    const select = document.getElementById(`${side}BlendMode`);
+    if (select) select.value = blendMode;
+}
+
+function updateInvertCheckbox(side, inverted) {
+    const checkbox = document.getElementById(`${side}Invert`);
+    if (checkbox) checkbox.checked = inverted;
+}
+
+function updateSliderValues(side) {
+    const t = transforms[side] || {};
+    const brightnessInput = document.getElementById(`${side}Brightness`);
+    const contrastInput = document.getElementById(`${side}Contrast`);
+    const opacityInput = document.getElementById(`${side}Opacity`);
+    if (brightnessInput) brightnessInput.value = t.brightness || 100;
+    if (contrastInput) contrastInput.value = t.contrast || 100;
+    if (opacityInput) opacityInput.value = t.opacity !== undefined ? t.opacity : 100;
+}
+
+function updateSaveButtonState() {
+    const saveBtn = document.getElementById('saveDesignBtn');
+    if (saveBtn) {
+        saveBtn.textContent = currentDesignId ? 'Perbarui Desain' : 'Simpan Desain';
+    }
 }
 
 function deleteDesign(id, event) {
