@@ -1,4 +1,5 @@
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1708,7 +1709,7 @@ input:checked + .slider:before {
                 <div class="section-content" id="priceSettings">
                     <div class="input-group">
                         <label>Harga per cm²:
-                            <input type="number" id="pricePerCm" value="20" class="locked-input" readonly>
+                            <input type="number" id="pricePerCm" value="28" class="locked-input" readonly>
                         </label>
                     </div>
                     <div class="input-group">
@@ -2265,7 +2266,7 @@ function cleanupOverlay(side) {
         if (!box) return;
 
         const wCm = (t.width / cont.offsetWidth) * 104;
-        const hCm = (t.height / cont.offsetHeight) * 104;
+        const hCm = (t.height / cont.offsetHeight) * 89.8;
         const isCollapsed = box.classList.contains('collapsed');
 
         box.innerHTML = `
@@ -2394,7 +2395,7 @@ function cleanupOverlay(side) {
             if (t.proportional) {
                 t.width = t.height * t.ar;
                 const widthInput = document.getElementById(`widthInput-${side}`);
-                if (widthInput) widthInput.value = (t.width / cont.offsetWidth * 104).toFixed(1);
+                if (widthInput) widthInput.value = (t.width / cont.offsetWidth * 89.8).toFixed(1);
             }
         }
 
@@ -2414,7 +2415,7 @@ function cleanupOverlay(side) {
         const heightCm = parseFloat(heightInput.value) || 0;
 
         t.width = (widthCm / 104) * cont.offsetWidth;
-        t.height = (heightCm / 104) * cont.offsetHeight;
+        t.height = (heightCm / 89.8) * cont.offsetHeight;
 
         const overlay = cont.querySelector('.design-overlay');
         if (overlay) {
@@ -2751,7 +2752,7 @@ function cleanupOverlay(side) {
             if (t.width && t.height) {
                 const cont = containers[side];
                 const wCm = (t.width / cont.offsetWidth) * 104;
-                const hCm = (t.height / cont.offsetHeight) * 104;
+                const hCm = (t.height / cont.offsetHeight) * 89.8;
                 const area = wCm * hCm;
                 const cost = roundSablonPrice(area * ppcm);
                 
@@ -2811,7 +2812,7 @@ function cleanupOverlay(side) {
                 if (t.width && t.height) {
                     const cont = containers[side];
                     const wCm = (t.width / cont.offsetWidth) * 104;
-                    const hCm = (t.height / cont.offsetHeight) * 104;
+                    const hCm = (t.height / cont.offsetHeight) * 89.8;
                     const area = wCm * hCm;
                     const cost = roundSablonPrice(area * pricePerCm);
                     
